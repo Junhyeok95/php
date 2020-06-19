@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
+        <title>환영합니다</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -64,6 +65,9 @@
         </style>
     </head>
     <body>
+    <title>환영합니다</title>
+    <title>환영합니다</title>
+
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -83,6 +87,9 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
+                <div class="title m-b-md"v> 환영합니다 </div>
+                <div class="title m-b-md"> WDJ </div>
+                <div class="title m-b-md"> ajax -> /ajax </div>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>

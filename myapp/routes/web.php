@@ -17,4 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('coins', 'CoinController@index');
+Route::get('/app', function () {
+  return response()->json(["hello"],200);
+});
+
+Route::get('/coins', 'CoinController@index');
