@@ -3,6 +3,13 @@
 composer create-project --prefer-dist laravel/laravel [awsTest]
 ```
 
+## JavaScript & CSS Scaffolding // https://laravel.com/docs/7.x/frontend
+omposer require laravel/ui  // 스케폴딩
+php artisan ui vue          // 뷰 사용 + (Please run "npm install && npm run dev" to compile your fresh scaffolding.)
+                            // resources/sass/app.scss 생성
+npm install                 // 라라벨 Mix 사용
+npm run dev                 // webpack.mix.js -> public/css , public/js 컴파일 후 등장
+
 ## make Tip
 php artisan make:middleware CheckAge                          // 미들웨어                     app/Http/Middleware
 php artisan make:controller ShowProfile --invokable           // 단일 동작 컨트롤러             app/Http/Controllers/
