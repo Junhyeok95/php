@@ -4,16 +4,17 @@ composer create-project --prefer-dist laravel/laravel [awsTest]
 ```
 
 ## JavaScript & CSS Scaffolding // https://laravel.com/docs/7.x/frontend
-omposer require laravel/ui  // 스케폴딩
-php artisan ui vue          // 뷰 사용 + (Please run "npm install && npm run dev" to compile your fresh scaffolding.)
-                            // resources/sass/app.scss 생성
-npm install                 // 라라벨 Mix 사용
-npm run dev                 // webpack.mix.js -> public/css , public/js 컴파일 후 등장
+```
+composer require laravel/ui // 스케폴딩  
+php artisan ui vue          // 뷰 사용 + resources/sass/app.scss 생성  
+npm install                 // 라라벨 Mix 사용  
+npm run dev                 // webpack.mix.js -> public/css , public/js 컴파일 후 등장  
+```
 
 ## aws deployTest.pem // devJJH/ssh_key
 1. AWS
 ```
-aws 인스턴스 생성
+aws 인스턴스 생성, 키페어 생성 및 다운로드 // EC2 대시보드 에서도 가능
 pem ssh키 발급
 ssh -i "deployTest.pem" ubuntu@ec2-18-217-23-133.us-east-2.compute.amazonaws.com // 접속
 ```
@@ -66,7 +67,7 @@ sudo vim mysqld.cnf
 sudo service mysql restart
 ```
 
-6. nginx / https://laravel.com/docs/7.x/deployment 참고
+6. nginx /   https://laravel.com/docs/7.x/deployment 참고
 ```
 cd /etc/nginx/sites-available/
 sudo vim default
@@ -98,21 +99,23 @@ sudo chown -R www-data:www-data public/
 sudo chown -R www-data:www-data storage/
 ```
 
-7. test
+7. TEST
+```
 sudo php artisan key:generate
 php artisan migrate
 php artisan db:seed
-
-
+```
 
 ## make Tip
-php artisan make:middleware CheckAge                          // 미들웨어                     app/Http/Middleware
-php artisan make:controller ShowProfile --invokable           // 단일 동작 컨트롤러             app/Http/Controllers/
-php artisan make:controller PhotoController --resource        // 리소스 컨트롤러                app/Http/Controllers/
-php artisan make:controller API/PhotoController --api         // api용 컨트롤러               app/Http/Controllers/API/
-php artisan make:model MyModel                                // 모델 생성                    app/
-php artisan make:model MyModel2 --migration                   // 모델 옵션                    app/
-php artisan make:migration create_posts_table --create=posts2 // 마이 명 , 생성 테이블 명         database/migrations/
-php artisan make:migration create_posts_table3 --table=posts4 // 마이 명 , 사용 테이블 명         database/migrations/
-php artisan make:seeder UsersTablesSeeder                     // 시더                         database/seeds/
-    artisan db:seed --class=UsersTablesSeeder                 // 실행
+```
+php artisan make:middleware CheckAge                          // 미들웨어                     app/Http/Middleware  
+php artisan make:controller ShowProfile --invokable           // 단일 동작 컨트롤러             app/Http/Controllers/  
+php artisan make:controller PhotoController --resource        // 리소스 컨트롤러                app/Http/Controllers/  
+php artisan make:controller API/PhotoController --api         // api용 컨트롤러               app/Http/Controllers/API/  
+php artisan make:model MyModel                                // 모델 생성                    app/  
+php artisan make:model MyModel2 --migration                   // 모델 옵션                    app/  
+php artisan make:migration create_posts_table --create=posts2 // 마이 명 , 생성 테이블 명         database/migrations/  
+php artisan make:migration create_posts_table3 --table=posts4 // 마이 명 , 사용 테이블 명         database/migrations/  
+php artisan make:seeder UsersTablesSeeder                     // 시더                         database/seeds/  
+php artisan db:seed --class=UsersTablesSeeder                 // 실행
+```
