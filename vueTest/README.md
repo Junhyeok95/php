@@ -29,3 +29,11 @@ php artisan migrate
 npm run dev
 npm run watch // js update
 ```
+
+## 하 ..
+
+```
+composer require laravel-frontend-presets/tailwindcss --dev
+php artisan ui tailwindcss --auth
+npm install && npm run dev
+```
