@@ -37,3 +37,10 @@ composer require laravel-frontend-presets/tailwindcss --dev
 php artisan ui tailwindcss --auth
 npm install && npm run dev
 ```
+
+## ing ~~
+
+```
+php artisan make:model Message -c -m
+php artisan migrate:refresh
+```
