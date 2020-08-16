@@ -2,6 +2,5 @@
 
 @section('content')
 <div class="flex-1">
-    <chat-vue>
-</div>
-@endsection
+    <chat-vue :current-user="{{ auth()->id() }}" />
+</div> @endsection
