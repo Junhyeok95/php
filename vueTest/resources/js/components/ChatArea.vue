@@ -1,5 +1,6 @@
 <template>
   <div class="flex-1">
+    <p>chatting with user {{ chatId }}</p>
     <div>mesaages</div>
     <div>mesaages</div>
     <div>mesaages</div>
@@ -10,6 +11,12 @@
 
 <script>
 export default {
+  props: {
+    chatId: {
+      type: Number,
+      required: true,
+    },
+  },
   data() {
     return {};
   },

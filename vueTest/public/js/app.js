@@ -1918,7 +1918,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    chatId: {
+      type: Number,
+      required: true
+    }
+  },
   data: function data() {
     return {};
   },
@@ -1936,6 +1943,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -1983,6 +1993,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     updateChatWith: function updateChatWith(userId) {
       this.$emit("updatedChatWith", userId); // 부모로 보내는 방법
+    },
+    deleteChatWith: function deleteChatWith() {
+      this.$emit("deletedChatWith");
     }
   }
 });
@@ -2014,6 +2027,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2030,7 +2053,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      chatWith: null
+      chatWith: null,
+      text: ""
     };
   },
   mounted: function mounted() {
@@ -2041,6 +2065,21 @@ __webpack_require__.r(__webpack_exports__);
       this.chatWith = value; // null 을 선택하면 변경하도록
 
       console.log("채팅상대 : ", value);
+    },
+    deletedChatWith: function deletedChatWith() {
+      this.chatWith = null;
+      console.log("채팅상대 : null");
+    },
+    submit: function submit() {
+      console.log("haha");
+
+      if (this.text) {
+        axios.post("/api/messages", {
+          message: this.text,
+          to: this.chatWith,
+          from: this.currentUser
+        });
+      }
     }
   }
 });
@@ -19695,26 +19734,21 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "flex-1" }, [
+    _c("p", [_vm._v("chatting with user " + _vm._s(_vm.chatId))]),
+    _vm._v(" "),
+    _c("div", [_vm._v("mesaages")]),
+    _vm._v(" "),
+    _c("div", [_vm._v("mesaages")]),
+    _vm._v(" "),
+    _c("div", [_vm._v("mesaages")]),
+    _vm._v(" "),
+    _c("div", [_vm._v("mesaages")]),
+    _vm._v(" "),
+    _c("div", [_vm._v("mesaages")])
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex-1" }, [
-      _c("div", [_vm._v("mesaages")]),
-      _vm._v(" "),
-      _c("div", [_vm._v("mesaages")]),
-      _vm._v(" "),
-      _c("div", [_vm._v("mesaages")]),
-      _vm._v(" "),
-      _c("div", [_vm._v("mesaages")]),
-      _vm._v(" "),
-      _c("div", [_vm._v("mesaages")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -19742,7 +19776,15 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "p-2 m-2 border-2 border-gray-600 text-center" },
+        {
+          staticClass:
+            "p-2 m-2 border-2 border-gray-600 text-center hover:bg-gray-300 cursor-pointer",
+          on: {
+            click: function($event) {
+              return _vm.deleteChatWith()
+            }
+          }
+        },
         [_vm._v("UserList")]
       ),
       _vm._v(" "),
@@ -19794,14 +19836,53 @@ var render = function() {
     [
       _c("ChatUserList", {
         attrs: { "current-user": _vm.currentUser },
-        on: { updatedChatWith: _vm.updatedChatWith }
+        on: {
+          updatedChatWith: _vm.updatedChatWith,
+          deletedChatWith: _vm.deletedChatWith
+        }
       }),
       _vm._v(" "),
       _vm.chatWith
         ? _c(
             "div",
             { staticClass: "w-4/5 flex flex-col" },
-            [_c("ChatArea"), _vm._v(" "), _vm._m(0)],
+            [
+              _c("ChatArea", { attrs: { "chat-id": _vm.chatWith } }),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex-initial p-2" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.text,
+                      expression: "text"
+                    }
+                  ],
+                  staticClass:
+                    "border-2 border-solid rounded border-gray-600 w-full p-3",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.text },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.submit($event)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.text = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ],
             1
           )
         : _c("div", { staticClass: "p-3" }, [
@@ -19811,19 +19892,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex-initial p-2" }, [
-      _c("input", {
-        staticClass: "border-2 border-solid rounded border-gray-600 w-full p-3",
-        attrs: { type: "text" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
