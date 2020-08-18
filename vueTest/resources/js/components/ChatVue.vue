@@ -7,7 +7,7 @@
     />
 
     <div v-if="chatWith" class="w-4/5 flex flex-col">
-      <ChatArea :chat-id="chatWith" />
+      <ChatArea :chat-id="chatWith" :messages="messages" />
       <div class="flex-initial p-2">
         <input
           class="border-2 border-solid rounded border-gray-600 w-full p-3"
@@ -41,6 +41,7 @@ export default {
     return {
       chatWith: null,
       text: "",
+      messages: null,
     };
   },
   mounted() {
@@ -49,7 +50,20 @@ export default {
   methods: {
     updatedChatWith(value) {
       this.chatWith = value; // null 을 선택하면 변경하도록
+      this.getMessages(); // 채팅기록 소환
       console.log("채팅상대 : ", value);
+    },
+    getMessages() {
+      axios
+        .get("/api/messages", {
+          params: {
+            to: this.chatWith,
+            from: this.currentUser,
+          },
+        })
+        .then((res) => {
+          this.messages = res.data.messages;
+        });
     },
     deletedChatWith() {
       this.chatWith = null;
@@ -58,12 +72,17 @@ export default {
     submit() {
       console.log("haha");
       if (this.text) {
-        axios.post("/api/messages", {
-          message: this.text,
-          to: this.chatWith,
-          from: this.currentUser,
-        });
+        axios
+          .post("/api/messages", {
+            text: this.text,
+            to: this.chatWith,
+            from: this.currentUser,
+          })
+          .then((res) => {
+            this.messages.push(res.data.message);
+          });
       }
+      this.text = "";
     },
   },
 };
