@@ -44,3 +44,18 @@ npm install && npm run dev
 php artisan make:model Message -c -m
 php artisan migrate:refresh
 ```
+
+## pusher
+
+```
+composer require pusher/pusher-php-server "~4.0"
+npm install --save laravel-echo pusher-js
+.env
+  BROADCAST_DRIVER=pusher
+  PUSHER_APP_ID
+  PUSHER_APP_KEY
+  PUSHER_APP_SECRET
+  PUSHER_APP_CLUSTER
+php artisan config:clear
+php artisan make:event MessageSent
+```

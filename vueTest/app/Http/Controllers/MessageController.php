@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
 use App\Message;
 use Illuminate\Http\Request;
 
@@ -30,6 +31,8 @@ class MessageController extends Controller
         ]);
 
         $message = Message::create($validated);
+
+        MessageSent::dispatch($message); // app/Events/MessageSent.php 여기의 __construct() 이쪽으로 감
 
         return response()->json(['message' => $message], 201);
     }
