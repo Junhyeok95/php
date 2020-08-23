@@ -21,6 +21,8 @@ window.Vue = require("vue");
 
 Vue.component("chat-vue", require("./components/ChatVue.vue").default);
 
+import VueChatScroll from "vue-chat-scroll";
+Vue.use(VueChatScroll);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

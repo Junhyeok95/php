@@ -59,3 +59,9 @@ npm install --save laravel-echo pusher-js
 php artisan config:clear
 php artisan make:event MessageSent
 ```
+
+## vue-chat-scroll
+
+```
+npm i vue-chat-scroll
+```
