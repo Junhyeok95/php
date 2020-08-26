@@ -9,6 +9,13 @@ php artisan make:test AuthControllerTest
 php artisan make:controller AuthController
 ```
 
+### passport
+
+```
+https://laravel.com/docs/7.x/passport#introduction
+
+```
+
 ###
 
 테스트 실행하는 법
