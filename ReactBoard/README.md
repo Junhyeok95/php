@@ -16,4 +16,6 @@ php artisan migrate
 composer require laravel/ui
 php artisan ui react --auth
 npm install
+
+npm i -S react-router-dom
 ```
