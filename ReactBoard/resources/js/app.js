@@ -6,7 +6,8 @@ require("./bootstrap");
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route } from "react-router-dom";
-// import "bootstrap/dist/css/bootstrap.min.css";
+
+import { UserContextProvider } from "./contexts/User";
 
 import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
@@ -31,9 +32,11 @@ const App = () => {
 
 if (document.getElementById("root")) {
   ReactDOM.render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>,
+    <UserContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </UserContextProvider>,
     document.getElementById("root")
   );
 }
