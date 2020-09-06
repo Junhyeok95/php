@@ -21,6 +21,14 @@ Route::get('/board', function () {
     return view('app');
 });
 
+// Route::get('/home', function () {
+//     return view('app');
+// });
+
+// Route::get('/login', function () {
+//     return view('app');
+// });
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');

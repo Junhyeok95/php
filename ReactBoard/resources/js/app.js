@@ -6,6 +6,7 @@ require("./bootstrap");
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route } from "react-router-dom";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
