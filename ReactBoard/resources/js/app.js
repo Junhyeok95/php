@@ -10,6 +10,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { UserContextProvider } from "./contexts/User";
 
 import Header from "./layouts/Header";
+import Body from "./layouts/Body";
 import Footer from "./layouts/Footer";
 
 import HomePage from "./pages/HomePage";
@@ -21,10 +22,12 @@ const App = () => {
   return (
     <React.Fragment>
       <Header />
-      <Route path="/" component={HomePage} exact />
-      <Route path="/board" component={BoardPage} exact />
-      <Route path="/login" component={LoginPage} exact />
-      <Route path="/register" component={RegisterPage} exact />
+      <Body>
+        <Route path="/" component={HomePage} exact />
+        <Route path="/board" component={BoardPage} exact />
+        <Route path="/login" component={LoginPage} exact />
+        <Route path="/register" component={RegisterPage} exact />
+      </Body>
       <Footer />
     </React.Fragment>
   );

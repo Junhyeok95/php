@@ -19,4 +19,5 @@ npm install
 
 npm i -S react-router-dom
 npm i -S react-bootstrap bootstrap
+npm i -S styled-components
 ```

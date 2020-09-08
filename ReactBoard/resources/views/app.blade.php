@@ -16,6 +16,17 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style type="text/css">
+    html, body {
+        height: 100%;
+    }
+    body > div {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    </style>
 </head>
 <body>
     <div id="root"></div>
