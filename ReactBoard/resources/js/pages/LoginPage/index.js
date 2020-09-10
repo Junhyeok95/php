@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../../contexts/User";
 
 const LoginPage = () => {
+  const { login } = useContext(UserContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log("- onSubmit - \n", email, password);
+    console.log("- login onSubmit - \n", email, password);
   };
+
   const onChange = e => {
     const { name, value } = e.target;
     if (name === "email") {

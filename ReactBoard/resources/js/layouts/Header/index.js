@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../contexts/User";
 
 const Header = () => {
+  const { logout } = useContext(UserContext);
+
+  const onClick = e => {
+    e.preventDefault();
+    console.log("onC");
+    logout();
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+  };
+
   return (
     <div>
       <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -67,16 +80,15 @@ const Header = () => {
                   className="dropdown-menu dropdown-menu-right"
                   aria-labelledby="navbarDropdown"
                 >
-                  <a className="dropdown-item" href="{{ route('logout') }}">
+                  <a
+                    style={{ cursor: "pointer" }}
+                    className="dropdown-item"
+                    onClick={onClick}
+                  >
                     Logout
                   </a>
 
-                  <form
-                    id="logout-form"
-                    action="{{ route('logout') }}"
-                    method="POST"
-                    className="d-none"
-                  >
+                  <form id="logout-form" className="d-none" onSubmit={onSubmit}>
                     @csrf
                   </form>
                 </div>

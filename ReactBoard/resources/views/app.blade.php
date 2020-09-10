@@ -29,6 +29,10 @@
     </style>
 </head>
 <body>
+    @guest
+    @else
+    {{ Auth::user()->name }}
+    @endguest
     <div id="root"></div>
 </body>
 </html>

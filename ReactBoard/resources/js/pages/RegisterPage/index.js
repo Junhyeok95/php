@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../../contexts/User";
 
 const RegisterPage = () => {
+  const { register } = useContext(UserContext);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -8,8 +11,15 @@ const RegisterPage = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log("- onSubmit - \n", name, email, password, passwordConfirm);
+    console.log(
+      "- register onSubmit - \n",
+      name,
+      email,
+      password,
+      passwordConfirm
+    );
   };
+
   const onChange = e => {
     const { name, value } = e.target;
     if (name === "name") {

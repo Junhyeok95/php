@@ -1,12 +1,27 @@
 import React, { createContext, useState, useEffect } from "react";
+import Axios from "axios";
 
 const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
+  const URL = "/";
+
   const [userInfo, setUserInfo] = useState({});
 
-  const login = () => {};
-  const logout = () => {};
+  const login = () => {
+    console.log(URL);
+    console.log("login");
+  };
+
+  const register = () => {
+    console.log(URL);
+    console.log("register");
+  };
+
+  const logout = () => {
+    console.log(URL);
+    console.log("logout");
+  };
 
   useEffect(() => {
     // localStorage -> 자동 로그인
@@ -18,6 +33,7 @@ const UserContextProvider = ({ children }) => {
       value={{
         userInfo,
         login,
+        register,
         logout
       }}
     >

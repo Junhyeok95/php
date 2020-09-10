@@ -70740,6 +70740,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserContext", function() { return UserContext; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -70753,19 +70755,32 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
+
 var UserContext = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"])();
 
 var UserContextProvider = function UserContextProvider(_ref) {
   var children = _ref.children;
+  var URL = "/";
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
       _useState2 = _slicedToArray(_useState, 2),
       userInfo = _useState2[0],
       setUserInfo = _useState2[1];
 
-  var login = function login() {};
+  var login = function login() {
+    console.log(URL);
+    console.log("login");
+  };
 
-  var logout = function logout() {};
+  var register = function register() {
+    console.log(URL);
+    console.log("register");
+  };
+
+  var logout = function logout() {
+    console.log(URL);
+    console.log("logout");
+  };
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {// localStorage -> 자동 로그인
     // sessionStorage -> 일회성
@@ -70774,6 +70789,7 @@ var UserContextProvider = function UserContextProvider(_ref) {
     value: {
       userInfo: userInfo,
       login: login,
+      register: register,
       logout: logout
     }
   }, children);
@@ -70855,10 +70871,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _contexts_User__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../contexts/User */ "./resources/js/contexts/User/index.js");
+
 
 
 
 var Header = function Header() {
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_contexts_User__WEBPACK_IMPORTED_MODULE_2__["UserContext"]),
+      logout = _useContext.logout;
+
+  var onClick = function onClick(e) {
+    e.preventDefault();
+    console.log("onC");
+    logout();
+  };
+
+  var onSubmit = function onSubmit(e) {
+    e.preventDefault();
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
     className: "navbar navbar-expand-md navbar-light bg-white shadow-sm"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -70921,13 +70952,15 @@ var Header = function Header() {
     className: "dropdown-menu dropdown-menu-right",
     "aria-labelledby": "navbarDropdown"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    style: {
+      cursor: "pointer"
+    },
     className: "dropdown-item",
-    href: "{{ route('logout') }}"
+    onClick: onClick
   }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     id: "logout-form",
-    action: "{{ route('logout') }}",
-    method: "POST",
-    className: "d-none"
+    className: "d-none",
+    onSubmit: onSubmit
   }, "@csrf"))))))));
 };
 
@@ -70988,6 +71021,7 @@ var HomePage = function HomePage() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _contexts_User__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../contexts/User */ "./resources/js/contexts/User/index.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -71002,7 +71036,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var LoginPage = function LoginPage() {
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_contexts_User__WEBPACK_IMPORTED_MODULE_1__["UserContext"]),
+      login = _useContext.login;
+
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
       _useState2 = _slicedToArray(_useState, 2),
       email = _useState2[0],
@@ -71015,7 +71053,7 @@ var LoginPage = function LoginPage() {
 
   var onSubmit = function onSubmit(e) {
     e.preventDefault();
-    console.log("- onSubmit - \n", email, password);
+    console.log("- login onSubmit - \n", email, password);
   };
 
   var onChange = function onChange(e) {
@@ -71120,6 +71158,7 @@ var LoginPage = function LoginPage() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _contexts_User__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../contexts/User */ "./resources/js/contexts/User/index.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -71134,7 +71173,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var RegisterPage = function RegisterPage() {
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_contexts_User__WEBPACK_IMPORTED_MODULE_1__["UserContext"]),
+      register = _useContext.register;
+
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
       _useState2 = _slicedToArray(_useState, 2),
       name = _useState2[0],
@@ -71157,7 +71200,7 @@ var RegisterPage = function RegisterPage() {
 
   var onSubmit = function onSubmit(e) {
     e.preventDefault();
-    console.log("- onSubmit - \n", name, email, password, passwordConfirm);
+    console.log("- register onSubmit - \n", name, email, password, passwordConfirm);
   };
 
   var onChange = function onChange(e) {
