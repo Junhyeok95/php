@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
 const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmit = e => {
+    e.preventDefault();
+    console.log("- onSubmit - \n", email, password);
+  };
+  const onChange = e => {
+    const { name, value } = e.target;
+    if (name === "email") {
+      setEmail(value);
+    }
+    if (name === "password") {
+      setPassword(value);
+    }
+  };
+
   return (
     <div className="container py-4">
       <div className="row justify-content-center">
@@ -9,27 +26,24 @@ const LoginPage = () => {
             <div className="card-header">Login</div>
 
             <div className="card-body">
-              <form method="POST" action="{{ route('login') }}">
+              <form onSubmit={onSubmit}>
                 <div className="form-group row">
                   <label
-                    // for="email"
+                    htmlFor="email"
                     className="col-md-4 col-form-label text-md-right"
                   >
                     E-Mail Address
                   </label>
-
                   <div className="col-md-6">
                     <input
                       id="email"
                       type="email"
                       className="form-control"
                       name="email"
-                      // value=""
                       required
-                      // autocomplete="email"
-                      // autofocus
+                      autoFocus
+                      onChange={onChange}
                     />
-
                     <span className="invalid-feedback" role="alert">
                       <strong></strong>
                     </span>
@@ -38,23 +52,20 @@ const LoginPage = () => {
 
                 <div className="form-group row">
                   <label
-                    // for="password"
+                    htmlFor="password"
                     className="col-md-4 col-form-label text-md-right"
                   >
                     Password
                   </label>
-
                   <div className="col-md-6">
                     <input
                       id="password"
                       type="password"
                       className="form-control"
                       name="password"
-                      // value=""
                       required
-                      // autocomplete="current-password"
+                      onChange={onChange}
                     ></input>
-
                     <span className="invalid-feedback" role="alert">
                       <strong></strong>
                     </span>
@@ -70,11 +81,7 @@ const LoginPage = () => {
                         name="remember"
                         id="remember"
                       />
-
-                      <label
-                        // for="remember"
-                        className="form-check-label"
-                      >
+                      <label htmlFor="remember" className="form-check-label">
                         Remember Me
                       </label>
                     </div>
@@ -86,13 +93,6 @@ const LoginPage = () => {
                     <button type="submit" className="btn btn-primary">
                       Login
                     </button>
-
-                    <a
-                      className="btn btn-link"
-                      href="{{ route('password.request') }}"
-                    >
-                      Forgot Your Password?
-                    </a>
                   </div>
                 </div>
               </form>
