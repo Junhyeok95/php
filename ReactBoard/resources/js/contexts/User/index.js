@@ -20,7 +20,13 @@ const UserContextProvider = ({ children }) => {
 
   const logout = () => {
     console.log(URL);
-    console.log("logout");
+    Axios.post("/logout", {
+      header: {
+        Accept: "application/json"
+      }
+    }).then(res => {
+      console.log(res);
+    });
   };
 
   useEffect(() => {

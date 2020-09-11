@@ -70779,7 +70779,13 @@ var UserContextProvider = function UserContextProvider(_ref) {
 
   var logout = function logout() {
     console.log(URL);
-    console.log("logout");
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/logout", {
+      header: {
+        Accept: "application/json"
+      }
+    }).then(function (res) {
+      console.log(res);
+    });
   };
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {// localStorage -> 자동 로그인
