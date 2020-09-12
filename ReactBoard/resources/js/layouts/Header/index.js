@@ -7,7 +7,6 @@ const Header = () => {
 
   const onClick = e => {
     e.preventDefault();
-    console.log("onC");
     logout();
   };
 
@@ -20,7 +19,7 @@ const Header = () => {
       <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div className="container">
           <a className="navbar-brand" href="/">
-            Laravel React Board
+            LRB
           </a>
           <button
             className="navbar-toggler"
@@ -50,7 +49,12 @@ const Header = () => {
 
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/board">
+                <Link className="nav-link" to="/" onClick={() => {}}>
+                  /
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/board" onClick={() => {}}>
                   Board
                 </Link>
               </li>

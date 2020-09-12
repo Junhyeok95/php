@@ -1,9 +1,10 @@
 import React, { createContext, useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import Axios from "axios";
 
 const UserContext = createContext();
 
-const UserContextProvider = ({ children }) => {
+const UserContextProvider = withRouter(({ children, history }) => {
   const URL = "/";
 
   const [userInfo, setUserInfo] = useState({});
@@ -25,7 +26,8 @@ const UserContextProvider = ({ children }) => {
         Accept: "application/json"
       }
     }).then(res => {
-      console.log(res);
+      // console.log(res);
+      history.push("/");
     });
   };
 
@@ -46,6 +48,6 @@ const UserContextProvider = ({ children }) => {
       {children}
     </UserContext.Provider>
   );
-};
+});
 
 export { UserContextProvider, UserContext };

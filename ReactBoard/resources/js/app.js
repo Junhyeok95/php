@@ -35,11 +35,11 @@ const App = () => {
 
 if (document.getElementById("root")) {
   ReactDOM.render(
-    <UserContextProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <UserContextProvider>
         <App />
-      </BrowserRouter>
-    </UserContextProvider>,
+      </UserContextProvider>
+    </BrowserRouter>,
     document.getElementById("root")
   );
 }
