@@ -14,9 +14,9 @@ const StyledTitle = styled.div`
 
 const HomePage = () => {
   return (
-    <StyledDiv class="flex-center position-ref full-height">
-      <div class="content">
-        <StyledTitle class="m-b-md">React Board</StyledTitle>
+    <StyledDiv className="flex-center position-ref full-height">
+      <div className="content">
+        <StyledTitle className="m-b-md">React Board</StyledTitle>
       </div>
     </StyledDiv>
   );

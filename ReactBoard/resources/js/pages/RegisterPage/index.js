@@ -18,6 +18,7 @@ const RegisterPage = () => {
       password,
       passwordConfirm
     );
+    register(name, email, password, passwordConfirm);
   };
 
   const onChange = e => {

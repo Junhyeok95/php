@@ -10,6 +10,7 @@ const LoginPage = () => {
   const onSubmit = e => {
     e.preventDefault();
     console.log("- login onSubmit - \n", email, password);
+    login(email, password);
   };
 
   const onChange = e => {

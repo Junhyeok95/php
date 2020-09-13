@@ -5,35 +5,63 @@ import Axios from "axios";
 const UserContext = createContext();
 
 const UserContextProvider = withRouter(({ children, history }) => {
-  const URL = "/";
+  const [userInfo, setUserInfo] = useState(null);
 
-  const [userInfo, setUserInfo] = useState({});
-
-  const login = () => {
-    console.log(URL);
-    console.log("login");
+  const login = (email, password) => {
+    Axios({
+      method: "post",
+      url: "/login",
+      data: {
+        email,
+        password
+      }
+    })
+      .then(res => {
+        setUserInfo(JSON.parse(res.config.data).email);
+        history.push("/");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
-  const register = () => {
-    console.log(URL);
-    console.log("register");
+  const register = (name, email, password, passwordConfirm) => {
+    Axios({
+      method: "post",
+      url: "/register",
+      data: {
+        name,
+        email,
+        password,
+        password_confirmation: passwordConfirm
+      }
+    })
+      .then(res => {
+        history.push("/");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
   const logout = () => {
-    console.log(URL);
-    Axios.post("/logout", {
-      header: {
-        Accept: "application/json"
-      }
-    }).then(res => {
-      // console.log(res);
-      history.push("/");
-    });
+    Axios({
+      method: "post",
+      url: "/logout"
+    })
+      .then(res => {
+        setUserInfo(null);
+        history.push("/");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
     // localStorage -> 자동 로그인
     // sessionStorage -> 일회성
+    console.log(userInfo);
   }, []);
 
   return (

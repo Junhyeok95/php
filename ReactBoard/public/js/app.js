@@ -70762,37 +70762,61 @@ var UserContext = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["create
 var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(function (_ref) {
   var children = _ref.children,
       history = _ref.history;
-  var URL = "/";
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState2 = _slicedToArray(_useState, 2),
       userInfo = _useState2[0],
       setUserInfo = _useState2[1];
 
-  var login = function login() {
-    console.log(URL);
-    console.log("login");
-  };
-
-  var register = function register() {
-    console.log(URL);
-    console.log("register");
-  };
-
-  var logout = function logout() {
-    console.log(URL);
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/logout", {
-      header: {
-        Accept: "application/json"
+  var login = function login(email, password) {
+    axios__WEBPACK_IMPORTED_MODULE_2___default()({
+      method: "post",
+      url: "/login",
+      data: {
+        email: email,
+        password: password
       }
     }).then(function (res) {
-      // console.log(res);
+      setUserInfo(JSON.parse(res.config.data).email);
       history.push("/");
+    })["catch"](function (error) {
+      console.log(error);
     });
   };
 
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {// localStorage -> 자동 로그인
+  var register = function register(name, email, password, passwordConfirm) {
+    axios__WEBPACK_IMPORTED_MODULE_2___default()({
+      method: "post",
+      url: "/register",
+      data: {
+        name: name,
+        email: email,
+        password: password,
+        password_confirmation: passwordConfirm
+      }
+    }).then(function (res) {
+      history.push("/");
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  };
+
+  var logout = function logout() {
+    axios__WEBPACK_IMPORTED_MODULE_2___default()({
+      method: "post",
+      url: "/logout"
+    }).then(function (res) {
+      setUserInfo(null);
+      history.push("/");
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  };
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    // localStorage -> 자동 로그인
     // sessionStorage -> 일회성
+    console.log(userInfo);
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UserContext.Provider, {
     value: {
@@ -70912,6 +70936,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var Header = function Header() {
   var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_contexts_User__WEBPACK_IMPORTED_MODULE_2__["UserContext"]),
+      userInfo = _useContext.userInfo,
       logout = _useContext.logout;
 
   var onClick = function onClick(e) {
@@ -70988,7 +71013,7 @@ var Header = function Header() {
     "data-toggle": "dropdown",
     "aria-haspopup": "true",
     "aria-expanded": "false"
-  }, "User"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, userInfo ? userInfo + " 님" : "미 로그인"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "dropdown-menu dropdown-menu-right",
     "aria-labelledby": "navbarDropdown"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -71070,11 +71095,11 @@ var StyledTitle = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(
 
 var HomePage = function HomePage() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv, {
-    "class": "flex-center position-ref full-height"
+    className: "flex-center position-ref full-height"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    "class": "content"
+    className: "content"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledTitle, {
-    "class": "m-b-md"
+    className: "m-b-md"
   }, "React Board")));
 };
 
@@ -71126,6 +71151,7 @@ var LoginPage = function LoginPage() {
   var onSubmit = function onSubmit(e) {
     e.preventDefault();
     console.log("- login onSubmit - \n", email, password);
+    login(email, password);
   };
 
   var onChange = function onChange(e) {
@@ -71273,6 +71299,7 @@ var RegisterPage = function RegisterPage() {
   var onSubmit = function onSubmit(e) {
     e.preventDefault();
     console.log("- register onSubmit - \n", name, email, password, passwordConfirm);
+    register(name, email, password, passwordConfirm);
   };
 
   var onChange = function onChange(e) {

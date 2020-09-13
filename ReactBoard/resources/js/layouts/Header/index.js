@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/User";
 
 const Header = () => {
-  const { logout } = useContext(UserContext);
+  const { userInfo, logout } = useContext(UserContext);
 
   const onClick = e => {
     e.preventDefault();
@@ -77,7 +77,7 @@ const Header = () => {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  User
+                  {userInfo ? userInfo + " 님" : "미 로그인"}
                 </a>
 
                 <div
