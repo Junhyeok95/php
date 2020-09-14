@@ -61,7 +61,7 @@ const UserContextProvider = withRouter(({ children, history }) => {
   useEffect(() => {
     // localStorage -> 자동 로그인
     // sessionStorage -> 일회성
-    console.log(userInfo);
+    // console.log(userInfo);
   }, []);
 
   return (
