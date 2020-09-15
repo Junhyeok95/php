@@ -70819,6 +70819,7 @@ var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["
     }).then(function (res) {
       setUserInfo(JSON.parse(res.config.data).email);
       history.push("/");
+      localStorage.setItem("userEmail", JSON.parse(res.config.data).email);
     })["catch"](function (error) {
       console.log(error);
     });
@@ -70848,12 +70849,24 @@ var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["
     }).then(function (res) {
       setUserInfo(null);
       history.push("/");
+      localStorage.removeItem("userEmail");
     })["catch"](function (error) {
       console.log(error);
     });
   };
 
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {// localStorage -> 자동 로그인
+  var loadUser = function loadUser() {
+    try {
+      var user = localStorage.getItem("userEmail");
+      if (!user) return;
+      setUserInfo(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    loadUser(); // localStorage -> 자동 로그인
     // sessionStorage -> 일회성
     // console.log(userInfo);
   }, []);

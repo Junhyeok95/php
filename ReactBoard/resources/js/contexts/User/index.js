@@ -19,6 +19,7 @@ const UserContextProvider = withRouter(({ children, history }) => {
       .then(res => {
         setUserInfo(JSON.parse(res.config.data).email);
         history.push("/");
+        localStorage.setItem("userEmail", JSON.parse(res.config.data).email);
       })
       .catch(function(error) {
         console.log(error);
@@ -52,13 +53,25 @@ const UserContextProvider = withRouter(({ children, history }) => {
       .then(res => {
         setUserInfo(null);
         history.push("/");
+        localStorage.removeItem("userEmail");
       })
       .catch(function(error) {
         console.log(error);
       });
   };
 
+  const loadUser = () => {
+    try {
+      const user = localStorage.getItem("userEmail");
+      if (!user) return;
+      setUserInfo(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
+    loadUser();
     // localStorage -> 자동 로그인
     // sessionStorage -> 일회성
     // console.log(userInfo);
