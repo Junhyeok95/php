@@ -22,4 +22,11 @@ npm i -S react-bootstrap bootstrap
 npm i -S styled-components
 
 npm i -S quill
+
+php artisan make:model Board
+php artisan make:model Photo
+php artisan make:migration create_board_table
+php artisan make:migration create_photos_table --create=photos
+
+php artisan make:controller BoardController --resource
 ```
