@@ -8,10 +8,6 @@ Route::get('/', function () {
     return view('app');
 });
 
-Route::get('/board', function () {
-    return view('app');
-});
-
 Route::get('/login', function () {
     return view('app');
 });

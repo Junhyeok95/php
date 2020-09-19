@@ -6,6 +6,20 @@ use Illuminate\Http\Request;
 
 class BoardController extends Controller
 {
+
+    // 사용자 인증
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
+    // 인가 - 권한 및 처리 로직 정의
+    // app/Providers/AuthServiceProvider.php
+
+    // 인가 - 권한 및 처리 로직 적용
+    // \App\Board $boards or Request $request
+    // $this->authorize('xxxxx', $xxxxx)
+
     /**
      * Display a listing of the resource.
      *
@@ -13,6 +27,7 @@ class BoardController extends Controller
      */
     public function index()
     {
+        // 글 전체 보기
         return view('app');
     }
 
@@ -45,7 +60,8 @@ class BoardController extends Controller
      */
     public function show($id)
     {
-        //
+        // 글 상세 보기
+        return view('app');
     }
 
     /**
@@ -56,7 +72,7 @@ class BoardController extends Controller
      */
     public function edit($id)
     {
-        //
+        // 글 수정 폼
     }
 
     /**
@@ -68,7 +84,7 @@ class BoardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // 글 수정 처리
     }
 
     /**
@@ -79,6 +95,6 @@ class BoardController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // 글 삭제
     }
 }

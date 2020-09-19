@@ -33,6 +33,10 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        // URL 파라미터와 모델을 연결하여 간단하게 사용
+        // 암시적 바인딩으로 코드를 처음 보는 사람은 한 번에 이해할 수 없다는 단점이 있음
+        // Route::model('boards',\App\Board::class);
     }
 
     /**

@@ -24,7 +24,7 @@ const App = () => {
       <Header />
       <Body>
         <Route path="/" component={HomePage} exact />
-        <Route path="/board" component={BoardPage} exact />
+        <Route path="/boards" component={BoardPage} exact />
         <Route path="/login" component={LoginPage} exact />
         <Route path="/register" component={RegisterPage} exact />
       </Body>
