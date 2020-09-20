@@ -27,4 +27,8 @@ php artisan make:model Board
 php artisan make:migration create_boards_table --create=boards
 php artisan make:controller BoardController --resource
 php artisan route:list
+
+php artisan make:model Comment
+php artisan make:migration create_comments_table --create=comments
+php artisan make:controller CommentController --resource
 ```
