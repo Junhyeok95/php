@@ -36,14 +36,9 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <a className="nav-link" href="/login">
-                  Login
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/register">
-                  Register
-                </a>
+                <Link className="nav-link" to="/test" onClick={() => {}}>
+                  Test
+                </Link>
               </li>
             </ul>
 

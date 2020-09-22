@@ -13,6 +13,8 @@ import Header from "./layouts/Header";
 import Body from "./layouts/Body";
 import Footer from "./layouts/Footer";
 
+import TestPage from "./pages/TestPage";
+
 import HomePage from "./pages/HomePage";
 import BoardPage from "./pages/BoardPage";
 import LoginPage from "./pages/LoginPage";
@@ -23,6 +25,7 @@ const App = () => {
     <React.Fragment>
       <Header />
       <Body>
+        <Route path="/test" component={TestPage} exact />
         <Route path="/" component={HomePage} exact />
         <Route path="/boards" component={BoardPage} exact />
         <Route path="/login" component={LoginPage} exact />
