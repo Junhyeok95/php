@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
+// import "quill/dist/quill.bubble.css";
 
 const StyledDiv = styled.div`
   padding: 3rem;
@@ -34,8 +35,15 @@ const Write = () => {
   const quillInstance = useRef(null);
 
   useEffect(() => {
+    setTimeout(() => {
+      // console.log(quillInstance.current.editor.delta);
+    }, 3000);
+  }, []);
+
+  useEffect(() => {
     quillInstance.current = new Quill(quillElement.current, {
-      theme: "snow", // sbubble
+      // theme: "bubble", // snow
+      theme: "snow", // snow
       placeholder: "내용을 작성하세요 ...",
       modules: {
         toolbar: [

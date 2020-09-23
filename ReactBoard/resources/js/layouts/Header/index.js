@@ -40,6 +40,11 @@ const Header = () => {
                   Test
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/test2" onClick={() => {}}>
+                  Test2
+                </Link>
+              </li>
             </ul>
 
             <ul className="navbar-nav ml-auto">

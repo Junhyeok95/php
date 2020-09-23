@@ -14,6 +14,7 @@ import Body from "./layouts/Body";
 import Footer from "./layouts/Footer";
 
 import TestPage from "./pages/TestPage";
+import TestPage2 from "./pages/TestPage2";
 
 import HomePage from "./pages/HomePage";
 import BoardPage from "./pages/BoardPage";
@@ -26,6 +27,7 @@ const App = () => {
       <Header />
       <Body>
         <Route path="/test" component={TestPage} exact />
+        <Route path="/test2" component={TestPage2} exact />
         <Route path="/" component={HomePage} exact />
         <Route path="/boards" component={BoardPage} exact />
         <Route path="/login" component={LoginPage} exact />
