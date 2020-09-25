@@ -2,26 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-Auth::routes();
-
-Route::get('/test', function () {
-    return view('app');
-});
-
-Route::get('/test2', function () {
-    return view('app');
-});
-
 Route::get('/', function () {
     return view('app');
 });
 
-Route::get('/login', function () {
-    return view('app');
-});
-
-Route::get('/register', function () {
+Route::get('/{any}', function () {
     return view('app');
 });
 
 Route::resource('boards', 'BoardController');
+
+Auth::routes();
