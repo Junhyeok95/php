@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { Route, Link } from "react-router-dom";
 import styled from "styled-components";
-import {} from "react-bootstrap";
+// import { List } from "./List";
+// import { Detail } from "./Detail";
 
 const StyledDiv = styled.div`
   padding: 1rem;
@@ -19,6 +21,11 @@ const TestPage3 = ({ match, location, history }) => {
     <Fragment>
       <div className="container py-1">
         <StyledDiv>{text}</StyledDiv>
+        <StyledDiv>
+          <br />
+          <br />
+          <br />
+        </StyledDiv>
         <pre>{JSON.stringify(match, null, 2)}</pre>
         <pre>{JSON.stringify(location, null, 2)}</pre>
         <pre>{JSON.stringify(history, null, 2)}</pre>

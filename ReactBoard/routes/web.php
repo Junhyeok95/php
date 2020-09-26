@@ -6,7 +6,7 @@ Route::get('/', function () {
     return view('app');
 });
 
-Route::get('/{any}', function () {
+Route::get('/{path?}', function () {
     return view('app');
 });
 
