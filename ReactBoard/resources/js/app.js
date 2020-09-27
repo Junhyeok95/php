@@ -29,7 +29,7 @@ const App = () => {
       <Body>
         <Route path="/test" component={TestPage} exact />
         <Route path="/test2" component={TestPage2} exact />
-        <Route path="/test3" component={TestPage3} exact />
+        <Route path="/test3" component={TestPage3} />
         <Route path="/" component={HomePage} exact />
         <Route path="/boards" component={BoardPage} exact />
         <Route path="/login" component={LoginPage} exact />
