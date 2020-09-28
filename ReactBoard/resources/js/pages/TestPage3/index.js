@@ -6,7 +6,7 @@ import List from "./List";
 import Detail from "./Detail";
 
 const StyledDiv = styled.div`
-  padding: 1rem;
+  padding: 0.5rem;
   margin: 1rem;
   border: 1px black solid;
   font-size: 24px;
@@ -18,12 +18,9 @@ const TestPage3 = ({ match, location, history }) => {
 
   console.log(match.url);
 
-  useEffect(() => {}, []);
-
-  const ss = {
-    en: ["all", "one", "two", "three"],
-    ko: ["전체보기", "하나", "둘", "셋"]
-  };
+  useEffect(() => {
+    console.log("Test Page3");
+  }, []);
 
   const renderItem = () => {
     const [category, setCategory] = useState({
