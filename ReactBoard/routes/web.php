@@ -10,6 +10,10 @@ Route::get('/{path?}', function () {
     return view('app');
 });
 
+Route::get('/{path}/{path2}', function () {
+    return view('app');
+});
+
 Route::resource('boards', 'BoardController');
 
 Auth::routes();

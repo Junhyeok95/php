@@ -6,16 +6,6 @@ const List = () => {
       <h2>List</h2>
       <h2>List</h2>
       <h2>List</h2>
-      <h2>List</h2>
-      <h2>List</h2>
-      <h2>List</h2>
-      <h2>List</h2>
-      <h2>List</h2>
-      <h2>List</h2>
-      <h2>List</h2>
-      <h2>List</h2>
-      <h2>List</h2>
-      <h2>List</h2>
     </div>
   );
 };

@@ -15,7 +15,34 @@ const TestPage2 = () => {
 
   useEffect(() => {
     console.log("Test Page");
+
+    for (let i = 0; i < 10; i++) {}
   }, []);
+
+  const renderItem = () => {
+    // 분류, 제목, 글쓴이, 날짜, 조회수
+    const [board, setBoard] = useState([
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    ]);
+
+    let itemArr = [];
+    for (let i = 0; i < 10; i++) {
+      itemArr.push(
+        <tr key={i}>
+          <th>{board[0][i]}</th>
+          <th>{board[1][i]}</th>
+          <th>{board[2][i]}</th>
+          <th>{board[3][i]}</th>
+          <th>{board[4][i]}</th>
+        </tr>
+      );
+    }
+    return itemArr;
+  };
 
   return (
     <Fragment>
@@ -23,67 +50,18 @@ const TestPage2 = () => {
         <StyledDiv>{text}</StyledDiv>
       </div>
       <div>
-        <StyledDiv>Tables</StyledDiv>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td colSpan="2">Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </Table>
-      </div>
-      <div>
         <StyledDiv>Small Table</StyledDiv>
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
+              <th>분류</th>
+              <th>제목</th>
+              <th>글쓴이</th>
+              <th>날짜</th>
+              <th>조회</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td colSpan="2">Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
+          <tbody>{renderItem()}</tbody>
         </Table>
       </div>
       <div>
