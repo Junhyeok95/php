@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Route, NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
-import { Badge } from "react-bootstrap";
+import { Row, Col, Badge } from "react-bootstrap";
 import List from "./List";
 import Detail from "./Detail";
 
@@ -20,91 +20,67 @@ const TestPage3 = ({ match, location, history }) => {
 
   useEffect(() => {}, []);
 
+  const ss = {
+    en: ["all", "one", "two", "three"],
+    ko: ["전체보기", "하나", "둘", "셋"]
+  };
+
+  const renderItem = () => {
+    const [category, setCategory] = useState({
+      en: ["all", "one", "two", "three"],
+      ko: ["전체보기", "하나", "둘", "셋"]
+    });
+
+    let itemArr = [];
+    for (let i = 0; i < category.en.length; i++) {
+      itemArr.push(
+        <Badge key={i} variant="Light">
+          <NavLink
+            activeStyle={{
+              fontWeight: "bold",
+              color: "red"
+            }}
+            to={`${match.url}/${category.en[i]}`}
+          >
+            {category.ko[i]}
+          </NavLink>
+        </Badge>
+      );
+    }
+    return itemArr;
+  };
+
   return (
     <Fragment>
       <div className="container py-1">
         <StyledDiv>{text}</StyledDiv>
         <StyledDiv>
-          <Link to={`${match.url}`}>전체 보기</Link>
-        </StyledDiv>
-        <StyledDiv>
-          <div>
-            <Badge variant="Light">
-              <Link to={`${match.url}`}>전체 보기</Link>
-            </Badge>
-            <Badge variant="Light">
-              <NavLink
-                activeStyle={{
-                  fontWeight: "bold",
-                  color: "red"
-                }}
-                to={`${match.url}/detail`}
-              >
-                페이지1
-              </NavLink>
-            </Badge>
-            <Badge variant="Light">
-              <NavLink
-                activeStyle={{
-                  fontWeight: "bold",
-                  color: "red"
-                }}
-                to={`${match.url}/detail2`}
-              >
-                페이지2
-              </NavLink>
-            </Badge>
-            <Badge variant="Light">
-              <NavLink
-                activeStyle={{
-                  fontWeight: "bold",
-                  color: "red"
-                }}
-                to={`${match.url}/detail3`}
-              >
-                페이지3
-              </NavLink>
-            </Badge>
-            <Badge variant="Light">
-              <NavLink
-                activeStyle={{
-                  fontWeight: "bold",
-                  color: "red"
-                }}
-                to={`${match.url}/detail4`}
-              >
-                페이지4
-              </NavLink>
-            </Badge>
-            <Badge variant="Light">
-              <NavLink
-                activeStyle={{
-                  fontWeight: "bold",
-                  color: "red"
-                }}
-                to={`${match.url}/detail5`}
-              >
-                페이지5
-              </NavLink>
-            </Badge>
-          </div>
+          <div>{renderItem()}</div>
           <br />
           <Route path={`${match.url}/:detail`} component={Detail} exact />
           <Route path={`${match.url}`} component={List} exact />
           <br />
         </StyledDiv>
-        <pre>
-          <h1>match</h1>
-          {JSON.stringify(match, null, 4)}
-        </pre>
-        <pre>
-          <h1>location</h1>
-          {JSON.stringify(location, null, 4)}
-        </pre>
-        <pre>
-          <h1>history</h1>
-          {JSON.stringify(history, null, 4)}
-        </pre>
+        <Row>
+          <Col>
+            <pre style={{ fontSize: 10 }}>
+              <h1>match</h1>
+              {JSON.stringify(match, null, 4)}
+            </pre>
+          </Col>
+          <Col>
+            <pre style={{ fontSize: 10 }}>
+              <h1>location</h1>
+              {JSON.stringify(location, null, 4)}
+            </pre>
+          </Col>
+          <Col>
+            <pre style={{ fontSize: 10 }}>
+              <h1>history</h1>
+              {JSON.stringify(history, null, 4)}
+            </pre>
+          </Col>
+        </Row>
       </div>
     </Fragment>
   );

@@ -5,7 +5,7 @@ const Detail = ({ match, location, history }) => {
   console.log(match.params);
   return (
     <div>
-      <h4>Detail</h4>
+      <p>Detail</p>
       <Row>
         <Col>
           <pre style={{ fontSize: 10 }}>
@@ -26,7 +26,6 @@ const Detail = ({ match, location, history }) => {
           </pre>
         </Col>
       </Row>
-      <h4>Detail</h4>
     </div>
   );
 };
