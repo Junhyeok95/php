@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Route, NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
-import { Row, Col, Badge } from "react-bootstrap";
+import { Container, Row, Col, Badge } from "react-bootstrap";
 import List from "./List";
 import Detail from "./Detail";
 
@@ -49,7 +49,7 @@ const TestPage3 = ({ match, location, history }) => {
 
   return (
     <Fragment>
-      <div className="container py-1">
+      <div>
         <StyledDiv>{text}</StyledDiv>
         <StyledDiv>
           <div>{renderItem()}</div>
@@ -58,26 +58,28 @@ const TestPage3 = ({ match, location, history }) => {
           <Route path={`${match.url}`} component={List} exact />
           <br />
         </StyledDiv>
-        <Row>
-          <Col>
-            <pre style={{ fontSize: 10 }}>
-              <h1>match</h1>
-              {JSON.stringify(match, null, 4)}
-            </pre>
-          </Col>
-          <Col>
-            <pre style={{ fontSize: 10 }}>
-              <h1>location</h1>
-              {JSON.stringify(location, null, 4)}
-            </pre>
-          </Col>
-          <Col>
-            <pre style={{ fontSize: 10 }}>
-              <h1>history</h1>
-              {JSON.stringify(history, null, 4)}
-            </pre>
-          </Col>
-        </Row>
+        <Container>
+          <Row>
+            <Col>
+              <pre style={{ fontSize: 10 }}>
+                <h1>match</h1>
+                {JSON.stringify(match, null, 4)}
+              </pre>
+            </Col>
+            <Col>
+              <pre style={{ fontSize: 10 }}>
+                <h1>location</h1>
+                {JSON.stringify(location, null, 4)}
+              </pre>
+            </Col>
+            <Col>
+              <pre style={{ fontSize: 10 }}>
+                <h1>history</h1>
+                {JSON.stringify(history, null, 4)}
+              </pre>
+            </Col>
+          </Row>
+        </Container>
       </div>
     </Fragment>
   );
