@@ -101269,7 +101269,26 @@ var TestPage2 = function TestPage2() {
     console.log("Test Page2");
   }, []);
 
-  var renderBoardItem = function renderBoardItem() {
+  var renderBoardHead = function renderBoardHead() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      scope: "col",
+      "class": "text-center"
+    }, "\uBD84\uB958"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      scope: "col",
+      "class": "text-center"
+    }, "\uC81C\uBAA9"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      scope: "col",
+      "class": "text-center"
+    }, "\uAE00\uC4F4\uC774"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      scope: "col",
+      "class": "text-center"
+    }, "\uB0A0\uC9DC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      scope: "col",
+      "class": "text-center"
+    }, "\uC870\uD68C")));
+  };
+
+  var renderBoardBody = function renderBoardBody() {
     // 분류, 제목, 글쓴이, 날짜, 조회수
     var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]]),
         _useState4 = _slicedToArray(_useState3, 2),
@@ -101281,13 +101300,21 @@ var TestPage2 = function TestPage2() {
     for (var i = 0; i < 10; i++) {
       itemArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
         key: i
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, board[0][i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, board[1][i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, board[2][i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, board[3][i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, board[4][i])));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        "class": "text-center"
+      }, board[0][i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, board[1][i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        "class": "text-center"
+      }, board[2][i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        "class": "text-center"
+      }, board[3][i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        "class": "text-center"
+      }, board[4][i])));
     }
 
-    return itemArr;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, itemArr);
   };
 
-  var renderPaginationItem = function renderPaginationItem() {
+  var renderPagination = function renderPagination() {
     var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
         _useState6 = _slicedToArray(_useState5, 2),
         paginationActive = _useState6[0],
@@ -101323,8 +101350,9 @@ var TestPage2 = function TestPage2() {
     striped: true,
     bordered: true,
     hover: true,
-    size: "sm"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "\uBD84\uB958"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "\uC81C\uBAA9"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "\uAE00\uC4F4\uC774"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "\uB0A0\uC9DC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "\uC870\uD68C"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, renderBoardItem())))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv, null, "Pagination"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Container"], null, renderPaginationItem())));
+    size: "sm",
+    variant: "dark"
+  }, renderBoardHead(), renderBoardBody()))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv, null, "Pagination"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Container"], null, renderPagination())));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (TestPage2);

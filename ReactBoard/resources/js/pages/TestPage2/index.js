@@ -17,7 +17,31 @@ const TestPage2 = () => {
     console.log("Test Page2");
   }, []);
 
-  const renderBoardItem = () => {
+  const renderBoardHead = () => {
+    return (
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">
+            분류
+          </th>
+          <th scope="col" class="text-center">
+            제목
+          </th>
+          <th scope="col" class="text-center">
+            글쓴이
+          </th>
+          <th scope="col" class="text-center">
+            날짜
+          </th>
+          <th scope="col" class="text-center">
+            조회
+          </th>
+        </tr>
+      </thead>
+    );
+  };
+
+  const renderBoardBody = () => {
     // 분류, 제목, 글쓴이, 날짜, 조회수
     const [board, setBoard] = useState([
       [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -31,18 +55,18 @@ const TestPage2 = () => {
     for (let i = 0; i < 10; i++) {
       itemArr.push(
         <tr key={i}>
-          <th>{board[0][i]}</th>
-          <th>{board[1][i]}</th>
-          <th>{board[2][i]}</th>
-          <th>{board[3][i]}</th>
-          <th>{board[4][i]}</th>
+          <td class="text-center">{board[0][i]}</td>
+          <td>{board[1][i]}</td>
+          <td class="text-center">{board[2][i]}</td>
+          <td class="text-center">{board[3][i]}</td>
+          <td class="text-center">{board[4][i]}</td>
         </tr>
       );
     }
-    return itemArr;
+    return <tbody>{itemArr}</tbody>;
   };
 
-  const renderPaginationItem = () => {
+  const renderPagination = () => {
     const [paginationActive, setPaginationActive] = useState(1);
     let items = [];
 
@@ -82,23 +106,15 @@ const TestPage2 = () => {
       <div>
         <StyledDiv>Small Table</StyledDiv>
         <Container>
-          <Table striped bordered hover size="sm">
-            <thead>
-              <tr>
-                <th>분류</th>
-                <th>제목</th>
-                <th>글쓴이</th>
-                <th>날짜</th>
-                <th>조회</th>
-              </tr>
-            </thead>
-            <tbody>{renderBoardItem()}</tbody>
+          <Table striped bordered hover size="sm" variant="dark">
+            {renderBoardHead()}
+            {renderBoardBody()}
           </Table>
         </Container>
       </div>
       <div>
         <StyledDiv>Pagination</StyledDiv>
-        <Container>{renderPaginationItem()}</Container>
+        <Container>{renderPagination()}</Container>
       </div>
     </Fragment>
   );
