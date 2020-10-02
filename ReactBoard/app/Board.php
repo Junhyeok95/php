@@ -13,4 +13,9 @@ class Board extends Model
         // 외래 키를 별도로 설정하는 방법 : belongsTo(User::class, 'my_id');
         return $this->belongsTo(User::class);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }

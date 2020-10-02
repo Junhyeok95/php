@@ -15,7 +15,7 @@ class CreateBoardsTable extends Migration
     {
         Schema::create('boards', function (Blueprint $table) {
             $table->bigIncrements('id'); // Alias of $table->bigIncrements('id')
-            $table->foreignId('user_id'); // Alias of $table->unsignedBigInteger('user_id')
+            $table->foreignId('user_id')->index();; // Alias of $table->unsignedBigInteger('user_id')
             $table->string('title');
             $table->text('content');
             $table->timestamps();

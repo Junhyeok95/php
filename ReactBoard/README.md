@@ -35,4 +35,7 @@ php artisan make:controller CommentController --resource
 php artisan make:model Tag
 php artisan make:migration create_tags_table --create=tags
 php artisan make:controller TagController --resource
+
+php artisan make:migration create_board_tag_table --create=board_tag
+
 ```
