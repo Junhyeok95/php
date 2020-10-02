@@ -38,4 +38,11 @@ php artisan make:controller TagController --resource
 
 php artisan make:migration create_board_tag_table --create=board_tag
 
+php artisan make:seeder UsersTableSeeder
+  php artisan db:seed --class=UsersTableSeeder 또는
+  DatabaseSeeder.php 의 $this->call(UsersTableSeeder::class);
+
+composer dump-autoload
+php artisan migrate:refresh --seed
+
 ```
