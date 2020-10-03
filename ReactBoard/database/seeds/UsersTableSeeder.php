@@ -20,9 +20,15 @@ class UsersTableSeeder extends Seeder
         //     'password' => bcrypt('password'),
         // ]);
 
+        // DB::table('users')->insert([
+        //     'name' => Str::random(10),
+        //     'email' => Str::random(10).'@gmail.com',
+        //     'password' => Hash::make('password'),
+        // ]);
+
         DB::table('users')->insert([
-            'name' => Str::random(10),
-            'email' => Str::random(10).'@gmail.com',
+            'name' => "T E S T",
+            'email' => 'test@mail.com',
             'password' => Hash::make('password'),
         ]);
 
@@ -30,8 +36,9 @@ class UsersTableSeeder extends Seeder
 
         // 모든 유저 제거
         // App\User::truncate();
+        // DB::table('uses')->truncate();
 
         // 모델 팩토리 활용
-        // factory(App\User::class, 5)->create();
+        factory(App\User::class, 14)->create();
     }
 }

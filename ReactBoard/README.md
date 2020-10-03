@@ -45,4 +45,7 @@ php artisan make:seeder UsersTableSeeder
 composer dump-autoload
 php artisan migrate:refresh --seed
 
+php artisan make:factory BoardFactory --model=Board
+php artisan make:seeder BoardsTableSeeder
+
 ```
