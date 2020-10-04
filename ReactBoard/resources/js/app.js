@@ -5,7 +5,7 @@ require("./bootstrap");
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import { UserContextProvider } from "./contexts/User";
 
@@ -22,18 +22,23 @@ import BoardPage from "./pages/BoardPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
+import NotFoundPage from "./pages/NotFoundPage";
+
 const App = () => {
   return (
     <React.Fragment>
       <Header />
       <Body>
-        <Route path="/test" component={TestPage} exact />
-        <Route path="/test2" component={TestPage2} exact />
-        <Route path="/test3" component={TestPage3} />
-        <Route path="/" component={HomePage} exact />
-        <Route path="/boards" component={BoardPage} />
-        <Route path="/login" component={LoginPage} exact />
-        <Route path="/register" component={RegisterPage} exact />
+        <Switch>
+          <Route path="/test" component={TestPage} exact />
+          <Route path="/test2" component={TestPage2} exact />
+          <Route path="/test3" component={TestPage3} />
+          <Route path="/" component={HomePage} exact />
+          <Route path="/boards" component={BoardPage} />
+          <Route path="/login" component={LoginPage} exact />
+          <Route path="/register" component={RegisterPage} exact />
+          <Route component={NotFoundPage} />
+        </Switch>
       </Body>
       <Footer />
     </React.Fragment>

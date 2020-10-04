@@ -5,15 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('boards', 'BoardController');
 
-Route::get('/', function () {
-    return view('app');
-});
-Route::get('/{path}', function () {
-    return view('app');
-});
-Route::get('/{path}/{path2}', function () {
-    return view('app');
-});
+Route::view('/','app');
+Route::view('/{path}','app');
+Route::view('/{path}/{path2}','app');
 
 // vendor/laravel/ui/auth-backend
 Auth::routes();

@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
+        // Model::unguard(), Model::reguard() -> ㄷㅐ량 할당 제약 사항을 풀었다가 잠금, 5.2이상은 자동으로 처리됨
         if (config('databases.default') !== 'sqlite') {
             DB::statement('SET FOREIGN_KEY_CHECKS=0');
         }

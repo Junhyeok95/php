@@ -33,11 +33,6 @@ class UsersTableSeeder extends Seeder
         ]);
 
         // -----------------------------------------------------------
-
-        // 모든 유저 제거
-        // App\User::truncate();
-        // DB::table('uses')->truncate();
-
         // 모델 팩토리 활용
         factory(App\User::class, 14)->create();
     }
