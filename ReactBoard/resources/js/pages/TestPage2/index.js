@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import styled from "styled-components";
 import { Container, Row, Table, Pagination } from "react-bootstrap";
+import Button from "../../components/Button";
 
 const StyledDiv = styled.div`
   padding: 0.5rem;
@@ -21,19 +22,19 @@ const TestPage2 = () => {
     return (
       <thead>
         <tr>
-          <th scope="col" class="text-center">
+          <th scope="col" className="text-center">
             분류
           </th>
-          <th scope="col" class="text-center">
+          <th scope="col" className="text-center">
             제목
           </th>
-          <th scope="col" class="text-center">
+          <th scope="col" className="text-center">
             글쓴이
           </th>
-          <th scope="col" class="text-center">
+          <th scope="col" className="text-center">
             날짜
           </th>
-          <th scope="col" class="text-center">
+          <th scope="col" className="text-center">
             조회
           </th>
         </tr>
@@ -55,11 +56,11 @@ const TestPage2 = () => {
     for (let i = 0; i < 10; i++) {
       itemArr.push(
         <tr key={i}>
-          <td class="text-center">{board[0][i]}</td>
+          <td className="text-center">{board[0][i]}</td>
           <td>{board[1][i]}</td>
-          <td class="text-center">{board[2][i]}</td>
-          <td class="text-center">{board[3][i]}</td>
-          <td class="text-center">{board[4][i]}</td>
+          <td className="text-center">{board[2][i]}</td>
+          <td className="text-center">{board[3][i]}</td>
+          <td className="text-center">{board[4][i]}</td>
         </tr>
       );
     }
@@ -102,6 +103,14 @@ const TestPage2 = () => {
     <Fragment>
       <div>
         <StyledDiv>{text}</StyledDiv>
+        <Button
+          onClick={() => {
+            console.log("클릭");
+          }}
+        >
+          {" "}
+          클릭{" "}
+        </Button>
       </div>
       <div>
         <StyledDiv>Small Table</StyledDiv>

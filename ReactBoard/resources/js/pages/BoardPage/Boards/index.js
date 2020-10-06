@@ -18,19 +18,19 @@ const Boards = () => {
     return (
       <thead>
         <tr>
-          <th scope="col" class="text-center">
+          <th scope="col" className="text-center">
             분류
           </th>
-          <th scope="col" class="text-center">
+          <th scope="col" className="text-center">
             제목
           </th>
-          <th scope="col" class="text-center">
+          <th scope="col" className="text-center">
             글쓴이
           </th>
-          <th scope="col" class="text-center">
+          <th scope="col" className="text-center">
             날짜
           </th>
-          <th scope="col" class="text-center">
+          <th scope="col" className="text-center">
             조회
           </th>
         </tr>
@@ -52,11 +52,11 @@ const Boards = () => {
     for (let i = 0; i < 10; i++) {
       itemArr.push(
         <tr key={i}>
-          <td class="text-center">{board[0][i]}</td>
+          <td className="text-center">{board[0][i]}</td>
           <td>{board[1][i]}</td>
-          <td class="text-center">{board[2][i]}</td>
-          <td class="text-center">{board[3][i]}</td>
-          <td class="text-center">{board[4][i]}</td>
+          <td className="text-center">{board[2][i]}</td>
+          <td className="text-center">{board[3][i]}</td>
+          <td className="text-center">{board[4][i]}</td>
         </tr>
       );
     }
@@ -64,6 +64,8 @@ const Boards = () => {
   };
 
   const renderPagination = () => {
+    // let totalPosts = posts.length;
+    let totalPosts = 55;
     let items = [];
 
     for (let number = 1; number <= 10; number++) {
