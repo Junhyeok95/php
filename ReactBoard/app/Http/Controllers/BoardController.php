@@ -27,8 +27,16 @@ class BoardController extends Controller
      */
     public function index()
     {
-        // 글 전체 보기
-        return view('app');
+        // $cnt = count(\App\Board::get());
+        // return response()->json(["mydata",$cnt]);
+
+        $boards = \App\Board::get();
+
+        // json["a","b","c"] 란?
+        // res.data[0] = a
+        // res.data[0] = b
+        // res.data[0] = c
+        return response()->json($boards);
     }
 
     /**

@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Container, Row, Table, Pagination } from "react-bootstrap";
+import Axios from "axios";
 
 const Boards = () => {
   const [posts, setPosts] = useState([]);
@@ -8,10 +9,40 @@ const Boards = () => {
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   useEffect(() => {
-    console.log("get table");
+    (() => {
+      Axios({
+        method: "get",
+        url: "/api/boards",
+        data: {
+          // ? data
+          myKey: "myKey"
+        },
+        headers: {
+          // ? headers token
+          myHeaders: "myToken"
+        },
+        params: {
+          // query string
+          // id: "myId",
+          myQuery: "myQuery"
+        }
+      })
+        .then(res => {
+          // Array.isArray([])           // true
+          // Array.isArray([1, 2, 3])    // true
+          // Array.isArray({})           // false
+          // Array.isArray(1)            // false
+          // [] instanceof Array; // true
+          // { } instanceof Array; // false
+          console.log("api boards get response");
+          console.log(res.data); // json([\App\Board::get()])
+          setPosts(res.data);
+        })
+        .catch(error => console.log(error));
+    })();
   }, []);
 
   const renderBoardHead = () => {
@@ -68,7 +99,7 @@ const Boards = () => {
     let totalPosts = 55;
     let items = [];
 
-    for (let number = 1; number <= 10; number++) {
+    for (let number = 1; number <= 5; number++) {
       items.push(
         <Pagination.Item
           key={number}
@@ -102,6 +133,7 @@ const Boards = () => {
   return (
     <Fragment>
       <Container>
+        {JSON.stringify(posts[0])}
         <Table striped bordered hover size="sm">
           {renderBoardHead()}
           {renderBoardBody()}

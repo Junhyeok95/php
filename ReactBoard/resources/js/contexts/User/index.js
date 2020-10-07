@@ -17,6 +17,7 @@ const UserContextProvider = withRouter(({ children, history }) => {
       }
     })
       .then(res => {
+        console.log("아 ㅋㅋ 부끄럽다 수정하자");
         setUserInfo(JSON.parse(res.config.data).email);
         history.push("/");
         localStorage.setItem("userEmail", JSON.parse(res.config.data).email);

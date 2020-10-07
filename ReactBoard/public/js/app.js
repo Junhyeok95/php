@@ -100314,6 +100314,7 @@ var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["
         password: password
       }
     }).then(function (res) {
+      console.log("아 ㅋㅋ 부끄럽다 수정하자");
       setUserInfo(JSON.parse(res.config.data).email);
       history.push("/");
       localStorage.setItem("userEmail", JSON.parse(res.config.data).email);
@@ -100608,6 +100609,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -100619,6 +100622,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -100639,10 +100643,41 @@ var Boards = function Boards() {
       postsPerPage = _useState6[0];
 
   var indexOfLastPost = currentPage * postsPerPage;
-  var indexOfFirstPost = indexOfLastPost - postsPerPage;
-  var currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  var indexOfFirstPost = indexOfLastPost - postsPerPage; // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    console.log("get table");
+    (function () {
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: "get",
+        url: "/api/boards",
+        data: {
+          // ? data
+          myKey: "myKey"
+        },
+        headers: {
+          // ? headers token
+          myHeaders: "myToken"
+        },
+        params: {
+          // query string
+          // id: "myId",
+          myQuery: "myQuery"
+        }
+      }).then(function (res) {
+        // Array.isArray([])           // true
+        // Array.isArray([1, 2, 3])    // true
+        // Array.isArray({})           // false
+        // Array.isArray(1)            // false
+        // [] instanceof Array; // true
+        // { } instanceof Array; // false
+        console.log("api boards get response");
+        console.log(res.data); // json([\App\Board::get()])
+
+        setPosts(res.data);
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    })();
   }, []);
 
   var renderBoardHead = function renderBoardHead() {
@@ -100705,7 +100740,7 @@ var Boards = function Boards() {
       }, number));
     };
 
-    for (var number = 1; number <= Math.ceil(totalPosts / postsPerPage); number++) {
+    for (var number = 1; number <= 5; number++) {
       _loop(number);
     }
 
@@ -100714,7 +100749,7 @@ var Boards = function Boards() {
     }, currentPage >= 11 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].First, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Prev, null)), items, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Next, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Last, null)));
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, JSON.stringify(posts[0]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
     striped: true,
     bordered: true,
     hover: true,
@@ -100884,9 +100919,7 @@ var BoardPage = function BoardPage(_ref) {
       test = _useState2[0],
       setTest = _useState2[1];
 
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    console.log(test);
-  }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {}, []);
 
   var renderNavLink = function renderNavLink() {
     var boardNav = {

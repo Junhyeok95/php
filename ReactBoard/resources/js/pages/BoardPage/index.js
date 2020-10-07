@@ -9,9 +9,7 @@ import Write from "./Write";
 const BoardPage = ({ match }) => {
   const [test, setTest] = useState(null);
 
-  useEffect(() => {
-    console.log(test);
-  }, []);
+  useEffect(() => {}, []);
 
   const renderNavLink = () => {
     const boardNav = {
