@@ -100671,9 +100671,10 @@ var Boards = function Boards() {
         // [] instanceof Array; // true
         // { } instanceof Array; // false
         console.log("api boards get response");
-        console.log(res.data); // json([\App\Board::get()])
+        console.log(res); // json([\App\Board::get()])
 
-        setPosts(res.data);
+        console.log(res.data); // json([\App\Board::get()])
+        // setPosts(res.data);
       })["catch"](function (error) {
         return console.log(error);
       });

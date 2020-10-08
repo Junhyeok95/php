@@ -38,8 +38,9 @@ const Boards = () => {
           // [] instanceof Array; // true
           // { } instanceof Array; // false
           console.log("api boards get response");
+          console.log(res); // json([\App\Board::get()])
           console.log(res.data); // json([\App\Board::get()])
-          setPosts(res.data);
+          // setPosts(res.data);
         })
         .catch(error => console.log(error));
     })();
