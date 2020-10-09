@@ -26,6 +26,18 @@ class BoardsTableSeeder extends Seeder
                 // 팩토리 활용
                 factory(Board::class)->make()
             );
+            $user->boards()->save(
+                // 팩토리 활용
+                factory(Board::class)->make()
+            );
+            $user->boards()->save(
+                // 팩토리 활용
+                factory(Board::class)->make()
+            );
+            $user->boards()->save(
+                // 팩토리 활용
+                factory(Board::class)->make()
+            );
         });
     }
 }

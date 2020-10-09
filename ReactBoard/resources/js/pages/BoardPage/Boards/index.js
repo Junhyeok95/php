@@ -6,6 +6,7 @@ const Boards = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
+  const [nextPageUrl, setNextPageUrl] = useState();
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -40,7 +41,7 @@ const Boards = () => {
           console.log("api boards get response");
           console.log(res); // json([\App\Board::get()])
           console.log(res.data); // json([\App\Board::get()])
-          // setPosts(res.data);
+          setPosts(res.data);
         })
         .catch(error => console.log(error));
     })();
@@ -100,13 +101,27 @@ const Boards = () => {
     let totalPosts = 55;
     let items = [];
 
-    for (let number = 1; number <= 5; number++) {
+    for (let number = 1; number <= 25; number++) {
       items.push(
         <Pagination.Item
           key={number}
           active={number === currentPage}
           onClick={() => {
-            setCurrentPage(number);
+            (() => {
+              Axios({
+                method: "get",
+                url: "/api/boards",
+                params: {
+                  page: number
+                }
+              })
+                .then(res => {
+                  console.log(res.data);
+                  setCurrentPage(res.data.current_page);
+                  setNextPageUrl(res.data.next_page_url);
+                })
+                .catch(error => console.log(error));
+            })();
           }}
         >
           {number}
@@ -133,6 +148,7 @@ const Boards = () => {
 
   return (
     <Fragment>
+      {nextPageUrl}
       <Container>
         {JSON.stringify(posts[0])}
         <Table striped bordered hover size="sm">
