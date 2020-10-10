@@ -100654,32 +100654,11 @@ var Boards = function Boards() {
     (function () {
       axios__WEBPACK_IMPORTED_MODULE_2___default()({
         method: "get",
-        url: "/api/boards",
-        data: {
-          // ? data
-          myKey: "myKey"
-        },
-        headers: {
-          // ? headers token
-          myHeaders: "myToken"
-        },
-        params: {
-          // query string
-          // id: "myId",
-          myQuery: "myQuery"
-        }
+        url: "/api/boards"
       }).then(function (res) {
-        // Array.isArray([])           // true
-        // Array.isArray([1, 2, 3])    // true
-        // Array.isArray({})           // false
-        // Array.isArray(1)            // false
-        // [] instanceof Array; // true
-        // { } instanceof Array; // false
         console.log("api boards get response");
-        console.log(res); // json([\App\Board::get()])
-
-        console.log(res.data); // json([\App\Board::get()])
-
+        console.log(res);
+        console.log(res.data);
         setPosts(res.data);
       })["catch"](function (error) {
         return console.log(error);
@@ -100708,25 +100687,20 @@ var Boards = function Boards() {
 
   var renderBoardBody = function renderBoardBody() {
     // 분류, 제목, 글쓴이, 날짜, 조회수
-    var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]]),
-        _useState10 = _slicedToArray(_useState9, 2),
-        board = _useState10[0],
-        setBoard = _useState10[1];
-
     var itemArr = [];
 
-    for (var i = 0; i < 10; i++) {
+    for (var cnt = indexOfFirstPost; cnt < indexOfLastPost; cnt++) {
       itemArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-        key: i
+        key: cnt
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
-      }, board[0][i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, board[1][i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      }, cnt + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, posts.data[cnt].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
-      }, board[2][i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      }, posts.data[cnt].user_id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
-      }, board[3][i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      }, posts.data[cnt].updated_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
-      }, board[4][i])));
+      }, 0)));
     }
 
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, itemArr);
@@ -100751,8 +100725,7 @@ var Boards = function Boards() {
               }
             }).then(function (res) {
               console.log(res.data);
-              setCurrentPage(res.data.current_page);
-              setNextPageUrl(res.data.next_page_url);
+              setPosts(res.data);
             })["catch"](function (error) {
               return console.log(error);
             });
@@ -100770,7 +100743,7 @@ var Boards = function Boards() {
     }, currentPage >= 11 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].First, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Prev, null)), items, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Next, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Last, null)));
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, nextPageUrl, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, JSON.stringify(posts[0]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, nextPageUrl, posts.length != 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, JSON.stringify(posts[0]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
     striped: true,
     bordered: true,
     hover: true,

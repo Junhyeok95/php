@@ -16,31 +16,12 @@ const Boards = () => {
     (() => {
       Axios({
         method: "get",
-        url: "/api/boards",
-        data: {
-          // ? data
-          myKey: "myKey"
-        },
-        headers: {
-          // ? headers token
-          myHeaders: "myToken"
-        },
-        params: {
-          // query string
-          // id: "myId",
-          myQuery: "myQuery"
-        }
+        url: "/api/boards"
       })
         .then(res => {
-          // Array.isArray([])           // true
-          // Array.isArray([1, 2, 3])    // true
-          // Array.isArray({})           // false
-          // Array.isArray(1)            // false
-          // [] instanceof Array; // true
-          // { } instanceof Array; // false
           console.log("api boards get response");
-          console.log(res); // json([\App\Board::get()])
-          console.log(res.data); // json([\App\Board::get()])
+          console.log(res);
+          console.log(res.data);
           setPosts(res.data);
         })
         .catch(error => console.log(error));
@@ -73,23 +54,15 @@ const Boards = () => {
 
   const renderBoardBody = () => {
     // 분류, 제목, 글쓴이, 날짜, 조회수
-    const [board, setBoard] = useState([
-      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    ]);
-
     let itemArr = [];
-    for (let i = 0; i < 10; i++) {
+    for (let cnt = indexOfFirstPost; cnt < indexOfLastPost; cnt++) {
       itemArr.push(
-        <tr key={i}>
-          <td className="text-center">{board[0][i]}</td>
-          <td>{board[1][i]}</td>
-          <td className="text-center">{board[2][i]}</td>
-          <td className="text-center">{board[3][i]}</td>
-          <td className="text-center">{board[4][i]}</td>
+        <tr key={cnt}>
+          <td className="text-center">{cnt + 1}</td>
+          <td>{posts.data[cnt].title}</td>
+          <td className="text-center">{posts.data[cnt].user_id}</td>
+          <td className="text-center">{posts.data[cnt].updated_at}</td>
+          <td className="text-center">{0}</td>
         </tr>
       );
     }
@@ -117,8 +90,7 @@ const Boards = () => {
               })
                 .then(res => {
                   console.log(res.data);
-                  setCurrentPage(res.data.current_page);
-                  setNextPageUrl(res.data.next_page_url);
+                  setPosts(res.data);
                 })
                 .catch(error => console.log(error));
             })();
@@ -149,14 +121,16 @@ const Boards = () => {
   return (
     <Fragment>
       {nextPageUrl}
-      <Container>
-        {JSON.stringify(posts[0])}
-        <Table striped bordered hover size="sm">
-          {renderBoardHead()}
-          {renderBoardBody()}
-        </Table>
-        {renderPagination()}
-      </Container>
+      {posts.length != 0 && (
+        <Container>
+          {JSON.stringify(posts[0])}
+          <Table striped bordered hover size="sm">
+            {renderBoardHead()}
+            {renderBoardBody()}
+          </Table>
+          {renderPagination()}
+        </Container>
+      )}
     </Fragment>
   );
 };
