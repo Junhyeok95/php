@@ -6,27 +6,57 @@ const Boards = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
-  const [nextPageUrl, setNextPageUrl] = useState();
+  const [nextPageUrl, setNextPageUrl] = useState(null);
+  const [prevPageUrl, setPrevPageUrl] = useState(null);
+  const [firstPostUrl, setFirstPostUrl] = useState(null);
+  const [lastPostUrl, setLastPostUrl] = useState(null);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   useEffect(() => {
-    (() => {
-      Axios({
-        method: "get",
-        url: "/api/boards"
-      })
-        .then(res => {
-          console.log("api boards get response");
-          console.log(res);
-          console.log(res.data);
-          setPosts(res.data);
-        })
-        .catch(error => console.log(error));
-    })();
+    setTimeout(()=>{
+      paginationAxios();
+      // (() => {
+      //   Axios({
+      //     method: "get",
+      //     url: "/api/boards"
+      //   })
+      //     .then(res => {
+      //       console.log("api boards get response");
+      //       console.log(res);
+      //       console.log(res.data);
+      //       setPosts(res.data.data); // arr data
+      //       setFirstPostUrl(res.data.next_page_url);
+      //       setLastPostUrl(res.data.next_page_url);
+      //       setNextPageUrl(res.data.next_page_url);
+      //       setPrevPageUrl(res.data.next_page_url);
+      //     })
+      //     .catch(error => console.log(error));
+      // })();
+    },1000);
   }, []);
+
+  const paginationAxios = (clickNumber) => {
+    console.log("clickNumber");
+    console.log(clickNumber);
+    Axios({
+      method: "get",
+      url: "/api/boards",
+      params: {
+        page: clickNumber
+      }
+    })
+      .then(res => {
+        setPosts(res.data.data); // arr data
+        setFirstPostUrl(res.data.next_page_url);
+        setLastPostUrl(res.data.next_page_url);
+        setNextPageUrl(res.data.next_page_url);
+        setPrevPageUrl(res.data.next_page_url);
+      })
+      .catch(error => console.log(error));
+  };
 
   const renderBoardHead = () => {
     return (
@@ -59,9 +89,9 @@ const Boards = () => {
       itemArr.push(
         <tr key={cnt}>
           <td className="text-center">{cnt + 1}</td>
-          <td>{posts.data[cnt].title}</td>
-          <td className="text-center">{posts.data[cnt].user_id}</td>
-          <td className="text-center">{posts.data[cnt].updated_at}</td>
+          <td>{posts[cnt].title}</td>
+          <td className="text-center">{posts[cnt].user_id}</td>
+          <td className="text-center">{posts[cnt].updated_at}</td>
           <td className="text-center">{0}</td>
         </tr>
       );
@@ -80,20 +110,6 @@ const Boards = () => {
           key={number}
           active={number === currentPage}
           onClick={() => {
-            (() => {
-              Axios({
-                method: "get",
-                url: "/api/boards",
-                params: {
-                  page: number
-                }
-              })
-                .then(res => {
-                  console.log(res.data);
-                  setPosts(res.data);
-                })
-                .catch(error => console.log(error));
-            })();
           }}
         >
           {number}
@@ -120,10 +136,10 @@ const Boards = () => {
 
   return (
     <Fragment>
-      {nextPageUrl}
+    <div style={{width:5000, backgroundColor:"red"}}>
+    </div>
       {posts.length != 0 && (
         <Container>
-          {JSON.stringify(posts[0])}
           <Table striped bordered hover size="sm">
             {renderBoardHead()}
             {renderBoardBody()}
