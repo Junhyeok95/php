@@ -6,56 +6,63 @@ const Boards = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
+
+  const [firstPageUrl, setFirstPageUrl] = useState(null);
+  const [lastPageUrl, setLastPageUrl] = useState(null);
   const [nextPageUrl, setNextPageUrl] = useState(null);
   const [prevPageUrl, setPrevPageUrl] = useState(null);
-  const [firstPostUrl, setFirstPostUrl] = useState(null);
-  const [lastPostUrl, setLastPostUrl] = useState(null);
+  const [total, setTotal] = useState(null);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   useEffect(() => {
-    setTimeout(()=>{
-      paginationAxios();
-      // (() => {
-      //   Axios({
-      //     method: "get",
-      //     url: "/api/boards"
-      //   })
-      //     .then(res => {
-      //       console.log("api boards get response");
-      //       console.log(res);
-      //       console.log(res.data);
-      //       setPosts(res.data.data); // arr data
-      //       setFirstPostUrl(res.data.next_page_url);
-      //       setLastPostUrl(res.data.next_page_url);
-      //       setNextPageUrl(res.data.next_page_url);
-      //       setPrevPageUrl(res.data.next_page_url);
-      //     })
-      //     .catch(error => console.log(error));
-      // })();
-    },1000);
+    getBoards();
+    // (() => {
+    //   Axios({
+    //     method: "get",
+    //     url: "/api/boards",
+    //     params: {
+    //       page: 0,
+    //     },
+    //   })
+    //     .then((res) => {
+    //       setPosts(res.data.data);
+    //       console.log(res.data);
+    //       console.log(res.data.total);
+    //       console.log("hello");
+    //       setFirstPageUrl(res.data.first_page_url);
+    //       setLastPageUrl(res.data.last_page_url);
+    //       setNextPageUrl(res.data.next_page_url);
+    //       setPrevPageUrl(res.data.prev_page_url);
+    //       setTotal(res.data.total);
+    //     })
+    //     .catch((error) => console.log(error));
+    // })();
   }, []);
-
-  const paginationAxios = (clickNumber) => {
-    console.log("clickNumber");
-    console.log(clickNumber);
+  const getBoards = (pageNumber) => {
+    const getPage = pageNumber;
     Axios({
       method: "get",
       url: "/api/boards",
       params: {
-        page: clickNumber
-      }
+        page: getPage,
+      },
     })
-      .then(res => {
-        setPosts(res.data.data); // arr data
-        setFirstPostUrl(res.data.next_page_url);
-        setLastPostUrl(res.data.next_page_url);
-        setNextPageUrl(res.data.next_page_url);
-        setPrevPageUrl(res.data.next_page_url);
+      .then((res) => {
+        console.log(res.data);
+        console.log(res.data.total);
+        console.log("res.data.total");
+        console.log(Math.ceil(res.data.total / 10));
+        // setPosts(res.data.data);
+        setFirstPageUrl(res.data.first_page_url);
+        // setLastPageUrl(res.data.last_page_url);
+        // setNextPageUrl(res.data.next_page_url);
+        // setPrevPageUrl(res.data.prev_page_url);
+        // setTotal(res.data.total);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   };
 
   const renderBoardHead = () => {
@@ -104,15 +111,18 @@ const Boards = () => {
     let totalPosts = 55;
     let items = [];
 
-    for (let number = 1; number <= 25; number++) {
+    console.log("호출");
+
+    for (let cn = 1; cn <= 5; cn++) {
       items.push(
         <Pagination.Item
-          key={number}
-          active={number === currentPage}
+          key={cn}
+          active={cn === currentPage}
           onClick={() => {
+            getBoards(cn);
           }}
         >
-          {number}
+          {cn}
         </Pagination.Item>
       );
     }
@@ -122,13 +132,15 @@ const Boards = () => {
         <Pagination className="justify-content-center">
           {currentPage >= 11 && (
             <Fragment>
-              <Pagination.First />
+              <Pagination.First onClick={() => getBoards(0)} />
               <Pagination.Prev />
             </Fragment>
           )}
           {items}
           <Pagination.Next />
-          <Pagination.Last />
+          <Pagination.Last
+            onClick={() => getBoards(Math.ceil(res.data.total / 10))}
+          />
         </Pagination>
       </div>
     );
@@ -136,8 +148,7 @@ const Boards = () => {
 
   return (
     <Fragment>
-    <div style={{width:5000, backgroundColor:"red"}}>
-    </div>
+      <div style={{ width: 5000, backgroundColor: "red" }}></div>
       {posts.length != 0 && (
         <Container>
           <Table striped bordered hover size="sm">

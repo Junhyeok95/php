@@ -100644,65 +100644,74 @@ var Boards = function Boards() {
 
   var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState8 = _slicedToArray(_useState7, 2),
-      nextPageUrl = _useState8[0],
-      setNextPageUrl = _useState8[1];
+      firstPageUrl = _useState8[0],
+      setFirstPageUrl = _useState8[1];
 
   var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState10 = _slicedToArray(_useState9, 2),
-      prevPageUrl = _useState10[0],
-      setPrevPageUrl = _useState10[1];
+      lastPageUrl = _useState10[0],
+      setLastPageUrl = _useState10[1];
 
   var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState12 = _slicedToArray(_useState11, 2),
-      firstPostUrl = _useState12[0],
-      setFirstPostUrl = _useState12[1];
+      nextPageUrl = _useState12[0],
+      setNextPageUrl = _useState12[1];
 
   var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState14 = _slicedToArray(_useState13, 2),
-      lastPostUrl = _useState14[0],
-      setLastPostUrl = _useState14[1];
+      prevPageUrl = _useState14[0],
+      setPrevPageUrl = _useState14[1];
+
+  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState16 = _slicedToArray(_useState15, 2),
+      total = _useState16[0],
+      setTotal = _useState16[1];
 
   var indexOfLastPost = currentPage * postsPerPage;
   var indexOfFirstPost = indexOfLastPost - postsPerPage; // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    setTimeout(function () {
-      paginationAxios(); // (() => {
-      //   Axios({
-      //     method: "get",
-      //     url: "/api/boards"
-      //   })
-      //     .then(res => {
-      //       console.log("api boards get response");
-      //       console.log(res);
-      //       console.log(res.data);
-      //       setPosts(res.data.data); // arr data
-      //       setFirstPostUrl(res.data.next_page_url);
-      //       setLastPostUrl(res.data.next_page_url);
-      //       setNextPageUrl(res.data.next_page_url);
-      //       setPrevPageUrl(res.data.next_page_url);
-      //     })
-      //     .catch(error => console.log(error));
-      // })();
-    }, 1000);
+    getBoards(); // (() => {
+    //   Axios({
+    //     method: "get",
+    //     url: "/api/boards",
+    //     params: {
+    //       page: 0,
+    //     },
+    //   })
+    //     .then((res) => {
+    //       setPosts(res.data.data);
+    //       console.log(res.data);
+    //       console.log(res.data.total);
+    //       console.log("hello");
+    //       setFirstPageUrl(res.data.first_page_url);
+    //       setLastPageUrl(res.data.last_page_url);
+    //       setNextPageUrl(res.data.next_page_url);
+    //       setPrevPageUrl(res.data.prev_page_url);
+    //       setTotal(res.data.total);
+    //     })
+    //     .catch((error) => console.log(error));
+    // })();
   }, []);
 
-  var paginationAxios = function paginationAxios(clickNumber) {
-    console.log("clickNumber");
-    console.log(clickNumber);
+  var getBoards = function getBoards(pageNumber) {
+    var getPage = pageNumber;
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "get",
       url: "/api/boards",
       params: {
-        page: clickNumber
+        page: getPage
       }
     }).then(function (res) {
-      setPosts(res.data.data); // arr data
+      console.log(res.data);
+      console.log(res.data.total);
+      console.log("res.data.total");
+      console.log(Math.ceil(res.data.total / 10)); // setPosts(res.data.data);
 
-      setFirstPostUrl(res.data.next_page_url);
-      setLastPostUrl(res.data.next_page_url);
-      setNextPageUrl(res.data.next_page_url);
-      setPrevPageUrl(res.data.next_page_url);
+      setFirstPageUrl(res.data.first_page_url); // setLastPageUrl(res.data.last_page_url);
+      // setNextPageUrl(res.data.next_page_url);
+      // setPrevPageUrl(res.data.prev_page_url);
+      // setTotal(res.data.total);
     })["catch"](function (error) {
       return console.log(error);
     });
@@ -100752,18 +100761,33 @@ var Boards = function Boards() {
     // let totalPosts = posts.length;
     var totalPosts = 55;
     var items = [];
+    console.log("호출");
 
-    for (var number = 1; number <= 25; number++) {
+    var _loop = function _loop(cn) {
       items.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Item, {
-        key: number,
-        active: number === currentPage,
-        onClick: function onClick() {}
-      }, number));
+        key: cn,
+        active: cn === currentPage,
+        onClick: function onClick() {
+          getBoards(cn);
+        }
+      }, cn));
+    };
+
+    for (var cn = 1; cn <= 5; cn++) {
+      _loop(cn);
     }
 
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"], {
       className: "justify-content-center"
-    }, currentPage >= 11 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].First, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Prev, null)), items, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Next, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Last, null)));
+    }, currentPage >= 11 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].First, {
+      onClick: function onClick() {
+        return getBoards(0);
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Prev, null)), items, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Next, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Last, {
+      onClick: function onClick() {
+        return getBoards(Math.ceil(res.data.total / 10));
+      }
+    })));
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
