@@ -100644,54 +100644,14 @@ var Boards = function Boards() {
 
   var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState8 = _slicedToArray(_useState7, 2),
-      firstPageUrl = _useState8[0],
-      setFirstPageUrl = _useState8[1];
-
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
-      _useState10 = _slicedToArray(_useState9, 2),
-      lastPageUrl = _useState10[0],
-      setLastPageUrl = _useState10[1];
-
-  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
-      _useState12 = _slicedToArray(_useState11, 2),
-      nextPageUrl = _useState12[0],
-      setNextPageUrl = _useState12[1];
-
-  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
-      _useState14 = _slicedToArray(_useState13, 2),
-      prevPageUrl = _useState14[0],
-      setPrevPageUrl = _useState14[1];
-
-  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
-      _useState16 = _slicedToArray(_useState15, 2),
-      total = _useState16[0],
-      setTotal = _useState16[1];
+      data = _useState8[0],
+      setData = _useState8[1];
 
   var indexOfLastPost = currentPage * postsPerPage;
   var indexOfFirstPost = indexOfLastPost - postsPerPage; // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    getBoards(); // (() => {
-    //   Axios({
-    //     method: "get",
-    //     url: "/api/boards",
-    //     params: {
-    //       page: 0,
-    //     },
-    //   })
-    //     .then((res) => {
-    //       setPosts(res.data.data);
-    //       console.log(res.data);
-    //       console.log(res.data.total);
-    //       console.log("hello");
-    //       setFirstPageUrl(res.data.first_page_url);
-    //       setLastPageUrl(res.data.last_page_url);
-    //       setNextPageUrl(res.data.next_page_url);
-    //       setPrevPageUrl(res.data.prev_page_url);
-    //       setTotal(res.data.total);
-    //     })
-    //     .catch((error) => console.log(error));
-    // })();
+    getBoards();
   }, []);
 
   var getBoards = function getBoards(pageNumber) {
@@ -100703,15 +100663,17 @@ var Boards = function Boards() {
         page: getPage
       }
     }).then(function (res) {
+      console.log(res);
       console.log(res.data);
       console.log(res.data.total);
       console.log("res.data.total");
-      console.log(Math.ceil(res.data.total / 10)); // setPosts(res.data.data);
-
-      setFirstPageUrl(res.data.first_page_url); // setLastPageUrl(res.data.last_page_url);
-      // setNextPageUrl(res.data.next_page_url);
-      // setPrevPageUrl(res.data.prev_page_url);
-      // setTotal(res.data.total);
+      console.log(Math.ceil(res.data.total / 10));
+      setPosts(res.data.data);
+      setFirstPageUrl(res.data.first_page_url);
+      setLastPageUrl(res.data.last_page_url);
+      setNextPageUrl(res.data.next_page_url);
+      setPrevPageUrl(res.data.prev_page_url);
+      setTotal(res.data.total);
     })["catch"](function (error) {
       return console.log(error);
     });
@@ -100795,7 +100757,7 @@ var Boards = function Boards() {
       width: 5000,
       backgroundColor: "red"
     }
-  }), posts.length != 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
+  }), data.length != 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
     striped: true,
     bordered: true,
     hover: true,

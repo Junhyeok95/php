@@ -7,11 +7,7 @@ const Boards = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
-  const [firstPageUrl, setFirstPageUrl] = useState(null);
-  const [lastPageUrl, setLastPageUrl] = useState(null);
-  const [nextPageUrl, setNextPageUrl] = useState(null);
-  const [prevPageUrl, setPrevPageUrl] = useState(null);
-  const [total, setTotal] = useState(null);
+  const [data, setData] = useState(null);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -19,28 +15,8 @@ const Boards = () => {
 
   useEffect(() => {
     getBoards();
-    // (() => {
-    //   Axios({
-    //     method: "get",
-    //     url: "/api/boards",
-    //     params: {
-    //       page: 0,
-    //     },
-    //   })
-    //     .then((res) => {
-    //       setPosts(res.data.data);
-    //       console.log(res.data);
-    //       console.log(res.data.total);
-    //       console.log("hello");
-    //       setFirstPageUrl(res.data.first_page_url);
-    //       setLastPageUrl(res.data.last_page_url);
-    //       setNextPageUrl(res.data.next_page_url);
-    //       setPrevPageUrl(res.data.prev_page_url);
-    //       setTotal(res.data.total);
-    //     })
-    //     .catch((error) => console.log(error));
-    // })();
   }, []);
+
   const getBoards = (pageNumber) => {
     const getPage = pageNumber;
     Axios({
@@ -51,16 +27,17 @@ const Boards = () => {
       },
     })
       .then((res) => {
+        console.log(res);
         console.log(res.data);
         console.log(res.data.total);
         console.log("res.data.total");
         console.log(Math.ceil(res.data.total / 10));
-        // setPosts(res.data.data);
+        setPosts(res.data.data);
         setFirstPageUrl(res.data.first_page_url);
-        // setLastPageUrl(res.data.last_page_url);
-        // setNextPageUrl(res.data.next_page_url);
-        // setPrevPageUrl(res.data.prev_page_url);
-        // setTotal(res.data.total);
+        setLastPageUrl(res.data.last_page_url);
+        setNextPageUrl(res.data.next_page_url);
+        setPrevPageUrl(res.data.prev_page_url);
+        setTotal(res.data.total);
       })
       .catch((error) => console.log(error));
   };
@@ -149,7 +126,7 @@ const Boards = () => {
   return (
     <Fragment>
       <div style={{ width: 5000, backgroundColor: "red" }}></div>
-      {posts.length != 0 && (
+      {data.length != 0 && (
         <Container>
           <Table striped bordered hover size="sm">
             {renderBoardHead()}
