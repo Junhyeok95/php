@@ -3,14 +3,12 @@ import { Container, Row, Table, Pagination } from "react-bootstrap";
 import Axios from "axios";
 
 const Boards = () => {
-  const [posts, setPosts] = useState([]);
+  const [perPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(10);
-
   const [data, setData] = useState(null);
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  // const indexOfLastPost = currentPage * perPage;
+  // const indexOfFirstPost = indexOfLastPost - perPage;
   // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   useEffect(() => {
@@ -18,6 +16,8 @@ const Boards = () => {
   }, []);
 
   const getBoards = (pageNumber) => {
+    console.log("호출 get -------------------------------");
+
     const getPage = pageNumber;
     Axios({
       method: "get",
@@ -27,22 +27,20 @@ const Boards = () => {
       },
     })
       .then((res) => {
-        console.log(res);
+        setData(res.data);
         console.log(res.data);
-        console.log(res.data.total);
-        console.log("res.data.total");
         console.log(Math.ceil(res.data.total / 10));
-        setPosts(res.data.data);
-        setFirstPageUrl(res.data.first_page_url);
-        setLastPageUrl(res.data.last_page_url);
-        setNextPageUrl(res.data.next_page_url);
-        setPrevPageUrl(res.data.prev_page_url);
-        setTotal(res.data.total);
+        console.log(res.data.current_page);
+        setCurrentPage(res.data.current_page);
+
+        console.log("호출 끝 get ====================");
       })
       .catch((error) => console.log(error));
   };
 
   const renderBoardHead = () => {
+    console.log("호출1");
+
     return (
       <thead>
         <tr>
@@ -67,15 +65,17 @@ const Boards = () => {
   };
 
   const renderBoardBody = () => {
+    console.log("호출2");
+
     // 분류, 제목, 글쓴이, 날짜, 조회수
     let itemArr = [];
-    for (let cnt = indexOfFirstPost; cnt < indexOfLastPost; cnt++) {
+    for (let i = 0; i < perPage; i++) {
       itemArr.push(
-        <tr key={cnt}>
-          <td className="text-center">{cnt + 1}</td>
-          <td>{posts[cnt].title}</td>
-          <td className="text-center">{posts[cnt].user_id}</td>
-          <td className="text-center">{posts[cnt].updated_at}</td>
+        <tr key={"BoardBody" + i}>
+          <td className="text-center">{i}</td>
+          <td>{data.data[i].title}</td>
+          <td className="text-center">{data.data[i].user_id}</td>
+          <td className="text-center">{data.data[i].updated_at}</td>
           <td className="text-center">{0}</td>
         </tr>
       );
@@ -84,22 +84,19 @@ const Boards = () => {
   };
 
   const renderPagination = () => {
-    // let totalPosts = posts.length;
-    let totalPosts = 55;
+    console.log("호출3");
+
     let items = [];
-
-    console.log("호출");
-
-    for (let cn = 1; cn <= 5; cn++) {
+    for (let i = 1; i <= 5; i++) {
       items.push(
         <Pagination.Item
-          key={cn}
-          active={cn === currentPage}
+          key={"Pagination" + i}
+          active={i == currentPage}
           onClick={() => {
-            getBoards(cn);
+            getBoards(i);
           }}
         >
-          {cn}
+          {i}
         </Pagination.Item>
       );
     }
@@ -107,16 +104,24 @@ const Boards = () => {
     return (
       <div>
         <Pagination className="justify-content-center">
-          {currentPage >= 11 && (
+          {data.current_page >= 11 && (
             <Fragment>
               <Pagination.First onClick={() => getBoards(0)} />
-              <Pagination.Prev />
+              <Pagination.Prev
+                onClick={() => {
+                  console.log("prev!");
+                }}
+              />
             </Fragment>
           )}
           {items}
-          <Pagination.Next />
+          <Pagination.Next
+            onClick={() => {
+              console.log("next!");
+            }}
+          />
           <Pagination.Last
-            onClick={() => getBoards(Math.ceil(res.data.total / 10))}
+            onClick={() => getBoards(Math.ceil(data.total / 10))}
           />
         </Pagination>
       </div>
@@ -126,7 +131,7 @@ const Boards = () => {
   return (
     <Fragment>
       <div style={{ width: 5000, backgroundColor: "red" }}></div>
-      {data.length != 0 && (
+      {data != null && (
         <Container>
           <Table striped bordered hover size="sm">
             {renderBoardHead()}

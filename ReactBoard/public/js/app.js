@@ -100628,33 +100628,29 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Boards = function Boards() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
-      _useState2 = _slicedToArray(_useState, 2),
-      posts = _useState2[0],
-      setPosts = _useState2[1];
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(10),
+      _useState2 = _slicedToArray(_useState, 1),
+      perPage = _useState2[0];
 
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
       _useState4 = _slicedToArray(_useState3, 2),
       currentPage = _useState4[0],
       setCurrentPage = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(10),
-      _useState6 = _slicedToArray(_useState5, 1),
-      postsPerPage = _useState6[0];
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState6 = _slicedToArray(_useState5, 2),
+      data = _useState6[0],
+      setData = _useState6[1]; // const indexOfLastPost = currentPage * perPage;
+  // const indexOfFirstPost = indexOfLastPost - perPage;
+  // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
-      _useState8 = _slicedToArray(_useState7, 2),
-      data = _useState8[0],
-      setData = _useState8[1];
-
-  var indexOfLastPost = currentPage * postsPerPage;
-  var indexOfFirstPost = indexOfLastPost - postsPerPage; // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     getBoards();
   }, []);
 
   var getBoards = function getBoards(pageNumber) {
+    console.log("호출 get -------------------------------");
     var getPage = pageNumber;
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "get",
@@ -100663,23 +100659,19 @@ var Boards = function Boards() {
         page: getPage
       }
     }).then(function (res) {
-      console.log(res);
+      setData(res.data);
       console.log(res.data);
-      console.log(res.data.total);
-      console.log("res.data.total");
       console.log(Math.ceil(res.data.total / 10));
-      setPosts(res.data.data);
-      setFirstPageUrl(res.data.first_page_url);
-      setLastPageUrl(res.data.last_page_url);
-      setNextPageUrl(res.data.next_page_url);
-      setPrevPageUrl(res.data.prev_page_url);
-      setTotal(res.data.total);
+      console.log(res.data.current_page);
+      setCurrentPage(res.data.current_page);
+      console.log("호출 끝 get ====================");
     })["catch"](function (error) {
       return console.log(error);
     });
   };
 
   var renderBoardHead = function renderBoardHead() {
+    console.log("호출1");
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
       scope: "col",
       className: "text-center"
@@ -100699,19 +100691,20 @@ var Boards = function Boards() {
   };
 
   var renderBoardBody = function renderBoardBody() {
-    // 분류, 제목, 글쓴이, 날짜, 조회수
+    console.log("호출2"); // 분류, 제목, 글쓴이, 날짜, 조회수
+
     var itemArr = [];
 
-    for (var cnt = indexOfFirstPost; cnt < indexOfLastPost; cnt++) {
+    for (var i = 0; i < perPage; i++) {
       itemArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-        key: cnt
+        key: "BoardBody" + i
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
-      }, cnt + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, posts[cnt].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      }, i), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, data.data[i].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
-      }, posts[cnt].user_id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      }, data.data[i].user_id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
-      }, posts[cnt].updated_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      }, data.data[i].updated_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
       }, 0)));
     }
@@ -100720,34 +100713,40 @@ var Boards = function Boards() {
   };
 
   var renderPagination = function renderPagination() {
-    // let totalPosts = posts.length;
-    var totalPosts = 55;
+    console.log("호출3");
     var items = [];
-    console.log("호출");
 
-    var _loop = function _loop(cn) {
+    var _loop = function _loop(i) {
       items.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Item, {
-        key: cn,
-        active: cn === currentPage,
+        key: "Pagination" + i,
+        active: i == currentPage,
         onClick: function onClick() {
-          getBoards(cn);
+          getBoards(i);
         }
-      }, cn));
+      }, i));
     };
 
-    for (var cn = 1; cn <= 5; cn++) {
-      _loop(cn);
+    for (var i = 1; i <= 5; i++) {
+      _loop(i);
     }
 
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"], {
       className: "justify-content-center"
-    }, currentPage >= 11 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].First, {
+    }, data.current_page >= 11 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].First, {
       onClick: function onClick() {
         return getBoards(0);
       }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Prev, null)), items, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Next, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Last, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Prev, {
       onClick: function onClick() {
-        return getBoards(Math.ceil(res.data.total / 10));
+        console.log("prev!");
+      }
+    })), items, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Next, {
+      onClick: function onClick() {
+        console.log("next!");
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Last, {
+      onClick: function onClick() {
+        return getBoards(Math.ceil(data.total / 10));
       }
     })));
   };
@@ -100757,7 +100756,7 @@ var Boards = function Boards() {
       width: 5000,
       backgroundColor: "red"
     }
-  }), data.length != 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
+  }), data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
     striped: true,
     bordered: true,
     hover: true,
