@@ -18,26 +18,12 @@ class BoardsTableSeeder extends Seeder
 
         // create() 와는 다르게 make 로 인스턴스 생성 후 save 함
         $users->each(function ($user) {
-            $user->boards()->save(
-                // 팩토리 활용
-                factory(Board::class)->make()
-            );
-            $user->boards()->save(
-                // 팩토리 활용
-                factory(Board::class)->make()
-            );
-            $user->boards()->save(
-                // 팩토리 활용
-                factory(Board::class)->make()
-            );
-            $user->boards()->save(
-                // 팩토리 활용
-                factory(Board::class)->make()
-            );
-            $user->boards()->save(
-                // 팩토리 활용
-                factory(Board::class)->make()
-            );
+            for ($i = 0; $i < 10; $i++) {
+                $user->boards()->save(
+                    // 팩토리 활용
+                    factory(Board::class)->make()
+                );
+            }
         });
     }
 }

@@ -3,9 +3,9 @@ import { Container, Row, Table, Pagination } from "react-bootstrap";
 import Axios from "axios";
 
 const Boards = () => {
-  const [perPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage] = useState(20);
   const [data, setData] = useState(null);
+  const [look, setLook] = useState(1);
 
   // const indexOfLastPost = currentPage * perPage;
   // const indexOfFirstPost = indexOfLastPost - perPage;
@@ -29,10 +29,7 @@ const Boards = () => {
       .then((res) => {
         setData(res.data);
         console.log(res.data);
-        console.log(Math.ceil(res.data.total / 10));
-        console.log(res.data.current_page);
-        setCurrentPage(res.data.current_page);
-
+        console.log("막페 : " + Math.ceil(res.data.total / res.data.per_page));
         console.log("호출 끝 get ====================");
       })
       .catch((error) => console.log(error));
@@ -75,7 +72,11 @@ const Boards = () => {
           <td className="text-center">{i}</td>
           <td>{data.data[i].title}</td>
           <td className="text-center">{data.data[i].user_id}</td>
-          <td className="text-center">{data.data[i].updated_at}</td>
+          <td className="text-center">
+            {data.data[i].updated_at.slice(5, 10) +
+              " " +
+              data.data[i].updated_at.slice(11, 16)}
+          </td>
           <td className="text-center">{0}</td>
         </tr>
       );
@@ -87,11 +88,11 @@ const Boards = () => {
     console.log("호출3");
 
     let items = [];
-    for (let i = 1; i <= 5; i++) {
+    for (let i = look; i <= look + 9; i++) {
       items.push(
         <Pagination.Item
           key={"Pagination" + i}
-          active={i == currentPage}
+          active={i == data.current_page}
           onClick={() => {
             getBoards(i);
           }}
@@ -105,23 +106,26 @@ const Boards = () => {
       <div>
         <Pagination className="justify-content-center">
           {data.current_page >= 11 && (
-            <Fragment>
-              <Pagination.First onClick={() => getBoards(0)} />
-              <Pagination.Prev
-                onClick={() => {
-                  console.log("prev!");
-                }}
-              />
-            </Fragment>
+            <Pagination.First onClick={() => getBoards(0)} />
+          )}
+          {data.current_page > 1 && (
+            <Pagination.Prev
+              onClick={() => {
+                getBoards(data.current_page - 1);
+              }}
+            />
           )}
           {items}
           <Pagination.Next
             onClick={() => {
-              console.log("next!");
+              getBoards(data.current_page + 1);
+              if (data.current_page % 10 == 0) {
+                setLook(data.current_page + 1);
+              }
             }}
           />
           <Pagination.Last
-            onClick={() => getBoards(Math.ceil(data.total / 10))}
+            onClick={() => getBoards(Math.ceil(data.total / data.per_page))}
           />
         </Pagination>
       </div>

@@ -100628,19 +100628,19 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Boards = function Boards() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(10),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(20),
       _useState2 = _slicedToArray(_useState, 1),
       perPage = _useState2[0];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState4 = _slicedToArray(_useState3, 2),
-      currentPage = _useState4[0],
-      setCurrentPage = _useState4[1];
+      data = _useState4[0],
+      setData = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
       _useState6 = _slicedToArray(_useState5, 2),
-      data = _useState6[0],
-      setData = _useState6[1]; // const indexOfLastPost = currentPage * perPage;
+      look = _useState6[0],
+      setLook = _useState6[1]; // const indexOfLastPost = currentPage * perPage;
   // const indexOfFirstPost = indexOfLastPost - perPage;
   // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
@@ -100661,9 +100661,7 @@ var Boards = function Boards() {
     }).then(function (res) {
       setData(res.data);
       console.log(res.data);
-      console.log(Math.ceil(res.data.total / 10));
-      console.log(res.data.current_page);
-      setCurrentPage(res.data.current_page);
+      console.log("막페 : " + Math.ceil(res.data.total / res.data.per_page));
       console.log("호출 끝 get ====================");
     })["catch"](function (error) {
       return console.log(error);
@@ -100704,7 +100702,7 @@ var Boards = function Boards() {
         className: "text-center"
       }, data.data[i].user_id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
-      }, data.data[i].updated_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      }, data.data[i].updated_at.slice(5, 10) + " " + data.data[i].updated_at.slice(11, 16)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
       }, 0)));
     }
@@ -100719,34 +100717,38 @@ var Boards = function Boards() {
     var _loop = function _loop(i) {
       items.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Item, {
         key: "Pagination" + i,
-        active: i == currentPage,
+        active: i == data.current_page,
         onClick: function onClick() {
           getBoards(i);
         }
       }, i));
     };
 
-    for (var i = 1; i <= 5; i++) {
+    for (var i = look; i <= look + 9; i++) {
       _loop(i);
     }
 
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"], {
       className: "justify-content-center"
-    }, data.current_page >= 11 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].First, {
+    }, data.current_page >= 11 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].First, {
       onClick: function onClick() {
         return getBoards(0);
       }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Prev, {
+    }), data.current_page > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Prev, {
       onClick: function onClick() {
-        console.log("prev!");
+        getBoards(data.current_page - 1);
       }
-    })), items, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Next, {
+    }), items, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Next, {
       onClick: function onClick() {
-        console.log("next!");
+        getBoards(data.current_page + 1);
+
+        if (data.current_page % 10 == 0) {
+          setLook(data.current_page + 1);
+        }
       }
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Last, {
       onClick: function onClick() {
-        return getBoards(Math.ceil(data.total / 10));
+        return getBoards(Math.ceil(data.total / data.per_page));
       }
     })));
   };

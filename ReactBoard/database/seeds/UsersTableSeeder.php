@@ -34,6 +34,6 @@ class UsersTableSeeder extends Seeder
 
         // -----------------------------------------------------------
         // 모델 팩토리 활용
-        factory(App\User::class, 49)->create();
+        factory(App\User::class, 69)->create();
     }
 }
