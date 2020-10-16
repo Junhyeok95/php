@@ -3,7 +3,8 @@ import { Container, Row, Table, Pagination } from "react-bootstrap";
 import Axios from "axios";
 
 const Boards = () => {
-  const [perPage] = useState(20);
+  const [perPage] = useState(10);
+  const [paging] = useState(5);
   const [data, setData] = useState(null);
   const [look, setLook] = useState(1);
 
@@ -134,7 +135,6 @@ const Boards = () => {
 
   return (
     <Fragment>
-      <div style={{ width: 5000, backgroundColor: "red" }}></div>
       {data != null && (
         <Container>
           <Table striped bordered hover size="sm">

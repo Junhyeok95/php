@@ -44,7 +44,7 @@ class BoardController extends Controller
         // return response()->json($boards);
 
         // 이건.. 페이징 .. blade render() 뭐지?
-        $paginate = \App\Board::latest()->paginate(20);
+        $paginate = \App\Board::latest()->paginate(10);
         return response()->json($paginate);
     }
 
