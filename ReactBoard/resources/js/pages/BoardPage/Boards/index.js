@@ -4,9 +4,9 @@ import Axios from "axios";
 
 const Boards = () => {
   const [perPage] = useState(10);
-  const [paging] = useState(5);
+  const [paging] = useState(8);
   const [data, setData] = useState(null);
-  const [look, setLook] = useState(1);
+  const [look, setLook] = useState(0);
 
   // const indexOfLastPost = currentPage * perPage;
   // const indexOfFirstPost = indexOfLastPost - perPage;
@@ -86,10 +86,14 @@ const Boards = () => {
   };
 
   const renderPagination = () => {
-    console.log("호출3");
-
+    const firstPaging = look * paging + 1;
+    const lastPaging =
+      (look + 1) * paging > Math.ceil(data.total / data.per_page)
+        ? Math.ceil(data.total / data.per_page)
+        : (look + 1) * paging;
     let items = [];
-    for (let i = look; i <= look + 9; i++) {
+
+    for (let i = firstPaging; i <= lastPaging; i++) {
       items.push(
         <Pagination.Item
           key={"Pagination" + i}
@@ -106,28 +110,48 @@ const Boards = () => {
     return (
       <div>
         <Pagination className="justify-content-center">
-          {data.current_page >= 11 && (
-            <Pagination.First onClick={() => getBoards(0)} />
+          {look > 0 && (
+            <Pagination.First
+              onClick={() => {
+                getBoards(0);
+                setLook(0);
+              }}
+            />
           )}
           {data.current_page > 1 && (
             <Pagination.Prev
               onClick={() => {
                 getBoards(data.current_page - 1);
+                if (data.current_page == look * paging + 1) {
+                  setLook(look - 1);
+                }
               }}
             />
           )}
           {items}
-          <Pagination.Next
-            onClick={() => {
-              getBoards(data.current_page + 1);
-              if (data.current_page % 10 == 0) {
-                setLook(data.current_page + 1);
-              }
-            }}
-          />
-          <Pagination.Last
-            onClick={() => getBoards(Math.ceil(data.total / data.per_page))}
-          />
+          {data.current_page != Math.ceil(data.total / data.per_page) && (
+            <Fragment>
+              <Pagination.Next
+                onClick={() => {
+                  getBoards(data.current_page + 1);
+                  if (data.current_page == (look + 1) * paging) {
+                    setLook(look + 1);
+                  }
+                }}
+              />
+              <Pagination.Last
+                onClick={() => {
+                  getBoards(Math.ceil(data.total / data.per_page));
+                  const point =
+                    Math.ceil(data.total / data.per_page) % paging == 0 ? 1 : 0; // 마법소스
+                  setLook(
+                    parseInt(Math.ceil(data.total / data.per_page) / paging) -
+                      point
+                  );
+                }}
+              />
+            </Fragment>
+          )}
         </Pagination>
       </div>
     );

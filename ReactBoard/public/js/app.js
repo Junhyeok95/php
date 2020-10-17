@@ -100632,7 +100632,7 @@ var Boards = function Boards() {
       _useState2 = _slicedToArray(_useState, 1),
       perPage = _useState2[0];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(5),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(8),
       _useState4 = _slicedToArray(_useState3, 1),
       paging = _useState4[0];
 
@@ -100641,7 +100641,7 @@ var Boards = function Boards() {
       data = _useState6[0],
       setData = _useState6[1];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
       _useState8 = _slicedToArray(_useState7, 2),
       look = _useState8[0],
       setLook = _useState8[1]; // const indexOfLastPost = currentPage * perPage;
@@ -100715,7 +100715,8 @@ var Boards = function Boards() {
   };
 
   var renderPagination = function renderPagination() {
-    console.log("호출3");
+    var firstPaging = look * paging + 1;
+    var lastPaging = (look + 1) * paging > Math.ceil(data.total / data.per_page) ? Math.ceil(data.total / data.per_page) : (look + 1) * paging;
     var items = [];
 
     var _loop = function _loop(i) {
@@ -100728,33 +100729,41 @@ var Boards = function Boards() {
       }, i));
     };
 
-    for (var i = look; i <= look + 9; i++) {
+    for (var i = firstPaging; i <= lastPaging; i++) {
       _loop(i);
     }
 
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"], {
       className: "justify-content-center"
-    }, data.current_page >= 11 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].First, {
+    }, look > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].First, {
       onClick: function onClick() {
-        return getBoards(0);
+        getBoards(0);
+        setLook(0);
       }
     }), data.current_page > 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Prev, {
       onClick: function onClick() {
         getBoards(data.current_page - 1);
+
+        if (data.current_page == look * paging + 1) {
+          setLook(look - 1);
+        }
       }
-    }), items, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Next, {
+    }), items, data.current_page != Math.ceil(data.total / data.per_page) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Next, {
       onClick: function onClick() {
         getBoards(data.current_page + 1);
 
-        if (data.current_page % 10 == 0) {
-          setLook(data.current_page + 1);
+        if (data.current_page == (look + 1) * paging) {
+          setLook(look + 1);
         }
       }
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Last, {
       onClick: function onClick() {
-        return getBoards(Math.ceil(data.total / data.per_page));
+        getBoards(Math.ceil(data.total / data.per_page));
+        var point = Math.ceil(data.total / data.per_page) % paging == 0 ? 1 : 0; // 마법소스
+
+        setLook(parseInt(Math.ceil(data.total / data.per_page) / paging) - point);
       }
-    })));
+    }))));
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
