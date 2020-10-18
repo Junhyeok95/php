@@ -8,10 +8,6 @@ const Boards = () => {
   const [data, setData] = useState(null);
   const [look, setLook] = useState(0);
 
-  // const indexOfLastPost = currentPage * perPage;
-  // const indexOfFirstPost = indexOfLastPost - perPage;
-  // const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-
   useEffect(() => {
     getBoards();
   }, []);
