@@ -14,7 +14,6 @@ import Body from "./layouts/Body";
 import Footer from "./layouts/Footer";
 
 import TestPage from "./pages/TestPage";
-import TestPage2 from "./pages/TestPage2";
 import TestPage3 from "./pages/TestPage3";
 
 import HomePage from "./pages/HomePage";
@@ -31,7 +30,6 @@ const App = () => {
       <Body>
         <Switch>
           <Route path="/test" component={TestPage} exact />
-          <Route path="/test2" component={TestPage2} exact />
           <Route path="/test3" component={TestPage3} />
           <Route path="/" component={HomePage} exact />
           <Route path="/boards" component={BoardPage} />

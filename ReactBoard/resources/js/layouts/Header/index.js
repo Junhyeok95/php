@@ -5,12 +5,12 @@ import { UserContext } from "../../contexts/User";
 const Header = () => {
   const { userInfo, logout } = useContext(UserContext);
 
-  const onClick = e => {
+  const onClick = (e) => {
     e.preventDefault();
     logout();
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
   };
 
@@ -38,11 +38,6 @@ const Header = () => {
               <li className="nav-item">
                 <Link className="nav-link" to="/test" onClick={() => {}}>
                   Test
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/test2" onClick={() => {}}>
-                  Test2
                 </Link>
               </li>
               <li className="nav-item">

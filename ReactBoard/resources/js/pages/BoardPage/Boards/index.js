@@ -13,8 +13,6 @@ const Boards = () => {
   }, []);
 
   const getBoards = (pageNumber) => {
-    console.log("호출 get -------------------------------");
-
     const getPage = pageNumber;
     Axios({
       method: "get",
@@ -25,16 +23,11 @@ const Boards = () => {
     })
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
-        console.log("막페 : " + Math.ceil(res.data.total / res.data.per_page));
-        console.log("호출 끝 get ====================");
       })
       .catch((error) => console.log(error));
   };
 
   const renderBoardHead = () => {
-    console.log("호출1");
-
     return (
       <thead>
         <tr>
@@ -59,15 +52,26 @@ const Boards = () => {
   };
 
   const renderBoardBody = () => {
-    console.log("호출2");
-
     // 분류, 제목, 글쓴이, 날짜, 조회수
     let itemArr = [];
     for (let i = 0; i < perPage; i++) {
       itemArr.push(
-        <tr key={"BoardBody" + i}>
+        <tr
+          key={"BoardBody" + i}
+          onClick={() => {
+            Axios({
+              method: "get",
+              url: `/api/boards/${data.data[i].id}`,
+            })
+              .then((res) => {
+                console.log(res);
+                console.log(res.data);
+              })
+              .catch((error) => console.log(error));
+          }}
+        >
           <td className="text-center">{i}</td>
-          <td>{data.data[i].title}</td>
+          <td style={{ cursor: "pointer" }}>{data.data[i].title}</td>
           <td className="text-center">{data.data[i].user_id}</td>
           <td className="text-center">
             {data.data[i].updated_at.slice(5, 10) +

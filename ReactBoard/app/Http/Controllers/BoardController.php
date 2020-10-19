@@ -55,7 +55,7 @@ class BoardController extends Controller
      */
     public function create()
     {
-        //
+        return response()->json("create");
     }
 
     /**
@@ -66,7 +66,7 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response()->json("store");
     }
 
     /**
@@ -75,10 +75,10 @@ class BoardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(\App\Board $board)
     {
         // 글 상세 보기
-        return view('app');
+        return response()->json($board);
     }
 
     /**
@@ -89,7 +89,7 @@ class BoardController extends Controller
      */
     public function edit($id)
     {
-        // 글 수정 폼
+        return response()->json("edit");
     }
 
     /**
@@ -101,7 +101,7 @@ class BoardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // 글 수정 처리
+        return response()->json("update");
     }
 
     /**
@@ -112,6 +112,6 @@ class BoardController extends Controller
      */
     public function destroy($id)
     {
-        // 글 삭제
+        return response()->json("destroy");
     }
 }
