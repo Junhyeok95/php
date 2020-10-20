@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 class BoardController extends Controller
 {
 
+    public function __construct()
+    {
+        //로그인 하지 않아도 index(게시판 홈), show(게시판 뷰)는 볼 수 있음
+        // $this->middleware('auth');
+    }
+
     // 사용자 인증
     // public function __construct()
     // {
@@ -66,7 +72,16 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json("store");
+        // $myuser = \Auth::user();
+        $create = \App\Board::create([
+            'user_id' => 1,
+            'title' => "AAAA",
+            'content' => "cccccc",
+        ]);
+        // $request->id
+
+        // return response()->json($request);
+        return response()->json($create);
     }
 
     /**

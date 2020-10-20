@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
+import Button from "../../../components/Button";
+import Axios from "axios";
 // import "quill/dist/quill.bubble.css";
 
 const StyledDiv = styled.div`
@@ -50,11 +52,28 @@ const Write = () => {
           [{ header: 1 }, { header: 2 }],
           ["bold", "italic", "underline", "strike"],
           [{ list: "ordered" }, { list: "bullet" }],
-          ["blockquote", "code-block", "link", "image"]
-        ]
-      }
+          ["blockquote", "code-block", "link", "image"],
+        ],
+      },
     });
   }, []);
+
+  const btn = () => {
+    Axios({
+      method: "post",
+      url: "/api/boards",
+      data: {
+        id: 1, // user id
+        title: "my title",
+        content: "Flintstone",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <StyledDiv>
@@ -62,6 +81,14 @@ const Write = () => {
       <QuillWrapper>
         <div ref={quillElement} />
       </QuillWrapper>
+      <Button
+        onClick={() => {
+          console.log("button");
+          btn();
+        }}
+      >
+        글 작성
+      </Button>
     </StyledDiv>
   );
 };

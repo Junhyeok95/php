@@ -54,7 +54,7 @@ const Boards = () => {
   const renderBoardBody = () => {
     // 분류, 제목, 글쓴이, 날짜, 조회수
     let itemArr = [];
-    for (let i = 0; i < perPage; i++) {
+    for (let i = 0; i < data.data.length; i++) {
       itemArr.push(
         <tr
           key={"BoardBody" + i}
