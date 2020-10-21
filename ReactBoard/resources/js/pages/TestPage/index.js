@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Container, Row, Col } from "react-bootstrap";
+import Button from "../../components/Button";
+import Axios from "axios";
 
 const StyledDiv = styled.div`
   padding: 0.5rem;
@@ -14,26 +16,26 @@ const Style = {
   backgroundColor: "#6afdff",
   border: "1px solid black",
   height: "180px",
-  fontSize: "16px"
+  fontSize: "16px",
 };
 
 const Style2 = {
   backgroundColor: "#46ff69",
   border: "1px solid black",
   height: "20px",
-  fontSize: "12px"
+  fontSize: "12px",
 };
 
 const Style3 = {
   backgroundColor: "#1179ff",
   border: "1px solid black",
-  height: "30px"
+  height: "30px",
 };
 
 const Style4 = {
   backgroundColor: "#eca5ff",
   border: "1px solid black",
-  height: "40px"
+  height: "40px",
 };
 
 const TestPage = () => {
@@ -50,6 +52,24 @@ const TestPage = () => {
       itemArr.push(<Col style={Style2}>{nameArr[i]}</Col>);
     }
     return itemArr;
+  };
+
+  const btn = () => {
+    Axios({
+      method: "post",
+      url: "/web-test",
+      // data: {
+      //   id: 1, // user id
+      //   title: "my title",
+      //   content: "Flintstone",
+      // },
+    })
+      .then((res) => {
+        // console.log(res);
+        console.log(res.data);
+        // console.log(JSON.stringify(res));
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -116,6 +136,17 @@ const TestPage = () => {
           </Col>
         </Row>
       </Container>
+
+      <div>
+        <Button
+          onClick={() => {
+            console.log("hi");
+            btn();
+          }}
+        >
+          bbbttt
+        </Button>
+      </div>
     </div>
   );
 };
