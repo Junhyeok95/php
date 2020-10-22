@@ -1,8 +1,16 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Container, Row, Table, Pagination } from "react-bootstrap";
 import Axios from "axios";
+import styled from "styled-components";
 
-const Boards = () => {
+const HoverTd = styled.td`
+  cursor: pointer;
+  &:hover {
+    color: #0000ffcc;
+  }
+`;
+
+const Boards = ({ match, location, history }) => {
   const [perPage] = useState(10);
   const [paging] = useState(8);
   const [data, setData] = useState(null);
@@ -56,22 +64,27 @@ const Boards = () => {
     let itemArr = [];
     for (let i = 0; i < data.data.length; i++) {
       itemArr.push(
-        <tr
-          key={"BoardBody" + i}
-          onClick={() => {
-            Axios({
-              method: "get",
-              url: `/api/boards/${data.data[i].id}`,
-            })
-              .then((res) => {
-                console.log(res);
-                console.log(res.data);
-              })
-              .catch((error) => console.log(error));
-          }}
-        >
+        <tr key={"BoardBody" + i}>
           <td className="text-center">{i}</td>
-          <td style={{ cursor: "pointer" }}>{data.data[i].title}</td>
+          <HoverTd
+            onClick={() => {
+              console.log(data.data[i].id, "history push");
+              console.log(
+                history.push(`${match.url}/detail/${data.data[i].id}`)
+              );
+              // Axios({
+              //   method: "get",
+              //   url: `/api/boards/${data.data[i].id}`,
+              // })
+              //   .then((res) => {
+              //     console.log(res);
+              //     console.log(res.data);
+              //   })
+              //   .catch((error) => console.log(error));
+            }}
+          >
+            {data.data[i].title}
+          </HoverTd>
           <td className="text-center">{data.data[i].user_id}</td>
           <td className="text-center">
             {data.data[i].updated_at.slice(5, 10) +

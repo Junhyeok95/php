@@ -13,8 +13,8 @@ const BoardPage = ({ match }) => {
 
   const renderNavLink = () => {
     const boardNav = {
-      en: ["", "/detail", "/write"],
-      ko: ["기본", "상세보기", "글쓰기"]
+      en: ["", "/write"],
+      ko: ["기본", "글쓰기"],
     };
 
     let itemArr = [];
@@ -39,8 +39,8 @@ const BoardPage = ({ match }) => {
       <Container>
         {renderNavLink()}
         <Route path={`${match.url}`} component={Boards} exact />
-        <Route path={`${match.url}/detail`} component={Detail} exact />
         <Route path={`${match.url}/write`} component={Write} exact />
+        <Route path={`${match.url}/detail/:detail`} component={Detail} exact />
       </Container>
     </Fragment>
   );

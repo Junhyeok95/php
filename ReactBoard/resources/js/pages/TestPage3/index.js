@@ -25,7 +25,7 @@ const TestPage3 = ({ match, location, history }) => {
   const renderItem = () => {
     const [category, setCategory] = useState({
       en: ["all", "one", "two", "three"],
-      ko: ["전체보기", "하나", "둘", "셋"]
+      ko: ["전체보기", "하나", "둘", "셋"],
     });
 
     let itemArr = [];
@@ -35,7 +35,7 @@ const TestPage3 = ({ match, location, history }) => {
           <NavLink
             activeStyle={{
               fontWeight: "bold",
-              color: "red"
+              color: "red",
             }}
             to={`${match.url}/${category.en[i]}`}
           >
