@@ -1,7 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Container, Row, Table, Pagination } from "react-bootstrap";
+import { Container, Row, Col, Table, Pagination } from "react-bootstrap";
 import Axios from "axios";
 import styled from "styled-components";
+import "./index.css";
 
 const HoverTd = styled.td`
   cursor: pointer;
@@ -11,7 +12,6 @@ const HoverTd = styled.td`
 `;
 
 const Boards = ({ match, location, history }) => {
-  const [perPage] = useState(10);
   const [paging] = useState(8);
   const [data, setData] = useState(null);
   const [look, setLook] = useState(0);
@@ -38,7 +38,7 @@ const Boards = ({ match, location, history }) => {
   const renderBoardHead = () => {
     return (
       <thead>
-        <tr>
+        <tr md={9} className="css_media">
           <th scope="col" className="text-center">
             분류
           </th>
@@ -64,7 +64,7 @@ const Boards = ({ match, location, history }) => {
     let itemArr = [];
     for (let i = 0; i < data.data.length; i++) {
       itemArr.push(
-        <tr key={"BoardBody" + i}>
+        <tr className="css_media" key={"BoardBody" + i}>
           <td className="text-center">{i}</td>
           <HoverTd
             onClick={() => {
@@ -72,15 +72,6 @@ const Boards = ({ match, location, history }) => {
               console.log(
                 history.push(`${match.url}/detail/${data.data[i].id}`)
               );
-              // Axios({
-              //   method: "get",
-              //   url: `/api/boards/${data.data[i].id}`,
-              // })
-              //   .then((res) => {
-              //     console.log(res);
-              //     console.log(res.data);
-              //   })
-              //   .catch((error) => console.log(error));
             }}
           >
             {data.data[i].title}

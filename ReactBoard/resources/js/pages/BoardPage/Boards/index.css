@@ -1,0 +1,37 @@
+/* 모바일 스타일 적용 후 */
+@media screen and (min-width: 768px) {
+  .css_media td:nth-child(1) {
+    min-width: 50px;
+  }
+  .css_media td:nth-child(2) {
+    width: 100%;
+  }
+  .css_media td:nth-child(3) {
+    min-width: 75px;
+  }
+  .css_media td:nth-child(4) {
+    min-width: 100px;
+  }
+  .css_media td:nth-child(5) {
+    min-width: 50px;
+  }
+}
+
+/* 데스크탑 적용 후 작성 */
+@media screen and (max-width: 767px) {
+  .css_media td:nth-child(1) {
+    min-width: 40px;
+  }
+  .css_media td:nth-child(2) {
+    width: 100%;
+  }
+  .css_media td:nth-child(3) {
+    min-width: 60px;
+  }
+  .css_media td:nth-child(4) {
+    min-width: 120px;
+  }
+  .css_media td:nth-child(5) {
+    min-width: 40px;
+  }
+}

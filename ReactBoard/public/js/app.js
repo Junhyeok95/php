@@ -12429,6 +12429,25 @@ exports.push([module.i, "/*!\n * Quill Editor v1.3.7\n * https://quilljs.com/\n 
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/pages/BoardPage/Boards/index.css":
+/*!***************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./resources/js/pages/BoardPage/Boards/index.css ***!
+  \***************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "/* 모바일 스타일 적용 후 */\n@media screen and (min-width: 768px) {\n  .css_media td:nth-child(1) {\n    min-width: 50px;\n  }\n  .css_media td:nth-child(2) {\n    width: 100%;\n  }\n  .css_media td:nth-child(3) {\n    min-width: 75px;\n  }\n  .css_media td:nth-child(4) {\n    min-width: 100px;\n  }\n  .css_media td:nth-child(5) {\n    min-width: 50px;\n  }\n}\n\n/* 데스크탑 적용 후 작성 */\n@media screen and (max-width: 767px) {\n  .css_media td:nth-child(1) {\n    min-width: 40px;\n  }\n  .css_media td:nth-child(2) {\n    width: 100%;\n  }\n  .css_media td:nth-child(3) {\n    min-width: 60px;\n  }\n  .css_media td:nth-child(4) {\n    min-width: 120px;\n  }\n  .css_media td:nth-child(5) {\n    min-width: 40px;\n  }\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/lib/css-base.js":
 /*!*************************************************!*\
   !*** ./node_modules/css-loader/lib/css-base.js ***!
@@ -100585,6 +100604,36 @@ var Header = function Header() {
 
 /***/ }),
 
+/***/ "./resources/js/pages/BoardPage/Boards/index.css":
+/*!*******************************************************!*\
+  !*** ./resources/js/pages/BoardPage/Boards/index.css ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--6-1!../../../../../node_modules/postcss-loader/src??ref--6-2!./index.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/pages/BoardPage/Boards/index.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./resources/js/pages/BoardPage/Boards/index.js":
 /*!******************************************************!*\
   !*** ./resources/js/pages/BoardPage/Boards/index.js ***!
@@ -100600,6 +100649,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./index.css */ "./resources/js/pages/BoardPage/Boards/index.css");
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_4__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -100628,6 +100679,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
+
 var HoverTd = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].td(_templateObject());
 
 var Boards = function Boards(_ref) {
@@ -100635,23 +100687,19 @@ var Boards = function Boards(_ref) {
       location = _ref.location,
       history = _ref.history;
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(10),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(8),
       _useState2 = _slicedToArray(_useState, 1),
-      perPage = _useState2[0];
+      paging = _useState2[0];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(8),
-      _useState4 = _slicedToArray(_useState3, 1),
-      paging = _useState4[0];
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      data = _useState4[0],
+      setData = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
       _useState6 = _slicedToArray(_useState5, 2),
-      data = _useState6[0],
-      setData = _useState6[1];
-
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
-      _useState8 = _slicedToArray(_useState7, 2),
-      look = _useState8[0],
-      setLook = _useState8[1];
+      look = _useState6[0],
+      setLook = _useState6[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     getBoards();
@@ -100673,7 +100721,10 @@ var Boards = function Boards(_ref) {
   };
 
   var renderBoardHead = function renderBoardHead() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+      md: 9,
+      className: "css_media"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
       scope: "col",
       className: "text-center"
     }, "\uBD84\uB958"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -100697,21 +100748,14 @@ var Boards = function Boards(_ref) {
 
     var _loop = function _loop(i) {
       itemArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        className: "css_media",
         key: "BoardBody" + i
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
       }, i), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HoverTd, {
         onClick: function onClick() {
           console.log(data.data[i].id, "history push");
-          console.log(history.push("".concat(match.url, "/detail/").concat(data.data[i].id))); // Axios({
-          //   method: "get",
-          //   url: `/api/boards/${data.data[i].id}`,
-          // })
-          //   .then((res) => {
-          //     console.log(res);
-          //     console.log(res.data);
-          //   })
-          //   .catch((error) => console.log(error));
+          console.log(history.push("".concat(match.url, "/detail/").concat(data.data[i].id)));
         }
       }, data.data[i].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
