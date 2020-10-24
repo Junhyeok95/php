@@ -43,19 +43,31 @@ const Write = () => {
   }, []);
 
   useEffect(() => {
-    quillInstance.current = new Quill(quillElement.current, {
-      // theme: "bubble", // snow
-      theme: "snow", // snow
-      placeholder: "내용을 작성하세요 ...",
-      modules: {
-        toolbar: [
-          [{ header: 1 }, { header: 2 }],
-          ["bold", "italic", "underline", "strike"],
-          [{ list: "ordered" }, { list: "bullet" }],
-          ["blockquote", "code-block", "link", "image"],
-        ],
-      },
-    });
+    if (quillElement.current) {
+      quillInstance.current = new Quill(quillElement.current, {
+        // theme: "bubble", // snow
+        theme: "snow", // snow
+        placeholder: "내용을 작성하세요 ...",
+        modules: {
+          toolbar: [
+            [{ header: 1 }, { header: 2 }],
+            ["bold", "italic", "underline", "strike"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["blockquote", "code-block", "link", "image"],
+          ],
+        },
+      });
+
+      const quill = quillInstance.current;
+      quill.on("text-change", function (delta, oldDelta, source) {
+        if (source == "api") {
+          console.log("An API call triggered this change.");
+        } else if (source == "user") {
+          console.log(quill.root.innerHTML);
+          console.log("이걸 .. 어떻게 .. 잘 .. 하면 .. 저장 .. 될 .. 텐데 ..");
+        }
+      });
+    }
   }, []);
 
   const btn = () => {
