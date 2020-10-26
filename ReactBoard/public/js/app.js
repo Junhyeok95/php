@@ -100702,11 +100702,23 @@ var Boards = function Boards(_ref) {
       setLook = _useState6[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    getBoards();
+    if (sessionStorage.getItem("page") && sessionStorage.getItem("look")) {// getBoards(sessionStorage.getItem("page"));
+      // setLook(sessionStorage.getItem("look"));
+    } else {
+      getBoards();
+    }
+
+    return function () {// console.log("exit");
+    };
   }, []);
 
   var getBoards = function getBoards(pageNumber) {
-    var getPage = pageNumber;
+    var getPage = pageNumber; // // TEST CODE
+    // if (getPage != undefined) {
+    //   sessionStorage.setItem("look", look);
+    //   sessionStorage.setItem("page", getPage);
+    // }
+
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "get",
       url: "/api/boards",
@@ -100754,8 +100766,8 @@ var Boards = function Boards(_ref) {
         className: "text-center"
       }, i), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HoverTd, {
         onClick: function onClick() {
-          console.log(data.data[i].id, "history push");
-          console.log(history.push("".concat(match.url, "/detail/").concat(data.data[i].id)));
+          // console.log(data.data[i].id, "history push");
+          history.push("".concat(match.url, "/detail/").concat(data.data[i].id));
         }
       }, data.data[i].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
@@ -100880,13 +100892,11 @@ var Detail = function Detail(_ref) {
       setData = _useState2[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    console.log("match.params.detail");
+    // console.log("match.params.detail");
     getBoardsDetail(match.params.detail);
   }, []);
 
   var getBoardsDetail = function getBoardsDetail(detailId) {
-    console.log("detailId");
-    console.log(detailId);
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "get",
       url: "/api/boards/".concat(detailId)
@@ -100922,7 +100932,9 @@ var Detail = function Detail(_ref) {
     }
   }, "\uC0AD\uC81C"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onClick: function onClick() {
-      alert("다시하장 ..");
+      // alert("다시하장 ..");
+      // history.push("/");
+      history.go(-1); // histroy.back();
     }
   }, "\uAE00\uBAA9\uB85D"))));
 };
@@ -101193,6 +101205,10 @@ var StyledDiv = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_t
 var StyledTitle = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2());
 
 var HomePage = function HomePage() {
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    sessionStorage.clear();
+    console.log("sessionStorage.clear() !");
+  });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv, {
     className: "flex-center position-ref full-height"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

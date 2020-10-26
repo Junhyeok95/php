@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const StyledDiv = styled.div`
@@ -13,6 +13,10 @@ const StyledTitle = styled.div`
 `;
 
 const HomePage = () => {
+  useEffect(() => {
+    sessionStorage.clear();
+    console.log("sessionStorage.clear() !");
+  });
   return (
     <StyledDiv className="flex-center position-ref full-height">
       <div className="content">

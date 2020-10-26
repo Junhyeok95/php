@@ -7,13 +7,11 @@ const Detail = ({ match, location, history }) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    console.log("match.params.detail");
+    // console.log("match.params.detail");
     getBoardsDetail(match.params.detail);
   }, []);
 
   const getBoardsDetail = (detailId) => {
-    console.log("detailId");
-    console.log(detailId);
     Axios({
       method: "get",
       url: `/api/boards/${detailId}`,
@@ -59,7 +57,10 @@ const Detail = ({ match, location, history }) => {
             </Button>
             <Button
               onClick={() => {
-                alert("다시하장 ..");
+                // alert("다시하장 ..");
+                // history.push("/");
+                history.go(-1);
+                // histroy.back();
               }}
             >
               글목록

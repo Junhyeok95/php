@@ -17,11 +17,27 @@ const Boards = ({ match, location, history }) => {
   const [look, setLook] = useState(0);
 
   useEffect(() => {
-    getBoards();
+    if (sessionStorage.getItem("page") && sessionStorage.getItem("look")) {
+      // getBoards(sessionStorage.getItem("page"));
+      // setLook(sessionStorage.getItem("look"));
+    } else {
+      getBoards();
+    }
+
+    return () => {
+      // console.log("exit");
+    };
   }, []);
 
   const getBoards = (pageNumber) => {
     const getPage = pageNumber;
+
+    // // TEST CODE
+    // if (getPage != undefined) {
+    //   sessionStorage.setItem("look", look);
+    //   sessionStorage.setItem("page", getPage);
+    // }
+
     Axios({
       method: "get",
       url: "/api/boards",
@@ -68,10 +84,8 @@ const Boards = ({ match, location, history }) => {
           <td className="text-center">{i}</td>
           <HoverTd
             onClick={() => {
-              console.log(data.data[i].id, "history push");
-              console.log(
-                history.push(`${match.url}/detail/${data.data[i].id}`)
-              );
+              // console.log(data.data[i].id, "history push");
+              history.push(`${match.url}/detail/${data.data[i].id}`);
             }}
           >
             {data.data[i].title}
