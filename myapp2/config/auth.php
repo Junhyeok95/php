@@ -15,6 +15,8 @@ return [
 
     'defaults' => [
         'guard' => 'web',
+        // 임시
+        // 'guard' => 'api',
         'passwords' => 'users',
     ],
 
@@ -42,9 +44,11 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            // 변경
+            // 'driver' => 'token',
+            'driver' => 'jwt',
             'provider' => 'users',
-            'hash' => false,
+            // 'hash' => false,
         ],
     ],
 
