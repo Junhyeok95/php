@@ -72,6 +72,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
+            // 설명 내가 유저로 사용 할 모델을 등록
             'model' => App\Models\User::class,
         ],
 
