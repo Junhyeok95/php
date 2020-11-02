@@ -19,4 +19,5 @@ php artisan jwt:secret
 
 php artisan make:controller Api/Auth/JWTAuthController
 php artisan make:request RegisterRequest
+php artisan make:controller Api/BaseApiController.php
 ```
