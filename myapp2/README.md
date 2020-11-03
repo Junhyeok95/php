@@ -11,6 +11,7 @@ php artisan key:generate
 
 composer require laravel/ui
 php artisan ui react --auth
+php artisan migrate
 
 composer require tymon/jwt-auth
 php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"

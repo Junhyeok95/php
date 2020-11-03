@@ -8,12 +8,12 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\JWTAuth;
+use Symfony\component\HttpFoundation\Response;
 
 
-class JWTAuthController extends BaseApiController
+class JWTAuthController extends BaseApiController // extends
 {
     // https://jwt-auth.readthedocs.io/en/develop/auth-guard/
-
     public function __construct()
     {
         parent::__construct(); // 부모 생성자 호출
