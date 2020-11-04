@@ -16,11 +16,11 @@ use App\Http\Controllers\Api\Auth\JWTAuthController;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+  return $request->user();
 });
 
 Route::group(['prefix' => 'auth'], function () {
-    // Route::post('login', 'App\Http\Controllers\Api\Auth\JWTAuthController@login ')->name('jwt.login');
-    Route::post('login', [JWTAuthController::class, 'login'])->name('jwt.login');
-    Route::post('register', [JWTAuthController::class, 'register'])->name('jwt.register');
+  // Route::post('login', 'App\Http\Controllers\Api\Auth\JWTAuthController@login ')->name('jwt.login');
+  Route::post('login', [JWTAuthController::class, 'login'])->name('jwt.login');
+  Route::post('register', [JWTAuthController::class, 'register'])->name('jwt.register');
 });

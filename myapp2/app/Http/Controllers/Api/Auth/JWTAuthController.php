@@ -13,32 +13,38 @@ use Symfony\component\HttpFoundation\Response;
 
 class JWTAuthController extends BaseApiController // extends
 {
-    // https://jwt-auth.readthedocs.io/en/develop/auth-guard/
-    public function __construct()
-    {
-        parent::__construct(); // 부모 생성자 호출
+  // https://jwt-auth.readthedocs.io/en/develop/auth-guard/
+  public function __construct()
+  {
+    parent::__construct(); // 부모 생성자 호출
+  }
+
+  // 로그인
+  public function login(Request $request)
+  {
+    $credentials = request(['email', 'password']);
+
+    $token = auth()->attempt($credentials);
+
+    dd($credentials);
+
+    if (!$token = JWTAuth::attemp($credentials)) {
+      return response()->json([
+        'status' => false,
+        'message' => 'Unauthorized'
+      ], RESPONSE::HTTP_UNAUTHORIZED);
     }
+  }
 
-    // 로그인
-    public function login(Request $request)
-    {
-        $credentials = $request(['email', 'password']);
+  // 회원가입
+  public function register(RegisterRequest $request) // Http->Requests
+  {
+    return "hi";
+    $newUser = User::create($request->all());
 
-        $token = auth()->attempt($credentials);
+    dd($newUser);
 
-        if (!$token = JWTAuth::attemp($credentials)) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Unauthorized'
-            ], RESPONSE::HTTP_UNAUTHORIZED);
-        }
-    }
 
-    // 회원가입
-    public function register(RegisterRequest $request)
-    {
-        $newUser = User::create($request->all());
-
-        return $this->login($request);
-    }
+    return $this->login($request);
+  }
 }
