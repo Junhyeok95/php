@@ -24,3 +24,8 @@ Route::group(['prefix' => 'auth'], function () {
   Route::post('login', [JWTAuthController::class, 'login'])->name('jwt.login');
   Route::post('register', [JWTAuthController::class, 'register'])->name('jwt.register');
 });
+
+Route::post('/ttt', function (Request $request) {
+  $all = $request->all();
+  return response()->json(["api", $all]);
+});

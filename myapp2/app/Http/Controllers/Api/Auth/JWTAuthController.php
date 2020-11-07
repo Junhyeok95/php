@@ -22,29 +22,35 @@ class JWTAuthController extends BaseApiController // extends
   // 로그인
   public function login(Request $request)
   {
-    $credentials = request(['email', 'password']);
 
-    $token = auth()->attempt($credentials);
+    $all = $request->all();
+    return response()->json(["api", $all]);
 
-    dd($credentials);
+    // $credentials = request(['email', 'password']);
 
-    if (!$token = JWTAuth::attemp($credentials)) {
-      return response()->json([
-        'status' => false,
-        'message' => 'Unauthorized'
-      ], RESPONSE::HTTP_UNAUTHORIZED);
-    }
+    // $token = auth()->attempt($credentials);
+
+    // dd($credentials);
+
+    // if (!$token = JWTAuth::attemp($credentials)) {
+    //   return response()->json([
+    //     'status' => false,
+    //     'message' => 'Unauthorized'
+    //   ], RESPONSE::HTTP_UNAUTHORIZED);
+    // }
   }
 
   // 회원가입
   public function register(RegisterRequest $request) // Http->Requests
   {
-    return "hi";
-    $newUser = User::create($request->all());
 
-    dd($newUser);
+    $all = $request->all();
+    return response()->json(["api", $all]);
 
+    // $newUser = User::create($request->all());
 
-    return $this->login($request);
+    // dd($newUser);
+
+    // return $this->login($request);
   }
 }

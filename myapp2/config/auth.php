@@ -2,7 +2,7 @@
 
 return [
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
     |--------------------------------------------------------------------------
@@ -13,14 +13,14 @@ return [
     |
     */
 
-    'defaults' => [
-        'guard' => 'web',
-        // 임시
-        // 'guard' => 'api',
-        'passwords' => 'users',
-    ],
+  'defaults' => [
+    // 'guard' => 'web',
+    // 임시
+    'guard' => 'api',
+    'passwords' => 'users',
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Authentication Guards
     |--------------------------------------------------------------------------
@@ -37,22 +37,22 @@ return [
     |
     */
 
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-
-        'api' => [
-            // 변경
-            // 'driver' => 'token',
-            'driver' => 'jwt',
-            'provider' => 'users',
-            // 'hash' => false,
-        ],
+  'guards' => [
+    'web' => [
+      'driver' => 'session',
+      'provider' => 'users',
     ],
 
-    /*
+    'api' => [
+      // 변경
+      // 'driver' => 'token',
+      'driver' => 'jwt',
+      'provider' => 'users',
+      // 'hash' => false,
+    ],
+  ],
+
+  /*
     |--------------------------------------------------------------------------
     | User Providers
     |--------------------------------------------------------------------------
@@ -69,20 +69,20 @@ return [
     |
     */
 
-    'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            // 설명 내가 유저로 사용 할 모델을 등록
-            'model' => App\Models\User::class,
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+  'providers' => [
+    'users' => [
+      'driver' => 'eloquent',
+      // 설명 내가 유저로 사용 할 모델을 등록
+      'model' => App\Models\User::class,
     ],
 
-    /*
+    // 'users' => [
+    //     'driver' => 'database',
+    //     'table' => 'users',
+    // ],
+  ],
+
+  /*
     |--------------------------------------------------------------------------
     | Resetting Passwords
     |--------------------------------------------------------------------------
@@ -97,16 +97,16 @@ return [
     |
     */
 
-    'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
+  'passwords' => [
+    'users' => [
+      'provider' => 'users',
+      'table' => 'password_resets',
+      'expire' => 60,
+      'throttle' => 60,
     ],
+  ],
 
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout
     |--------------------------------------------------------------------------
@@ -117,6 +117,6 @@ return [
     |
     */
 
-    'password_timeout' => 10800,
+  'password_timeout' => 10800,
 
 ];
