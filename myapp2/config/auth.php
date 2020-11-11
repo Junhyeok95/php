@@ -14,9 +14,9 @@ return [
     */
 
   'defaults' => [
-    // 'guard' => 'web',
+    'guard' => 'web',
     // 임시
-    'guard' => 'api',
+    // 'guard' => 'api',
     'passwords' => 'users',
   ],
 

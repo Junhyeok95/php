@@ -21,12 +21,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(
   [
-    'middleware' => 'api',
+    // 'middleware' => 'api',
     'prefix' => 'auth'
   ],
   function () {
     // Route::post('login', 'App\Http\Controllers\Api\Auth\JWTAuthController@login ')->name('jwt.login');
     Route::post('login', [JWTAuthController::class, 'login'])->name('jwt.login');
     Route::post('register', [JWTAuthController::class, 'register'])->name('jwt.register');
+
+    Route::post('me', [JWTAuthController::class, 'me'])->name('jwt.me');
+    Route::post('logout', [JWTAuthController::class, 'logout'])->name('jwt.logout');
+    Route::post('refresh', [JWTAuthController::class, 'refresh'])->name('jwt.refresh');
   }
 );

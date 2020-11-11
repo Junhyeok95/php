@@ -28,13 +28,14 @@ class JWTAuthController extends BaseApiController // extends
         'status' => false,
         'message' => 'Unauthorized'
       ], RESPONSE::HTTP_UNAUTHORIZED);
-    } else {
-      return response()->json([
-        'access_token' => $token,
-        'token_type' => 'bearer',
-        'expires_in' => auth()->factory()->getTTL() * 60
-      ]);
     }
+
+    return response()->json([
+      'access_token' => $token,
+      'token_type' => 'bearer',
+      'expires_in' => auth()->factory()->getTTL() * 60,
+      'current_user' => auth()->user()
+    ]);
   }
 
   // 회원가입
@@ -44,5 +45,22 @@ class JWTAuthController extends BaseApiController // extends
     // dd($newUser);
 
     return $this->login($request);
+  }
+
+  public function me()
+  {
+    return response()->json(auth()->user());
+  }
+
+  public function logout()
+  {
+    auth()->logout();
+
+    return response()->json(['message' => 'Successfully logged out']);
+  }
+
+  public function refresh()
+  {
+    return $this->respondWithToken(auth()->refresh());
   }
 }
