@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(
   [
-    // 'middleware' => 'api',
+    'middleware' => 'api', // api.php 는 자동으로 api미들웨어를 찾음
     'prefix' => 'auth'
   ],
   function () {
