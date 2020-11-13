@@ -48,4 +48,10 @@ php artisan migrate:refresh --seed
 php artisan make:factory BoardFactory --model=Board
 php artisan make:seeder BoardsTableSeeder
 
+composer require tymon/jwt-auth
+php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+php artisan jwt:secret
+
+php artisan make:controller AuthController
+php artisan make:request RegisterRequest
 ```
