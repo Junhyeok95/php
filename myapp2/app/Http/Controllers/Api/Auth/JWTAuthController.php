@@ -15,8 +15,8 @@ class JWTAuthController extends BaseApiController // extends
   public function __construct()
   {
     parent::__construct(); // 부모 생성자 호출
-    // $this->middleware('JWT', ['except' => ['login', 'register']]);
-    $this->middleware('auth:api', ['except' => ['login']]);
+    $this->middleware('JWT', ['except' => ['login', 'register']]);
+    // $this->middleware('auth:api', ['except' => ['login']]);
   }
 
   // 로그인

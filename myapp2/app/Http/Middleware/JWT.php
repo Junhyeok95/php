@@ -18,7 +18,7 @@ class JWT
   public function handle(Request $request, Closure $next)
   {
     // 토큰을 이용하여 인증 ...
-    echo JWTAuth::parseToken()->authenticate();
+    JWTAuth::parseToken()->authenticate();
     return $next($request);
   }
 }
