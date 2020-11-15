@@ -101045,7 +101045,7 @@ var Write = function Write() {
       console.log(res);
       console.log(res.data);
     })["catch"](function (error) {
-      return console.log(error);
+      console.log(error);
     });
   };
 
