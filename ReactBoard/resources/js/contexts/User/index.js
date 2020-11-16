@@ -10,19 +10,26 @@ const UserContextProvider = withRouter(({ children, history }) => {
   const login = (email, password) => {
     Axios({
       method: "post",
-      url: "/login",
+      url: "/api/auth/login",
       data: {
         email,
-        password
-      }
+        password,
+      },
     })
-      .then(res => {
-        console.log("아 ㅋㅋ 부끄럽다 수정하자");
-        setUserInfo(JSON.parse(res.config.data).email);
-        history.push("/");
-        localStorage.setItem("userEmail", JSON.parse(res.config.data).email);
+      .then((res) => {
+        console.log(res);
+        if (res.data.access_token) {
+          let userData = {
+            email: res.data.current_user.email,
+            name: res.data.current_user.name,
+            token: res.data.access_token,
+          };
+          setUserInfo(userData);
+          localStorage.setItem("user", JSON.stringify(userData));
+          // history.push("/");
+        }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   };
@@ -35,13 +42,13 @@ const UserContextProvider = withRouter(({ children, history }) => {
         name,
         email,
         password,
-        password_confirmation: passwordConfirm
-      }
+        password_confirmation: passwordConfirm,
+      },
     })
-      .then(res => {
+      .then((res) => {
         history.push("/");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   };
@@ -49,21 +56,21 @@ const UserContextProvider = withRouter(({ children, history }) => {
   const logout = () => {
     Axios({
       method: "post",
-      url: "/logout"
+      url: "/logout",
     })
-      .then(res => {
+      .then((res) => {
         setUserInfo(null);
         history.push("/");
-        localStorage.removeItem("userEmail");
+        localStorage.removeItem("user");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   };
 
   const loadUser = () => {
     try {
-      const user = localStorage.getItem("userEmail");
+      const user = JSON.parse(localStorage.getItem("user"));
       if (!user) return;
       setUserInfo(user);
     } catch (error) {
@@ -73,9 +80,6 @@ const UserContextProvider = withRouter(({ children, history }) => {
 
   useEffect(() => {
     loadUser();
-    // localStorage -> 자동 로그인
-    // sessionStorage -> 일회성
-    // console.log(userInfo);
   }, []);
 
   return (
@@ -84,7 +88,7 @@ const UserContextProvider = withRouter(({ children, history }) => {
         userInfo,
         login,
         register,
-        logout
+        logout,
       }}
     >
       {children}

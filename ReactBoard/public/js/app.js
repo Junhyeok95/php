@@ -100315,16 +100315,23 @@ var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["
   var login = function login(email, password) {
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "post",
-      url: "/login",
+      url: "/api/auth/login",
       data: {
         email: email,
         password: password
       }
     }).then(function (res) {
-      console.log("아 ㅋㅋ 부끄럽다 수정하자");
-      setUserInfo(JSON.parse(res.config.data).email);
-      history.push("/");
-      localStorage.setItem("userEmail", JSON.parse(res.config.data).email);
+      console.log(res);
+
+      if (res.data.access_token) {
+        var userData = {
+          email: res.data.current_user.email,
+          name: res.data.current_user.name,
+          token: res.data.access_token
+        };
+        setUserInfo(userData);
+        localStorage.setItem("user", JSON.stringify(userData)); // history.push("/");
+      }
     })["catch"](function (error) {
       console.log(error);
     });
@@ -100354,7 +100361,7 @@ var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["
     }).then(function (res) {
       setUserInfo(null);
       history.push("/");
-      localStorage.removeItem("userEmail");
+      localStorage.removeItem("user");
     })["catch"](function (error) {
       console.log(error);
     });
@@ -100362,7 +100369,7 @@ var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["
 
   var loadUser = function loadUser() {
     try {
-      var user = localStorage.getItem("userEmail");
+      var user = JSON.parse(localStorage.getItem("user"));
       if (!user) return;
       setUserInfo(user);
     } catch (error) {
@@ -100371,9 +100378,7 @@ var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["
   };
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    loadUser(); // localStorage -> 자동 로그인
-    // sessionStorage -> 일회성
-    // console.log(userInfo);
+    loadUser();
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UserContext.Provider, {
     value: {
