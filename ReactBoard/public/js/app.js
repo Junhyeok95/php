@@ -100321,17 +100321,8 @@ var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["
         password: password
       }
     }).then(function (res) {
-      console.log(res);
-
-      if (res.data.access_token) {
-        var userData = {
-          email: res.data.current_user.email,
-          name: res.data.current_user.name,
-          token: res.data.access_token
-        };
-        setUserInfo(userData);
-        localStorage.setItem("user", JSON.stringify(userData)); // history.push("/");
-      }
+      setCurrentUser(res);
+      history.push("/");
     })["catch"](function (error) {
       console.log(error);
     });
@@ -100340,7 +100331,7 @@ var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["
   var register = function register(name, email, password, passwordConfirm) {
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "post",
-      url: "/register",
+      url: "/api/auth/register",
       data: {
         name: name,
         email: email,
@@ -100348,6 +100339,7 @@ var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["
         password_confirmation: passwordConfirm
       }
     }).then(function (res) {
+      setCurrentUser(res);
       history.push("/");
     })["catch"](function (error) {
       console.log(error);
@@ -100355,16 +100347,21 @@ var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["
   };
 
   var logout = function logout() {
-    axios__WEBPACK_IMPORTED_MODULE_2___default()({
-      method: "post",
-      url: "/logout"
-    }).then(function (res) {
-      setUserInfo(null);
-      history.push("/");
-      localStorage.removeItem("user");
-    })["catch"](function (error) {
-      console.log(error);
-    });
+    if (userInfo.token) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: "post",
+        url: "/api/auth/logout",
+        headers: {
+          Authorization: "Bearer " + userInfo.token
+        }
+      }).then(function (res) {
+        localStorage.removeItem("user");
+        setUserInfo(null);
+        history.push("/");
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
   };
 
   var loadUser = function loadUser() {
@@ -100374,6 +100371,19 @@ var UserContextProvider = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["
       setUserInfo(user);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  var setCurrentUser = function setCurrentUser(res) {
+    if (res.data.access_token) {
+      var userData = {
+        email: res.data.current_user.email,
+        name: res.data.current_user.name,
+        token: res.data.access_token
+      };
+      localStorage.setItem("user", JSON.stringify(userData));
+      setUserInfo(userData);
+      history.push("/");
     }
   };
 
@@ -101460,7 +101470,12 @@ var RegisterPage = function RegisterPage() {
   var onSubmit = function onSubmit(e) {
     e.preventDefault();
     console.log("- register onSubmit - \n", name, email, password, passwordConfirm);
-    register(name, email, password, passwordConfirm);
+
+    if (password !== passwordConfirm) {
+      alert("비밀번호가 서로 다릅니다");
+    } else {
+      register(name, email, password, passwordConfirm);
+    }
   };
 
   var onChange = function onChange(e) {

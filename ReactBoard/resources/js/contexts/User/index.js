@@ -17,17 +17,8 @@ const UserContextProvider = withRouter(({ children, history }) => {
       },
     })
       .then((res) => {
-        console.log(res);
-        if (res.data.access_token) {
-          let userData = {
-            email: res.data.current_user.email,
-            name: res.data.current_user.name,
-            token: res.data.access_token,
-          };
-          setUserInfo(userData);
-          localStorage.setItem("user", JSON.stringify(userData));
-          // history.push("/");
-        }
+        setCurrentUser(res);
+        history.push("/");
       })
       .catch(function (error) {
         console.log(error);
@@ -37,7 +28,7 @@ const UserContextProvider = withRouter(({ children, history }) => {
   const register = (name, email, password, passwordConfirm) => {
     Axios({
       method: "post",
-      url: "/register",
+      url: "/api/auth/register",
       data: {
         name,
         email,
@@ -46,6 +37,7 @@ const UserContextProvider = withRouter(({ children, history }) => {
       },
     })
       .then((res) => {
+        setCurrentUser(res);
         history.push("/");
       })
       .catch(function (error) {
@@ -54,18 +46,23 @@ const UserContextProvider = withRouter(({ children, history }) => {
   };
 
   const logout = () => {
-    Axios({
-      method: "post",
-      url: "/logout",
-    })
-      .then((res) => {
-        setUserInfo(null);
-        history.push("/");
-        localStorage.removeItem("user");
+    if (userInfo.token) {
+      Axios({
+        method: "post",
+        url: "/api/auth/logout",
+        headers: {
+          Authorization: "Bearer " + userInfo.token,
+        },
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .then((res) => {
+          localStorage.removeItem("user");
+          setUserInfo(null);
+          history.push("/");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   };
 
   const loadUser = () => {
@@ -75,6 +72,19 @@ const UserContextProvider = withRouter(({ children, history }) => {
       setUserInfo(user);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const setCurrentUser = (res) => {
+    if (res.data.access_token) {
+      let userData = {
+        email: res.data.current_user.email,
+        name: res.data.current_user.name,
+        token: res.data.access_token,
+      };
+      localStorage.setItem("user", JSON.stringify(userData));
+      setUserInfo(userData);
+      history.push("/");
     }
   };
 

@@ -9,7 +9,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     console.log(
       "- register onSubmit - \n",
@@ -18,10 +18,14 @@ const RegisterPage = () => {
       password,
       passwordConfirm
     );
-    register(name, email, password, passwordConfirm);
+    if (password !== passwordConfirm) {
+      alert("비밀번호가 서로 다릅니다");
+    } else {
+      register(name, email, password, passwordConfirm);
+    }
   };
 
-  const onChange = e => {
+  const onChange = (e) => {
     const { name, value } = e.target;
     if (name === "name") {
       setName(value);
