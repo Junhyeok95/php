@@ -1,10 +1,12 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Axios from "axios";
 import Button from "../../../components/Button";
+import { UserContext } from "../../../contexts/User";
 
 const Detail = ({ match, location, history }) => {
   const [data, setData] = useState(null);
+  const { userInfo } = useContext(UserContext);
 
   useEffect(() => {
     // console.log("match.params.detail");
@@ -15,6 +17,11 @@ const Detail = ({ match, location, history }) => {
     Axios({
       method: "get",
       url: `/api/boards/${detailId}`,
+      headers: {
+        Authorization:
+          "Bearer " +
+          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+      },
     })
       .then((res) => {
         setData(res.data);

@@ -100666,6 +100666,16 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+function _templateObject2() {
+  var data = _taggedTemplateLiteral([""]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject() {
   var data = _taggedTemplateLiteral(["\n  cursor: pointer;\n  &:hover {\n    color: #0000ffcc;\n  }\n"]);
 
@@ -100684,6 +100694,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 var HoverTd = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].td(_templateObject());
+var WriteButton = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].button(_templateObject2());
 
 var Boards = function Boards(_ref) {
   var match = _ref.match,
@@ -100837,7 +100848,9 @@ var Boards = function Boards(_ref) {
 
         setLook(parseInt(Math.ceil(data.total / data.per_page) / paging) - point);
       }
-    }))));
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WriteButton, {
+      onClick: function onClick() {}
+    }, "\uAE00 \uC4F0 \uAE30")));
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
@@ -100867,6 +100880,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/Button */ "./resources/js/components/Button/index.js");
+/* harmony import */ var _contexts_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../contexts/User */ "./resources/js/contexts/User/index.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -100884,6 +100898,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var Detail = function Detail(_ref) {
   var match = _ref.match,
       location = _ref.location,
@@ -100894,6 +100909,9 @@ var Detail = function Detail(_ref) {
       data = _useState2[0],
       setData = _useState2[1];
 
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_contexts_User__WEBPACK_IMPORTED_MODULE_4__["UserContext"]),
+      userInfo = _useContext.userInfo;
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // console.log("match.params.detail");
     getBoardsDetail(match.params.detail);
@@ -100902,7 +100920,10 @@ var Detail = function Detail(_ref) {
   var getBoardsDetail = function getBoardsDetail(detailId) {
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "get",
-      url: "/api/boards/".concat(detailId)
+      url: "/api/boards/".concat(detailId),
+      headers: {
+        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+      }
     }).then(function (res) {
       setData(res.data);
     })["catch"](function (error) {

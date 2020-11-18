@@ -10,6 +10,7 @@ const HoverTd = styled.td`
     color: #0000ffcc;
   }
 `;
+const WriteButton = styled.button``;
 
 const Boards = ({ match, location, history }) => {
   const [paging] = useState(8);
@@ -170,6 +171,7 @@ const Boards = ({ match, location, history }) => {
               />
             </Fragment>
           )}
+          <WriteButton onClick={() => {}}>글 쓰 기</WriteButton>
         </Pagination>
       </div>
     );
