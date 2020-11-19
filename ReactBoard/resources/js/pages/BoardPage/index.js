@@ -1,13 +1,14 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useEffect, useContext } from "react";
 import { Route, Link } from "react-router-dom";
 import { Container, Row, Col, Badge } from "react-bootstrap";
+import { UserContext } from "../../contexts/User";
 
 import Boards from "./Boards";
 import Detail from "./Detail";
 import Write from "./Write";
 
 const BoardPage = ({ match }) => {
-  const [test, setTest] = useState(null);
+  const { userInfo } = useContext(UserContext);
 
   useEffect(() => {}, []);
 
@@ -39,8 +40,18 @@ const BoardPage = ({ match }) => {
       <Container>
         {renderNavLink()}
         <Route path={`${match.url}`} component={Boards} exact />
-        <Route path={`${match.url}/write`} component={Write} exact />
-        <Route path={`${match.url}/detail/:detail`} component={Detail} exact />
+        <Route
+          path={`${match.url}/write`}
+          // component={Write}
+          render={(props) => <Write userInfo={userInfo} {...props} />}
+          exact
+        />
+        <Route
+          path={`${match.url}/detail/:detail`}
+          // component={Detail}
+          render={(props) => <Detail userInfo={userInfo} {...props} />}
+          exact
+        />
       </Container>
     </Fragment>
   );

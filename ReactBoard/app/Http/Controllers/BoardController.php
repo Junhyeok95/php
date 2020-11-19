@@ -10,7 +10,7 @@ class BoardController extends Controller
   public function __construct()
   {
     //로그인 하지 않아도 index(게시판 홈), show(게시판 뷰)는 볼 수 있음
-    $this->middleware('auth:api', ['except' => ['index', 'show']]);
+    $this->middleware('auth:api', ['except' => ['index', 'show', 'store']]);
   }
 
   // 사용자 인증
@@ -72,16 +72,15 @@ class BoardController extends Controller
    */
   public function store(Request $request)
   {
-    // $myuser = \Auth::user();
-    $create = \App\Board::create([
-      'user_id' => 1,
-      'title' => "AAAA",
-      'content' => "cccccc",
-    ]);
-    // $request->id
+    // dd(auth()->user()->id, auth()->user()->email);
 
-    // return response()->json($request);
-    return response()->json($create);
+    $board = \App\Board::create([
+      'user_id' => auth()->user()->id,
+      'title' => $request->title,
+      'content' => $request->content,
+    ]);
+
+    return response()->json($board);
   }
 
   /**

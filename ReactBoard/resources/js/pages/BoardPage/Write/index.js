@@ -32,7 +32,7 @@ const QuillWrapper = styled.div`
   }
 `;
 
-const Write = () => {
+const Write = ({ userInfo }) => {
   const quillElement = useRef(null);
   const quillInstance = useRef(null);
 
@@ -70,23 +70,31 @@ const Write = () => {
     }
   }, []);
 
-  const btn = () => {
-    Axios({
-      method: "post",
-      url: "/api/boards",
-      data: {
-        id: 1, // user id
-        title: "my title",
-        content: "Flintstone",
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
+  const postBtn = () => {
+    if (userInfo) {
+      Axios({
+        method: "post",
+        url: "/api/boards",
+        headers: {
+          Authorization:
+            "Bearer " +
+            (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+        },
+        data: {
+          title: "my title",
+          content: "Flintstone",
+        },
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      alert("로그인 필요");
+    }
   };
 
   return (
@@ -97,8 +105,7 @@ const Write = () => {
       </QuillWrapper>
       <Button
         onClick={() => {
-          console.log("button");
-          btn();
+          postBtn();
         }}
       >
         글 작성

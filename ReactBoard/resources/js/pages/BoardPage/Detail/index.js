@@ -1,12 +1,10 @@
-import React, { Fragment, useState, useEffect, useContext } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Axios from "axios";
 import Button from "../../../components/Button";
-import { UserContext } from "../../../contexts/User";
 
-const Detail = ({ match, location, history }) => {
+const Detail = ({ userInfo, match, history }) => {
   const [data, setData] = useState(null);
-  const { userInfo } = useContext(UserContext);
 
   useEffect(() => {
     // console.log("match.params.detail");
@@ -64,10 +62,7 @@ const Detail = ({ match, location, history }) => {
             </Button>
             <Button
               onClick={() => {
-                // alert("다시하장 ..");
-                // history.push("/");
                 history.go(-1);
-                // histroy.back();
               }}
             >
               글목록
