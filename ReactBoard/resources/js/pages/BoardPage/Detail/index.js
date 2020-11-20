@@ -31,8 +31,8 @@ const Detail = ({ userInfo, match, history }) => {
     <Fragment>
       <div>heelo</div>
       {data != null && (
-        <Container>
-          <Row>
+        <Container style={{ backgroundColor: "red" }}>
+          <Row style={{ backgroundColor: "blue" }}>
             <Col style={{ fontSize: 30 }} className="text-right">
               제목 :{" "}
             </Col>
@@ -40,33 +40,37 @@ const Detail = ({ userInfo, match, history }) => {
               {data.title}
             </Col>
           </Row>
-          <Row>
+          <Row style={{ minHeight: 300 }}>
             <Col style={{ fontSize: 24 }} className="text-center">
               {data.content}
             </Col>
           </Row>
-          <Row>
-            <Button
-              onClick={() => {
-                alert("로그인이 필요합니다");
-              }}
-            >
-              수정
-            </Button>
-            <Button
-              onClick={() => {
-                alert("로그인이 필요합니다");
-              }}
-            >
-              삭제
-            </Button>
-            <Button
-              onClick={() => {
-                history.go(-1);
-              }}
-            >
-              글목록
-            </Button>
+          <Row style={{ backgroundColor: "gray" }} className="d-flex p-4">
+            <Col style={{ backgroundColor: "yellow" }} className="p-2">
+              <Button
+                onClick={() => {
+                  history.go(-1);
+                }}
+              >
+                글목록
+              </Button>
+            </Col>
+            <Col style={{ backgroundColor: "green" }} className="ml-auto p-2">
+              <Button
+                onClick={() => {
+                  alert("로그인이 필요합니다");
+                }}
+              >
+                수정
+              </Button>
+              <Button
+                onClick={() => {
+                  alert("로그인이 필요합니다");
+                }}
+              >
+                삭제
+              </Button>
+            </Col>
           </Row>
         </Container>
       )}

@@ -12,7 +12,7 @@ const HoverTd = styled.td`
 `;
 const WriteButton = styled.button``;
 
-const Boards = ({ match, location, history }) => {
+const Boards = ({ match, history }) => {
   const [paging] = useState(8);
   const [data, setData] = useState(null);
   const [look, setLook] = useState(0);
@@ -127,8 +127,9 @@ const Boards = ({ match, location, history }) => {
     }
 
     return (
-      <div>
-        <Pagination className="justify-content-center">
+      <Pagination className="d-flex justify-content-between">
+        <span></span>
+        <Row>
           {look > 0 && (
             <Pagination.First
               onClick={() => {
@@ -171,9 +172,9 @@ const Boards = ({ match, location, history }) => {
               />
             </Fragment>
           )}
-          <WriteButton onClick={() => {}}>글 쓰 기</WriteButton>
-        </Pagination>
-      </div>
+        </Row>
+        <WriteButton onClick={() => {}}>글 쓰 기</WriteButton>
+      </Pagination>
     );
   };
 

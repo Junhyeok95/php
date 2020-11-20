@@ -54,4 +54,5 @@ php artisan jwt:secret
 
 php artisan make:controller AuthController
 php artisan make:request RegisterRequest
+php artisan make:request BoardRequest
 ```
