@@ -55,4 +55,7 @@ php artisan jwt:secret
 php artisan make:controller AuthController
 php artisan make:request RegisterRequest
 php artisan make:request BoardRequest
+
+php artisan make:listener BoardEventListener --event=board.created
+php artisan make:event BoardCreated
 ```

@@ -80,6 +80,13 @@ class BoardController extends Controller
       )
     );
 
+    // dump("이벤트");
+    // event(
+    //   // 'board.created', // 프로바이더에 등록 후 생략
+    //   new \App\Events\BoardCreated(($board))
+    // );
+    // dump("이벤트");
+
     return response()->json($board);
   }
 
