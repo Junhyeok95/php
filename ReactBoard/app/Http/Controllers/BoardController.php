@@ -120,8 +120,15 @@ class BoardController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(\App\Board $board, Request $request)
+  // public function update(Request $request, $id)
+  // public function update(\App\Board $board, Request $request, $id)
   {
+    // $this->authorize('update');
+    return response()->json([$board->id, $request->id, $request->title]);
+    // return response()->json([auth()->user()->id, $request->id, $id]);
+    // return response()->json([auth()->user()->id, $board->user_id, $request->id, $id]);
+    // return response()->json([$id, "haha", $request, $request->id]);
     return response()->json("update");
   }
 
@@ -131,8 +138,13 @@ class BoardController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy(\App\Board $board)
   {
+    // return response()->json(auth()->user()->id);
+    return response()->json(auth()->user()->id === $board->user_id ? $board->delete() : "NO");
+    // $this->authorize('delete', $board);
+    // return response()->json(["destroy", $board]);
+    // return response()->json(["destroy", $id]);
     return response()->json("destroy");
   }
 }

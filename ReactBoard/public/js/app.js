@@ -100908,6 +100908,7 @@ var Detail = function Detail(_ref) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     // console.log("match.params.detail");
+    // console.log(match.params.detail);
     getBoardsDetail(match.params.detail);
   }, []);
 
@@ -100919,13 +100920,50 @@ var Detail = function Detail(_ref) {
         Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
       }
     }).then(function (res) {
+      // console.log(res);
       setData(res.data);
     })["catch"](function (error) {
       return console.log(error);
     });
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "heelo"), data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], {
+  var updateBoardsDetail = function updateBoardsDetail(detailId) {
+    axios__WEBPACK_IMPORTED_MODULE_2___default()({
+      method: "put",
+      url: "/api/boards/".concat(detailId),
+      headers: {
+        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+      },
+      data: {
+        id: "300",
+        title: "update",
+        content: "update"
+      }
+    }).then(function (res) {
+      console.log(res); // setData(res.data);
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  };
+
+  var deleteBoardsDetail = function deleteBoardsDetail(detailId) {
+    axios__WEBPACK_IMPORTED_MODULE_2___default()({
+      method: "delete",
+      url: "/api/boards/".concat(detailId),
+      headers: {
+        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+      } // data: {
+      //   id: "255",
+      // },
+
+    }).then(function (res) {
+      console.log(res); // setData(res.data);
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], {
     style: {
       backgroundColor: "red"
     }
@@ -100973,11 +101011,14 @@ var Detail = function Detail(_ref) {
     className: "ml-auto p-2"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onClick: function onClick() {
-      alert("로그인이 필요합니다");
+      console.log(match.params.detail);
+      updateBoardsDetail(match.params.detail);
     }
   }, "\uC218\uC815"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onClick: function onClick() {
-      alert("로그인이 필요합니다");
+      console.log(match.params.detail);
+      deleteBoardsDetail(match.params.detail);
+      history.go(-1);
     }
   }, "\uC0AD\uC81C")))));
 };

@@ -8,6 +8,7 @@ const Detail = ({ userInfo, match, history }) => {
 
   useEffect(() => {
     // console.log("match.params.detail");
+    // console.log(match.params.detail);
     getBoardsDetail(match.params.detail);
   }, []);
 
@@ -22,14 +23,56 @@ const Detail = ({ userInfo, match, history }) => {
       },
     })
       .then((res) => {
+        // console.log(res);
         setData(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const updateBoardsDetail = (detailId) => {
+    Axios({
+      method: "put",
+      url: `/api/boards/${detailId}`,
+      headers: {
+        Authorization:
+          "Bearer " +
+          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+      },
+      data: {
+        id: "300",
+        title: "update",
+        content: "update",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        // setData(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const deleteBoardsDetail = (detailId) => {
+    Axios({
+      method: "delete",
+      url: `/api/boards/${detailId}`,
+      headers: {
+        Authorization:
+          "Bearer " +
+          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+      },
+      // data: {
+      //   id: "255",
+      // },
+    })
+      .then((res) => {
+        console.log(res);
+        // setData(res.data);
       })
       .catch((error) => console.log(error));
   };
 
   return (
     <Fragment>
-      <div>heelo</div>
       {data != null && (
         <Container style={{ backgroundColor: "red" }}>
           <Row style={{ backgroundColor: "blue" }}>
@@ -58,14 +101,17 @@ const Detail = ({ userInfo, match, history }) => {
             <Col style={{ backgroundColor: "green" }} className="ml-auto p-2">
               <Button
                 onClick={() => {
-                  alert("로그인이 필요합니다");
+                  console.log(match.params.detail);
+                  updateBoardsDetail(match.params.detail);
                 }}
               >
                 수정
               </Button>
               <Button
                 onClick={() => {
-                  alert("로그인이 필요합니다");
+                  console.log(match.params.detail);
+                  deleteBoardsDetail(match.params.detail);
+                  history.go(-1);
                 }}
               >
                 삭제
