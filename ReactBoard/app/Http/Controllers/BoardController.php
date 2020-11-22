@@ -108,9 +108,10 @@ class BoardController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit(\App\Board $board)
   {
-    return response()->json("edit");
+    // 수정 창 보기
+    return response()->json($board);
   }
 
   /**
@@ -120,16 +121,13 @@ class BoardController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(\App\Board $board, Request $request)
-  // public function update(Request $request, $id)
-  // public function update(\App\Board $board, Request $request, $id)
+  public function update(\App\Board $board, BoardRequest $request)
   {
-    // $this->authorize('update');
-    return response()->json([$board->id, $request->id, $request->title]);
-    // return response()->json([auth()->user()->id, $request->id, $id]);
-    // return response()->json([auth()->user()->id, $board->user_id, $request->id, $id]);
-    // return response()->json([$id, "haha", $request, $request->id]);
-    return response()->json("update");
+    if (!auth()->user()->id === $board->user_id) {
+      return response()->json("err");
+    }
+    $board->update($request->all());
+    return response()->json($board);
   }
 
   /**
@@ -140,11 +138,6 @@ class BoardController extends Controller
    */
   public function destroy(\App\Board $board)
   {
-    // return response()->json(auth()->user()->id);
-    return response()->json(auth()->user()->id === $board->user_id ? $board->delete() : "NO");
-    // $this->authorize('delete', $board);
-    // return response()->json(["destroy", $board]);
-    // return response()->json(["destroy", $id]);
-    return response()->json("destroy");
+    return response()->json(auth()->user()->id === $board->user_id ? $board->delete() : false);
   }
 }

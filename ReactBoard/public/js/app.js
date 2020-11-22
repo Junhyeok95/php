@@ -100920,8 +100920,21 @@ var Detail = function Detail(_ref) {
         Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
       }
     }).then(function (res) {
-      // console.log(res);
       setData(res.data);
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  };
+
+  var editBoardsDetail = function editBoardsDetail(detailId) {
+    axios__WEBPACK_IMPORTED_MODULE_2___default()({
+      method: "get",
+      url: "/api/boards/".concat(detailId),
+      headers: {
+        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+      }
+    }).then(function (res) {
+      console.log(res); // setData(res.data);
     })["catch"](function (error) {
       return console.log(error);
     });
@@ -100957,7 +100970,11 @@ var Detail = function Detail(_ref) {
       // },
 
     }).then(function (res) {
-      console.log(res); // setData(res.data);
+      console.log(res);
+
+      if (res.data === true) {
+        history.go(-1);
+      }
     })["catch"](function (error) {
       return console.log(error);
     });
@@ -101012,13 +101029,17 @@ var Detail = function Detail(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onClick: function onClick() {
       console.log(match.params.detail);
-      updateBoardsDetail(match.params.detail);
+      editBoardsDetail(match.params.detail);
     }
   }, "\uC218\uC815"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onClick: function onClick() {
       console.log(match.params.detail);
+      updateBoardsDetail(match.params.detail);
+    }
+  }, "\uC800\uC7A5"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    onClick: function onClick() {
+      console.log(match.params.detail);
       deleteBoardsDetail(match.params.detail);
-      history.go(-1);
     }
   }, "\uC0AD\uC81C")))));
 };

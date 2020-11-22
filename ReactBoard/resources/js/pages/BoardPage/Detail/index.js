@@ -23,8 +23,24 @@ const Detail = ({ userInfo, match, history }) => {
       },
     })
       .then((res) => {
-        // console.log(res);
         setData(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const editBoardsDetail = (detailId) => {
+    Axios({
+      method: "get",
+      url: `/api/boards/${detailId}`,
+      headers: {
+        Authorization:
+          "Bearer " +
+          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        // setData(res.data);
       })
       .catch((error) => console.log(error));
   };
@@ -66,7 +82,9 @@ const Detail = ({ userInfo, match, history }) => {
     })
       .then((res) => {
         console.log(res);
-        // setData(res.data);
+        if (res.data === true) {
+          history.go(-1);
+        }
       })
       .catch((error) => console.log(error));
   };
@@ -102,7 +120,7 @@ const Detail = ({ userInfo, match, history }) => {
               <Button
                 onClick={() => {
                   console.log(match.params.detail);
-                  updateBoardsDetail(match.params.detail);
+                  editBoardsDetail(match.params.detail);
                 }}
               >
                 수정
@@ -110,8 +128,15 @@ const Detail = ({ userInfo, match, history }) => {
               <Button
                 onClick={() => {
                   console.log(match.params.detail);
+                  updateBoardsDetail(match.params.detail);
+                }}
+              >
+                저장
+              </Button>
+              <Button
+                onClick={() => {
+                  console.log(match.params.detail);
                   deleteBoardsDetail(match.params.detail);
-                  history.go(-1);
                 }}
               >
                 삭제
