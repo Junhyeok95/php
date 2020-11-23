@@ -58,4 +58,5 @@ php artisan make:request BoardRequest
 
 php artisan make:listener BoardEventListener --event=board.created
 php artisan make:event BoardCreated
+php artisan make:middleware JWT
 ```

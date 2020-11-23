@@ -9,7 +9,7 @@ class AuthController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    $this->middleware('JWT', ['except' => ['login', 'register']]);
     // auth()->setDefaultDriver('api');
   }
 

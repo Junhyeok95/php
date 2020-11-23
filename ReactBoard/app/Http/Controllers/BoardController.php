@@ -11,7 +11,7 @@ class BoardController extends Controller
   public function __construct()
   {
     //로그인 하지 않아도 index(게시판 홈), show(게시판 뷰)는 볼 수 있음
-    $this->middleware('auth:api', ['except' => ['index', 'show', 'store']]);
+    $this->middleware('JWT', ['except' => ['index', 'show']]);
   }
 
   // 사용자 인증
