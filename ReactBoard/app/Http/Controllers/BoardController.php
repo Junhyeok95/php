@@ -32,7 +32,7 @@ class BoardController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Request $request)
   {
     // $cnt = count(\App\Board::get());
     // return response()->json(["mydata",$cnt]);
@@ -50,8 +50,10 @@ class BoardController extends Controller
     // res.data[0] = c
     // return response()->json($boards);
 
-    // 이건.. 페이징 .. blade render() 뭐지?
-    $paginate = \App\Board::latest()->paginate(10);
+    if (!$per_page = $request->perPage) {
+      return response()->json("err");
+    }
+    $paginate = \App\Board::latest()->paginate($per_page);
     return response()->json($paginate);
   }
 
@@ -99,6 +101,7 @@ class BoardController extends Controller
   public function show(\App\Board $board)
   {
     // 글 상세 보기
+    // return response()->json(["show", $board]);
     return response()->json($board);
   }
 
@@ -111,6 +114,10 @@ class BoardController extends Controller
   public function edit(\App\Board $board)
   {
     // 수정 창 보기
+    // if (!auth()->user()->id === $board->user_id) {
+    //   return response()->json("err");
+    // }
+    // return response()->json(["edit", $board]);
     return response()->json($board);
   }
 
@@ -138,6 +145,9 @@ class BoardController extends Controller
    */
   public function destroy(\App\Board $board)
   {
+    if (!auth()->user()->id === $board->user_id) {
+      return response()->json("err");
+    }
     return response()->json(auth()->user()->id === $board->user_id ? $board->delete() : false);
   }
 }

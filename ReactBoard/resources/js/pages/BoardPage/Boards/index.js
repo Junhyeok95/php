@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Container, Row, Col, Table, Pagination } from "react-bootstrap";
+import { Container, Row, Table, Pagination } from "react-bootstrap";
 import Axios from "axios";
 import styled from "styled-components";
 import "./index.css";
@@ -10,43 +10,76 @@ const HoverTd = styled.td`
     color: #0000ffcc;
   }
 `;
-const WriteButton = styled.button``;
 
 const Boards = ({ match, history }) => {
-  const [paging] = useState(8);
+  const [perPage] = useState(
+    (window.innerWidth || document.body.clientWidth) >= 768 ? 20 : 10
+  );
+  const [paging] = useState(
+    (window.innerWidth || document.body.clientWidth) >= 768 ? 10 : 5
+  );
   const [data, setData] = useState(null);
   const [look, setLook] = useState(0);
+
+  // XHTML -> document.body.clientWidth
+  // HTML5 -> window.innerWidth
+  // if ((window.innerWidth || document.body.clientWidth) > 767) {
+  //   console.log("767 이상 입니다");
+  // } else console.log("이하");
 
   useEffect(() => {
     if (sessionStorage.getItem("page") && sessionStorage.getItem("look")) {
       // getBoards(sessionStorage.getItem("page"));
       // setLook(sessionStorage.getItem("look"));
     } else {
-      getBoards();
     }
 
-    return () => {
-      // console.log("exit");
-    };
+    getBoards();
+
+    return () => {};
   }, []);
 
+  useEffect(() => {
+    console.log("데이터 변경");
+
+    const mql = window.matchMedia("screen and (max-width: 768px)");
+    mql.removeEventListener("change", () => {});
+    mql.addEventListener("change", (e) => {
+      if (data) {
+        if (data.current_page) {
+          if (e.matches) {
+            console.log("모바일 화면 입니다.");
+            console.log(data.current_page);
+            // getBoards(data.current_page);
+          } else {
+            console.log("데스크탑 화면 입니다.");
+            console.log(data.current_page);
+            // getBoards(data.current_page);
+          }
+        }
+      }
+    });
+  }, [data]);
+
   const getBoards = (pageNumber) => {
-    const getPage = pageNumber;
+    const currentPage = pageNumber;
 
     // // TEST CODE
-    // if (getPage != undefined) {
+    // if (currentPage != undefined) {
     //   sessionStorage.setItem("look", look);
-    //   sessionStorage.setItem("page", getPage);
+    //   sessionStorage.setItem("page", currentPage);
     // }
 
     Axios({
       method: "get",
       url: "/api/boards",
       params: {
-        page: getPage,
+        page: currentPage,
+        perPage,
       },
     })
       .then((res) => {
+        // console.log(res);
         setData(res.data);
       })
       .catch((error) => console.log(error));
@@ -128,7 +161,9 @@ const Boards = ({ match, history }) => {
 
     return (
       <Pagination className="d-flex justify-content-between">
-        <span></span>
+        <Pagination.Item style={{ visibility: "hidden" }} disabled>
+          글쓰기
+        </Pagination.Item>
         <Row>
           {look > 0 && (
             <Pagination.First
@@ -173,7 +208,9 @@ const Boards = ({ match, history }) => {
             </Fragment>
           )}
         </Row>
-        <WriteButton onClick={() => {}}>글 쓰 기</WriteButton>
+        <Pagination.Item onClick={() => history.push("/boards/write")}>
+          글쓰기
+        </Pagination.Item>
       </Pagination>
     );
   };

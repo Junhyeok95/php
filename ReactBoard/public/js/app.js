@@ -100506,7 +100506,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var Header = function Header() {
+  var history2 = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
+
   var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_contexts_User__WEBPACK_IMPORTED_MODULE_2__["UserContext"]),
       userInfo = _useContext.userInfo,
       logout = _useContext.logout;
@@ -100666,16 +100669,6 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function _templateObject2() {
-  var data = _taggedTemplateLiteral([""]);
-
-  _templateObject2 = function _templateObject2() {
-    return data;
-  };
-
-  return data;
-}
-
 function _templateObject() {
   var data = _taggedTemplateLiteral(["\n  cursor: pointer;\n  &:hover {\n    color: #0000ffcc;\n  }\n"]);
 
@@ -100694,51 +100687,77 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 var HoverTd = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].td(_templateObject());
-var WriteButton = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].button(_templateObject2());
 
 var Boards = function Boards(_ref) {
   var match = _ref.match,
       history = _ref.history;
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(8),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])((window.innerWidth || document.body.clientWidth) >= 768 ? 20 : 10),
       _useState2 = _slicedToArray(_useState, 1),
-      paging = _useState2[0];
+      perPage = _useState2[0];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
-      _useState4 = _slicedToArray(_useState3, 2),
-      data = _useState4[0],
-      setData = _useState4[1];
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])((window.innerWidth || document.body.clientWidth) >= 768 ? 10 : 5),
+      _useState4 = _slicedToArray(_useState3, 1),
+      paging = _useState4[0];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState6 = _slicedToArray(_useState5, 2),
-      look = _useState6[0],
-      setLook = _useState6[1];
+      data = _useState6[0],
+      setData = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState8 = _slicedToArray(_useState7, 2),
+      look = _useState8[0],
+      setLook = _useState8[1]; // XHTML -> document.body.clientWidth
+  // HTML5 -> window.innerWidth
+  // if ((window.innerWidth || document.body.clientWidth) > 767) {
+  //   console.log("767 이상 입니다");
+  // } else console.log("이하");
+
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (sessionStorage.getItem("page") && sessionStorage.getItem("look")) {// getBoards(sessionStorage.getItem("page"));
       // setLook(sessionStorage.getItem("look"));
-    } else {
-      getBoards();
-    }
+    } else {}
 
-    return function () {// console.log("exit");
-    };
+    getBoards();
+    return function () {};
   }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    console.log("데이터 변경");
+    var mql = window.matchMedia("screen and (max-width: 768px)");
+    mql.removeEventListener("change", function () {});
+    mql.addEventListener("change", function (e) {
+      if (data) {
+        if (data.current_page) {
+          if (e.matches) {
+            console.log("모바일 화면 입니다.");
+            console.log(data.current_page); // getBoards(data.current_page);
+          } else {
+            console.log("데스크탑 화면 입니다.");
+            console.log(data.current_page); // getBoards(data.current_page);
+          }
+        }
+      }
+    });
+  }, [data]);
 
   var getBoards = function getBoards(pageNumber) {
-    var getPage = pageNumber; // // TEST CODE
-    // if (getPage != undefined) {
+    var currentPage = pageNumber; // // TEST CODE
+    // if (currentPage != undefined) {
     //   sessionStorage.setItem("look", look);
-    //   sessionStorage.setItem("page", getPage);
+    //   sessionStorage.setItem("page", currentPage);
     // }
 
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "get",
       url: "/api/boards",
       params: {
-        page: getPage
+        page: currentPage,
+        perPage: perPage
       }
     }).then(function (res) {
+      // console.log(res);
       setData(res.data);
     })["catch"](function (error) {
       return console.log(error);
@@ -100819,7 +100838,12 @@ var Boards = function Boards(_ref) {
 
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"], {
       className: "d-flex justify-content-between"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, look > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].First, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Item, {
+      style: {
+        visibility: "hidden"
+      },
+      disabled: true
+    }, "\uAE00\uC4F0\uAE30"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, look > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].First, {
       onClick: function onClick() {
         getBoards(0);
         setLook(0);
@@ -100847,9 +100871,11 @@ var Boards = function Boards(_ref) {
 
         setLook(parseInt(Math.ceil(data.total / data.per_page) / paging) - point);
       }
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WriteButton, {
-      onClick: function onClick() {}
-    }, "\uAE00 \uC4F0 \uAE30"));
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Pagination"].Item, {
+      onClick: function onClick() {
+        return history.push("/boards/write");
+      }
+    }, "\uAE00\uC4F0\uAE30"));
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
@@ -100907,10 +100933,8 @@ var Detail = function Detail(_ref) {
       setData = _useState2[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    // console.log("match.params.detail");
-    // console.log(match.params.detail);
     getBoardsDetail(match.params.detail);
-  }, []);
+  }, []); // show
 
   var getBoardsDetail = function getBoardsDetail(detailId) {
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
@@ -100924,40 +100948,8 @@ var Detail = function Detail(_ref) {
     })["catch"](function (error) {
       return console.log(error);
     });
-  };
+  }; // destroy
 
-  var editBoardsDetail = function editBoardsDetail(detailId) {
-    axios__WEBPACK_IMPORTED_MODULE_2___default()({
-      method: "get",
-      url: "/api/boards/".concat(detailId),
-      headers: {
-        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
-      }
-    }).then(function (res) {
-      console.log(res); // setData(res.data);
-    })["catch"](function (error) {
-      return console.log(error);
-    });
-  };
-
-  var updateBoardsDetail = function updateBoardsDetail(detailId) {
-    axios__WEBPACK_IMPORTED_MODULE_2___default()({
-      method: "put",
-      url: "/api/boards/".concat(detailId),
-      headers: {
-        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
-      },
-      data: {
-        id: "300",
-        title: "update",
-        content: "update"
-      }
-    }).then(function (res) {
-      console.log(res); // setData(res.data);
-    })["catch"](function (error) {
-      return console.log(error);
-    });
-  };
 
   var deleteBoardsDetail = function deleteBoardsDetail(detailId) {
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
@@ -100965,80 +100957,68 @@ var Detail = function Detail(_ref) {
       url: "/api/boards/".concat(detailId),
       headers: {
         Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
-      } // data: {
-      //   id: "255",
-      // },
-
+      }
     }).then(function (res) {
-      console.log(res);
-
+      // console.log(res);
       if (res.data === true) {
-        history.go(-1);
+        console.log("게시판 삭제 성공");
+        history.push("/boards");
+      } else if (res.data === false) {
+        console.log("게시판 삭제 실패");
       }
     })["catch"](function (error) {
       return console.log(error);
     });
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     style: {
-      backgroundColor: "red"
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
-    style: {
-      backgroundColor: "blue"
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-    style: {
-      fontSize: 30
+      padding: "2px",
+      border: "solid black 2px",
+      fontSize: 20
     },
-    className: "text-right"
-  }, "\uC81C\uBAA9 :", " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "col-sm-2 text-center"
+  }, "\uC81C\uBAA9", " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     style: {
-      fontSize: 30
+      padding: "2px",
+      border: "solid black 2px",
+      fontSize: 20
     },
-    className: "text-left"
+    className: "pl-2 text-left"
   }, data.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
     style: {
       minHeight: 300
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     style: {
-      fontSize: 24
+      fontSize: 16
     },
     className: "text-center"
   }, data.content)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
     style: {
       backgroundColor: "gray"
     },
-    className: "d-flex p-4"
+    className: "d-flex p-3"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     style: {
       backgroundColor: "yellow"
     },
-    className: "p-2"
+    className: "p-1"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onClick: function onClick() {
-      history.go(-1);
+      history.push("/boards");
     }
-  }, "\uAE00\uBAA9\uB85D")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+  }, "\uAE00 \uBAA9\uB85D")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     style: {
       backgroundColor: "green"
     },
-    className: "ml-auto p-2"
+    className: "d-flex justify-content-end p-1"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onClick: function onClick() {
-      console.log(match.params.detail);
-      editBoardsDetail(match.params.detail);
+      history.push("/boards/".concat(match.params.detail, "/write"));
     }
   }, "\uC218\uC815"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onClick: function onClick() {
-      console.log(match.params.detail);
-      updateBoardsDetail(match.params.detail);
-    }
-  }, "\uC800\uC7A5"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    onClick: function onClick() {
-      console.log(match.params.detail);
       deleteBoardsDetail(match.params.detail);
     }
   }, "\uC0AD\uC81C")))));
@@ -101067,6 +101047,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/Button */ "./resources/js/components/Button/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 function _templateObject3() {
   var data = _taggedTemplateLiteral(["\n  .ql-editor {\n    padding: 0;\n    min-height: 320px;\n    font-size: 1.125rem;\n    line-height: 1.5;\n  }\n  .ql-editor.ql-blank::before {\n    left: 0px;\n  }\n"]);
 
@@ -101078,7 +101070,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n  font-size: 3rem;\n  outline: none;\n  padding-bottom: 0.5rem;\n  border: none;\n  border-bottom: 1px black solid;\n  margin-bottom: 2rem;\n  width: 50%;\n"]);
+  var data = _taggedTemplateLiteral(["\n  font-size: 2rem;\n  outline: none;\n  padding-bottom: 0.5rem;\n  border: none;\n  border-bottom: 1px black solid;\n  margin-bottom: 2rem;\n  width: 50%;\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -101088,7 +101080,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  padding: 3rem;\n  border: 1px black solid;\n  background-color: white;\n"]);
+  var data = _taggedTemplateLiteral(["\n  padding: 2rem;\n  border: 1px black solid;\n  background-color: white;\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -101111,19 +101103,28 @@ var Title = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].input(_tem
 var QuillWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject3());
 
 var Write = function Write(_ref) {
-  var userInfo = _ref.userInfo;
+  var userInfo = _ref.userInfo,
+      match = _ref.match,
+      history = _ref.history,
+      action = _ref.action;
   var quillElement = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
-  var quillInstance = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    setTimeout(function () {// console.log(quillInstance.current.editor.delta);
-    }, 3000);
-  }, []);
+  var quillInstance = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null); // 이게 아닌거같은데 .. ?
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+    data: {
+      title: "null",
+      content: "null"
+    }
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      WriteData = _useState2[0],
+      setWriteData = _useState2[1];
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (quillElement.current) {
       quillInstance.current = new quill__WEBPACK_IMPORTED_MODULE_2___default.a(quillElement.current, {
-        // theme: "bubble", // snow
+        // theme: "bubble",
         theme: "snow",
-        // snow
         placeholder: "내용을 작성하세요 ...",
         modules: {
           toolbar: [[{
@@ -101142,14 +101143,22 @@ var Write = function Write(_ref) {
         if (source == "api") {
           console.log("An API call triggered this change.");
         } else if (source == "user") {
-          console.log(quill.root.innerHTML);
-          console.log("이걸 .. 어떻게 .. 잘 .. 하면 .. 저장 .. 될 .. 텐데 ..");
+          // console.log(quill.root.innerHTML);
+          var _WriteData = WriteData;
+          _WriteData.data.content = quill.root.innerHTML;
+          setWriteData(_WriteData);
         }
       });
     }
+
+    if (action === "create") {
+      console.log("create API 호출");
+    } else if (action === "update") {
+      console.log("update API 호출");
+    }
   }, []);
 
-  var postBtn = function postBtn() {
+  var storeBtn = function storeBtn() {
     if (userInfo) {
       axios__WEBPACK_IMPORTED_MODULE_5___default()({
         method: "post",
@@ -101158,11 +101167,10 @@ var Write = function Write(_ref) {
           Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
         },
         data: {
-          title: "my title",
-          content: "Flintstone"
+          title: WriteData.data.title,
+          content: WriteData.data.content
         }
       }).then(function (res) {
-        console.log(res);
         console.log(res.data);
       })["catch"](function (error) {
         console.log(error);
@@ -101172,15 +101180,117 @@ var Write = function Write(_ref) {
     }
   };
 
+  var updateBtn = function updateBtn(detailId) {
+    if (userInfo) {
+      axios__WEBPACK_IMPORTED_MODULE_5___default()({
+        method: "put",
+        url: "/api/boards/".concat(detailId),
+        headers: {
+          Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+        },
+        data: {
+          title: WriteData.data.title,
+          content: WriteData.data.content
+        }
+      }).then(function (res) {
+        console.log(res.data); // console.log(`/boards/detail/${match.params.detail}`);
+
+        history.push("/boards/detail/".concat(match.params.detail));
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    } else {
+      alert("로그인 필요");
+    }
+  };
+
+  var deleteBtn = function deleteBtn(detailId) {
+    axios__WEBPACK_IMPORTED_MODULE_5___default()({
+      method: "delete",
+      url: "/api/boards/".concat(detailId),
+      headers: {
+        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+      }
+    }).then(function (res) {
+      console.log(res);
+
+      if (res.data === true) {
+        history.go(-1);
+      }
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  };
+
+  var getCreate = function getCreate(detailId) {
+    axios__WEBPACK_IMPORTED_MODULE_5___default()({
+      method: "get",
+      url: "/api/boards/".concat(300),
+      headers: {
+        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+      }
+    }).then(function (res) {
+      console.log(res.data);
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  };
+
+  var getEdit = function getEdit(detailId) {
+    axios__WEBPACK_IMPORTED_MODULE_5___default()({
+      method: "get",
+      url: "/api/boards/".concat(300, "/edit"),
+      headers: {
+        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+      }
+    }).then(function (res) {
+      console.log(res.data);
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Title, {
-    placeholder: "\uC81C\uBAA9\uC744 \uC791\uC131\uD558\uC138\uC694 ..."
+    placeholder: "\uC81C\uBAA9\uC744 \uC791\uC131\uD558\uC138\uC694 ...",
+    onChange: function onChange(e) {
+      // console.log(e.target.value); // current.value
+      var _WriteData = WriteData;
+      _WriteData.data.title = e.target.value;
+      setWriteData(_WriteData);
+    }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(QuillWrapper, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     ref: quillElement
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
     onClick: function onClick() {
-      postBtn();
+      history.go(-1);
     }
-  }, "\uAE00 \uC791\uC131"));
+  }, "\uAE00 \uBAA9\uB85D"), action === "update" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onClick: function onClick() {
+      updateBtn(match.params.detail);
+      console.log(WriteData);
+    }
+  }, "\uC800\uC7A5"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onClick: function onClick() {
+      updateBtn(match.params.detail);
+      console.log(WriteData);
+    }
+  }, "\uC0AD\uC81C")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onClick: function onClick() {
+      storeBtn();
+    }
+  }, "\uC791\uC131"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onClick: function onClick() {
+      getShow();
+    }
+  }, "show"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onClick: function onClick() {
+      getEdit();
+    }
+  }, "edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onClick: function onClick() {
+      history.push("/");
+    }
+  }, "history2"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Write);
@@ -101220,48 +101330,34 @@ var BoardPage = function BoardPage(_ref) {
   var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_contexts_User__WEBPACK_IMPORTED_MODULE_3__["UserContext"]),
       userInfo = _useContext.userInfo;
 
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {}, []);
-
-  var renderNavLink = function renderNavLink() {
-    var boardNav = {
-      en: ["", "/write"],
-      ko: ["기본", "글쓰기"]
-    };
-    var itemArr = [];
-
-    for (var i = 0; i < boardNav.en.length; i++) {
-      itemArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
-        key: i,
-        sm: {
-          span: 2
-        },
-        className: "justify-content-center text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Badge"], {
-        variant: "Light"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "".concat(match.url).concat(boardNav.en[i])
-      }, boardNav.ko[i]))));
-    }
-
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Row"], null, itemArr);
-  };
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Container"], null, renderNavLink(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Container"], {
+    className: "pt-4"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     path: "".concat(match.url),
     component: _Boards__WEBPACK_IMPORTED_MODULE_4__["default"],
     exact: true
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    path: "".concat(match.url, "/write") // component={Write}
-    ,
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"] // write create
+  , {
+    path: "".concat(match.url, "/write"),
     render: function render(props) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Write__WEBPACK_IMPORTED_MODULE_6__["default"], _extends({
+        action: "create",
+        userInfo: userInfo
+      }, props));
+    },
+    exact: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"] // write update
+  , {
+    path: "".concat(match.url, "/:detail/write"),
+    render: function render(props) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Write__WEBPACK_IMPORTED_MODULE_6__["default"], _extends({
+        action: "update",
         userInfo: userInfo
       }, props));
     },
     exact: true
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    path: "".concat(match.url, "/detail/:detail") // component={Detail}
-    ,
+    path: "".concat(match.url, "/detail/:detail"),
     render: function render(props) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Detail__WEBPACK_IMPORTED_MODULE_5__["default"], _extends({
         userInfo: userInfo

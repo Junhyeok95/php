@@ -10,45 +10,26 @@ import Write from "./Write";
 const BoardPage = ({ match }) => {
   const { userInfo } = useContext(UserContext);
 
-  useEffect(() => {}, []);
-
-  const renderNavLink = () => {
-    const boardNav = {
-      en: ["", "/write"],
-      ko: ["기본", "글쓰기"],
-    };
-
-    let itemArr = [];
-    for (let i = 0; i < boardNav.en.length; i++) {
-      itemArr.push(
-        <Col
-          key={i}
-          sm={{ span: 2 }}
-          className="justify-content-center text-center"
-        >
-          <Badge variant="Light">
-            <Link to={`${match.url}${boardNav.en[i]}`}>{boardNav.ko[i]}</Link>
-          </Badge>
-        </Col>
-      );
-    }
-    return <Row>{itemArr}</Row>;
-  };
-
   return (
     <Fragment>
-      <Container>
-        {renderNavLink()}
+      <Container className="pt-4">
         <Route path={`${match.url}`} component={Boards} exact />
-        <Route
+        <Route // write create
           path={`${match.url}/write`}
-          // component={Write}
-          render={(props) => <Write userInfo={userInfo} {...props} />}
+          render={(props) => (
+            <Write action={"create"} userInfo={userInfo} {...props} />
+          )}
+          exact
+        />
+        <Route // write update
+          path={`${match.url}/:detail/write`}
+          render={(props) => (
+            <Write action={"update"} userInfo={userInfo} {...props} />
+          )}
           exact
         />
         <Route
           path={`${match.url}/detail/:detail`}
-          // component={Detail}
           render={(props) => <Detail userInfo={userInfo} {...props} />}
           exact
         />

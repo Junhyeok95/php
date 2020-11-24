@@ -7,11 +7,10 @@ const Detail = ({ userInfo, match, history }) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    // console.log("match.params.detail");
-    // console.log(match.params.detail);
     getBoardsDetail(match.params.detail);
   }, []);
 
+  // show
   const getBoardsDetail = (detailId) => {
     Axios({
       method: "get",
@@ -28,45 +27,7 @@ const Detail = ({ userInfo, match, history }) => {
       .catch((error) => console.log(error));
   };
 
-  const editBoardsDetail = (detailId) => {
-    Axios({
-      method: "get",
-      url: `/api/boards/${detailId}`,
-      headers: {
-        Authorization:
-          "Bearer " +
-          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        // setData(res.data);
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const updateBoardsDetail = (detailId) => {
-    Axios({
-      method: "put",
-      url: `/api/boards/${detailId}`,
-      headers: {
-        Authorization:
-          "Bearer " +
-          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
-      },
-      data: {
-        id: "300",
-        title: "update",
-        content: "update",
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        // setData(res.data);
-      })
-      .catch((error) => console.log(error));
-  };
-
+  // destroy
   const deleteBoardsDetail = (detailId) => {
     Axios({
       method: "delete",
@@ -76,14 +37,14 @@ const Detail = ({ userInfo, match, history }) => {
           "Bearer " +
           (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
       },
-      // data: {
-      //   id: "255",
-      // },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.data === true) {
-          history.go(-1);
+          console.log("게시판 삭제 성공");
+          history.push(`/boards`);
+        } else if (res.data === false) {
+          console.log("게시판 삭제 실패");
         }
       })
       .catch((error) => console.log(error));
@@ -92,50 +53,57 @@ const Detail = ({ userInfo, match, history }) => {
   return (
     <Fragment>
       {data != null && (
-        <Container style={{ backgroundColor: "red" }}>
-          <Row style={{ backgroundColor: "blue" }}>
-            <Col style={{ fontSize: 30 }} className="text-right">
-              제목 :{" "}
+        <Container>
+          <Row>
+            <Col
+              style={{
+                padding: "2px",
+                border: "solid black 2px",
+                fontSize: 20,
+              }}
+              className="col-sm-2 text-center"
+            >
+              제목{" "}
             </Col>
-            <Col style={{ fontSize: 30 }} className="text-left">
+            <Col
+              style={{
+                padding: "2px",
+                border: "solid black 2px",
+                fontSize: 20,
+              }}
+              className="pl-2 text-left"
+            >
               {data.title}
             </Col>
           </Row>
           <Row style={{ minHeight: 300 }}>
-            <Col style={{ fontSize: 24 }} className="text-center">
+            <Col style={{ fontSize: 16 }} className="text-center">
               {data.content}
             </Col>
           </Row>
-          <Row style={{ backgroundColor: "gray" }} className="d-flex p-4">
-            <Col style={{ backgroundColor: "yellow" }} className="p-2">
+          <Row style={{ backgroundColor: "gray" }} className="d-flex p-3">
+            <Col style={{ backgroundColor: "yellow" }} className="p-1">
               <Button
                 onClick={() => {
-                  history.go(-1);
+                  history.push(`/boards`);
                 }}
               >
-                글목록
+                글 목록
               </Button>
             </Col>
-            <Col style={{ backgroundColor: "green" }} className="ml-auto p-2">
+            <Col
+              style={{ backgroundColor: "green" }}
+              className="d-flex justify-content-end p-1"
+            >
               <Button
                 onClick={() => {
-                  console.log(match.params.detail);
-                  editBoardsDetail(match.params.detail);
+                  history.push(`/boards/${match.params.detail}/write`);
                 }}
               >
                 수정
               </Button>
               <Button
                 onClick={() => {
-                  console.log(match.params.detail);
-                  updateBoardsDetail(match.params.detail);
-                }}
-              >
-                저장
-              </Button>
-              <Button
-                onClick={() => {
-                  console.log(match.params.detail);
                   deleteBoardsDetail(match.params.detail);
                 }}
               >

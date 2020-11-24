@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState, Fragment } from "react";
 import styled from "styled-components";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
@@ -7,12 +7,12 @@ import Axios from "axios";
 // import "quill/dist/quill.bubble.css";
 
 const StyledDiv = styled.div`
-  padding: 3rem;
+  padding: 2rem;
   border: 1px black solid;
   background-color: white;
 `;
 const Title = styled.input`
-  font-size: 3rem;
+  font-size: 2rem;
   outline: none;
   padding-bottom: 0.5rem;
   border: none;
@@ -32,21 +32,20 @@ const QuillWrapper = styled.div`
   }
 `;
 
-const Write = ({ userInfo }) => {
+const Write = ({ userInfo, match, history, action }) => {
   const quillElement = useRef(null);
   const quillInstance = useRef(null);
 
-  useEffect(() => {
-    setTimeout(() => {
-      // console.log(quillInstance.current.editor.delta);
-    }, 3000);
-  }, []);
+  // 이게 아닌거같은데 .. ?
+  const [WriteData, setWriteData] = useState({
+    data: { title: "null", content: "null" },
+  });
 
   useEffect(() => {
     if (quillElement.current) {
       quillInstance.current = new Quill(quillElement.current, {
-        // theme: "bubble", // snow
-        theme: "snow", // snow
+        // theme: "bubble",
+        theme: "snow",
         placeholder: "내용을 작성하세요 ...",
         modules: {
           toolbar: [
@@ -63,14 +62,21 @@ const Write = ({ userInfo }) => {
         if (source == "api") {
           console.log("An API call triggered this change.");
         } else if (source == "user") {
-          console.log(quill.root.innerHTML);
-          console.log("이걸 .. 어떻게 .. 잘 .. 하면 .. 저장 .. 될 .. 텐데 ..");
+          // console.log(quill.root.innerHTML);
+          let _WriteData = WriteData;
+          _WriteData.data.content = quill.root.innerHTML;
+          setWriteData(_WriteData);
         }
       });
     }
+    if (action === "create") {
+      console.log("create API 호출");
+    } else if (action === "update") {
+      console.log("update API 호출");
+    }
   }, []);
 
-  const postBtn = () => {
+  const storeBtn = () => {
     if (userInfo) {
       Axios({
         method: "post",
@@ -81,12 +87,11 @@ const Write = ({ userInfo }) => {
             (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
         },
         data: {
-          title: "my title",
-          content: "Flintstone",
+          title: WriteData.data.title,
+          content: WriteData.data.content,
         },
       })
         .then((res) => {
-          console.log(res);
           console.log(res.data);
         })
         .catch((error) => {
@@ -97,18 +102,154 @@ const Write = ({ userInfo }) => {
     }
   };
 
+  const updateBtn = (detailId) => {
+    if (userInfo) {
+      Axios({
+        method: "put",
+        url: `/api/boards/${detailId}`,
+        headers: {
+          Authorization:
+            "Bearer " +
+            (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+        },
+        data: {
+          title: WriteData.data.title,
+          content: WriteData.data.content,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          // console.log(`/boards/detail/${match.params.detail}`);
+          history.push(`/boards/detail/${match.params.detail}`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      alert("로그인 필요");
+    }
+  };
+
+  const deleteBtn = (detailId) => {
+    Axios({
+      method: "delete",
+      url: `/api/boards/${detailId}`,
+      headers: {
+        Authorization:
+          "Bearer " +
+          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.data === true) {
+          history.go(-1);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const getCreate = (detailId) => {
+    Axios({
+      method: "get",
+      url: `/api/boards/${300}`,
+      headers: {
+        Authorization:
+          "Bearer " +
+          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const getEdit = (detailId) => {
+    Axios({
+      method: "get",
+      url: `/api/boards/${300}/edit`,
+      headers: {
+        Authorization:
+          "Bearer " +
+          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <StyledDiv>
-      <Title placeholder="제목을 작성하세요 ..." />
+      <Title
+        placeholder="제목을 작성하세요 ..."
+        onChange={(e) => {
+          // console.log(e.target.value); // current.value
+          let _WriteData = WriteData;
+          _WriteData.data.title = e.target.value;
+          setWriteData(_WriteData);
+        }}
+      />
       <QuillWrapper>
         <div ref={quillElement} />
       </QuillWrapper>
       <Button
         onClick={() => {
-          postBtn();
+          history.go(-1);
         }}
       >
-        글 작성
+        글 목록
+      </Button>
+      {action === "update" ? (
+        <Fragment>
+          <Button
+            onClick={() => {
+              updateBtn(match.params.detail);
+              console.log(WriteData);
+            }}
+          >
+            저장
+          </Button>
+          <Button
+            onClick={() => {
+              updateBtn(match.params.detail);
+              console.log(WriteData);
+            }}
+          >
+            삭제
+          </Button>
+        </Fragment>
+      ) : (
+        <Button
+          onClick={() => {
+            storeBtn();
+          }}
+        >
+          작성
+        </Button>
+      )}
+      <Button
+        onClick={() => {
+          getShow();
+        }}
+      >
+        show
+      </Button>
+      <Button
+        onClick={() => {
+          getEdit();
+        }}
+      >
+        edit
+      </Button>
+      <Button
+        onClick={() => {
+          history.push("/");
+        }}
+      >
+        history2
       </Button>
     </StyledDiv>
   );

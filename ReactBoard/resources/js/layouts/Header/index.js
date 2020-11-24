@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/User";
+import { useHistory } from "react-router-dom";
 
 const Header = () => {
+  let history2 = useHistory();
   const { userInfo, logout } = useContext(UserContext);
 
   const onClick = (e) => {
