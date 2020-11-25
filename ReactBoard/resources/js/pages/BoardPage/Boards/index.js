@@ -117,6 +117,7 @@ const Boards = ({ match, history }) => {
         <tr className="css_media" key={"BoardBody" + i}>
           <td className="text-center">{i}</td>
           <HoverTd
+            className="text-truncate"
             onClick={() => {
               // console.log(data.data[i].id, "history push");
               history.push(`${match.url}/detail/${data.data[i].id}`);

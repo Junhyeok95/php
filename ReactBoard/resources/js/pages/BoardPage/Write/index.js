@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState, Fragment } from "react";
+import { Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
@@ -195,62 +196,47 @@ const Write = ({ userInfo, match, history, action }) => {
       <QuillWrapper>
         <div ref={quillElement} />
       </QuillWrapper>
-      <Button
-        onClick={() => {
-          history.go(-1);
-        }}
-      >
-        글 목록
-      </Button>
-      {action === "update" ? (
-        <Fragment>
+      <Row className="pt-2">
+        <Col className="d-flex justify-content-start">
           <Button
             onClick={() => {
-              updateBtn(match.params.detail);
-              console.log(WriteData);
+              history.go(-1);
             }}
           >
-            저장
+            글 목록
           </Button>
-          <Button
-            onClick={() => {
-              updateBtn(match.params.detail);
-              console.log(WriteData);
-            }}
-          >
-            삭제
-          </Button>
-        </Fragment>
-      ) : (
-        <Button
-          onClick={() => {
-            storeBtn();
-          }}
-        >
-          작성
-        </Button>
-      )}
-      <Button
-        onClick={() => {
-          getShow();
-        }}
-      >
-        show
-      </Button>
-      <Button
-        onClick={() => {
-          getEdit();
-        }}
-      >
-        edit
-      </Button>
-      <Button
-        onClick={() => {
-          history.push("/");
-        }}
-      >
-        history2
-      </Button>
+        </Col>
+        <Col className="d-flex justify-content-end">
+          {action === "update" ? (
+            <Fragment>
+              <Button
+                onClick={() => {
+                  updateBtn(match.params.detail);
+                  console.log(WriteData);
+                }}
+              >
+                저장
+              </Button>
+              <Button
+                onClick={() => {
+                  updateBtn(match.params.detail);
+                  console.log(WriteData);
+                }}
+              >
+                삭제
+              </Button>
+            </Fragment>
+          ) : (
+            <Button
+              onClick={() => {
+                storeBtn();
+              }}
+            >
+              작성
+            </Button>
+          )}
+        </Col>
+      </Row>
     </StyledDiv>
   );
 };

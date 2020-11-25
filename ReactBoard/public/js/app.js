@@ -100797,6 +100797,7 @@ var Boards = function Boards(_ref) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
       }, i), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HoverTd, {
+        className: "text-truncate",
         onClick: function onClick() {
           // console.log(data.data[i].id, "history push");
           history.push("".concat(match.url, "/detail/").concat(data.data[i].id));
@@ -101039,14 +101040,15 @@ var Detail = function Detail(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-/* harmony import */ var quill__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! quill */ "./node_modules/quill/dist/quill.js");
-/* harmony import */ var quill__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(quill__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var quill_dist_quill_snow_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! quill/dist/quill.snow.css */ "./node_modules/quill/dist/quill.snow.css");
-/* harmony import */ var quill_dist_quill_snow_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(quill_dist_quill_snow_css__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/Button */ "./resources/js/components/Button/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/index.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var quill__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! quill */ "./node_modules/quill/dist/quill.js");
+/* harmony import */ var quill__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(quill__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var quill_dist_quill_snow_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! quill/dist/quill.snow.css */ "./node_modules/quill/dist/quill.snow.css");
+/* harmony import */ var quill_dist_quill_snow_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(quill_dist_quill_snow_css__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../components/Button */ "./resources/js/components/Button/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -101096,11 +101098,12 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
+
  // import "quill/dist/quill.bubble.css";
 
-var StyledDiv = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject());
-var Title = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].input(_templateObject2());
-var QuillWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject3());
+var StyledDiv = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject());
+var Title = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].input(_templateObject2());
+var QuillWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject3());
 
 var Write = function Write(_ref) {
   var userInfo = _ref.userInfo,
@@ -101122,7 +101125,7 @@ var Write = function Write(_ref) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     if (quillElement.current) {
-      quillInstance.current = new quill__WEBPACK_IMPORTED_MODULE_2___default.a(quillElement.current, {
+      quillInstance.current = new quill__WEBPACK_IMPORTED_MODULE_3___default.a(quillElement.current, {
         // theme: "bubble",
         theme: "snow",
         placeholder: "내용을 작성하세요 ...",
@@ -101160,7 +101163,7 @@ var Write = function Write(_ref) {
 
   var storeBtn = function storeBtn() {
     if (userInfo) {
-      axios__WEBPACK_IMPORTED_MODULE_5___default()({
+      axios__WEBPACK_IMPORTED_MODULE_6___default()({
         method: "post",
         url: "/api/boards",
         headers: {
@@ -101182,7 +101185,7 @@ var Write = function Write(_ref) {
 
   var updateBtn = function updateBtn(detailId) {
     if (userInfo) {
-      axios__WEBPACK_IMPORTED_MODULE_5___default()({
+      axios__WEBPACK_IMPORTED_MODULE_6___default()({
         method: "put",
         url: "/api/boards/".concat(detailId),
         headers: {
@@ -101205,7 +101208,7 @@ var Write = function Write(_ref) {
   };
 
   var deleteBtn = function deleteBtn(detailId) {
-    axios__WEBPACK_IMPORTED_MODULE_5___default()({
+    axios__WEBPACK_IMPORTED_MODULE_6___default()({
       method: "delete",
       url: "/api/boards/".concat(detailId),
       headers: {
@@ -101223,7 +101226,7 @@ var Write = function Write(_ref) {
   };
 
   var getCreate = function getCreate(detailId) {
-    axios__WEBPACK_IMPORTED_MODULE_5___default()({
+    axios__WEBPACK_IMPORTED_MODULE_6___default()({
       method: "get",
       url: "/api/boards/".concat(300),
       headers: {
@@ -101237,7 +101240,7 @@ var Write = function Write(_ref) {
   };
 
   var getEdit = function getEdit(detailId) {
-    axios__WEBPACK_IMPORTED_MODULE_5___default()({
+    axios__WEBPACK_IMPORTED_MODULE_6___default()({
       method: "get",
       url: "/api/boards/".concat(300, "/edit"),
       headers: {
@@ -101260,37 +101263,31 @@ var Write = function Write(_ref) {
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(QuillWrapper, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     ref: quillElement
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "pt-2"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "d-flex justify-content-start"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onClick: function onClick() {
       history.go(-1);
     }
-  }, "\uAE00 \uBAA9\uB85D"), action === "update" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, "\uAE00 \uBAA9\uB85D")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "d-flex justify-content-end"
+  }, action === "update" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onClick: function onClick() {
       updateBtn(match.params.detail);
       console.log(WriteData);
     }
-  }, "\uC800\uC7A5"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, "\uC800\uC7A5"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onClick: function onClick() {
       updateBtn(match.params.detail);
       console.log(WriteData);
     }
-  }, "\uC0AD\uC81C")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, "\uC0AD\uC81C")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onClick: function onClick() {
       storeBtn();
     }
-  }, "\uC791\uC131"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    onClick: function onClick() {
-      getShow();
-    }
-  }, "show"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    onClick: function onClick() {
-      getEdit();
-    }
-  }, "edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    onClick: function onClick() {
-      history.push("/");
-    }
-  }, "history2"));
+  }, "\uC791\uC131"))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Write);
@@ -101459,12 +101456,12 @@ var LoginPage = function LoginPage() {
   var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_contexts_User__WEBPACK_IMPORTED_MODULE_1__["UserContext"]),
       login = _useContext.login;
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("test@mail.com"),
       _useState2 = _slicedToArray(_useState, 2),
       email = _useState2[0],
       setEmail = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("password"),
       _useState4 = _slicedToArray(_useState3, 2),
       password = _useState4[0],
       setPassword = _useState4[1];
@@ -101517,7 +101514,8 @@ var LoginPage = function LoginPage() {
     name: "email",
     required: true,
     autoFocus: true,
-    onChange: onChange
+    onChange: onChange,
+    value: "test@mail.com"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "invalid-feedback",
     role: "alert"
@@ -101534,7 +101532,8 @@ var LoginPage = function LoginPage() {
     className: "form-control",
     name: "password",
     required: true,
-    onChange: onChange
+    onChange: onChange,
+    value: "password"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "invalid-feedback",
     role: "alert"

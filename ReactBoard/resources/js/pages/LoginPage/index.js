@@ -4,16 +4,16 @@ import { UserContext } from "../../contexts/User";
 const LoginPage = () => {
   const { login } = useContext(UserContext);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("test@mail.com");
+  const [password, setPassword] = useState("password");
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     console.log("- login onSubmit - \n", email, password);
     login(email, password);
   };
 
-  const onChange = e => {
+  const onChange = (e) => {
     const { name, value } = e.target;
     if (name === "email") {
       setEmail(value);
@@ -48,6 +48,7 @@ const LoginPage = () => {
                       required
                       autoFocus
                       onChange={onChange}
+                      value="test@mail.com"
                     />
                     <span className="invalid-feedback" role="alert">
                       <strong></strong>
@@ -70,6 +71,7 @@ const LoginPage = () => {
                       name="password"
                       required
                       onChange={onChange}
+                      value="password"
                     ></input>
                     <span className="invalid-feedback" role="alert">
                       <strong></strong>
