@@ -15,11 +15,6 @@ const Detail = ({ userInfo, match, history }) => {
     Axios({
       method: "get",
       url: `/api/boards/${detailId}`,
-      headers: {
-        Authorization:
-          "Bearer " +
-          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
-      },
     })
       .then((res) => {
         setData(res.data);
@@ -39,7 +34,6 @@ const Detail = ({ userInfo, match, history }) => {
       },
     })
       .then((res) => {
-        // console.log(res);
         if (res.data === true) {
           console.log("게시판 삭제 성공");
           history.push(`/boards`);

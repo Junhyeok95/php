@@ -100757,7 +100757,6 @@ var Boards = function Boards(_ref) {
         perPage: perPage
       }
     }).then(function (res) {
-      // console.log(res);
       setData(res.data);
     })["catch"](function (error) {
       return console.log(error);
@@ -100940,10 +100939,7 @@ var Detail = function Detail(_ref) {
   var getBoardsDetail = function getBoardsDetail(detailId) {
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "get",
-      url: "/api/boards/".concat(detailId),
-      headers: {
-        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
-      }
+      url: "/api/boards/".concat(detailId)
     }).then(function (res) {
       setData(res.data);
     })["catch"](function (error) {
@@ -100960,7 +100956,6 @@ var Detail = function Detail(_ref) {
         Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
       }
     }).then(function (res) {
-      // console.log(res);
       if (res.data === true) {
         console.log("게시판 삭제 성공");
         history.push("/boards");
@@ -101156,8 +101151,10 @@ var Write = function Write(_ref) {
 
     if (action === "create") {
       console.log("create API 호출");
+      getCreate();
     } else if (action === "update") {
       console.log("update API 호출");
+      getEdit(match.params.detail);
     }
   }, []);
 
@@ -101174,7 +101171,12 @@ var Write = function Write(_ref) {
           content: WriteData.data.content
         }
       }).then(function (res) {
-        console.log(res.data);
+        if (res.data) {
+          console.log("게시판 작성 성공");
+          history.push("/boards");
+        } else {
+          console.log("게시판 작성 실패");
+        }
       })["catch"](function (error) {
         console.log(error);
       });
@@ -101196,9 +101198,12 @@ var Write = function Write(_ref) {
           content: WriteData.data.content
         }
       }).then(function (res) {
-        console.log(res.data); // console.log(`/boards/detail/${match.params.detail}`);
-
-        history.push("/boards/detail/".concat(match.params.detail));
+        if (res.data === true) {
+          console.log("게시판 수정 성공");
+          history.push("/boards/detail/".concat(match.params.detail));
+        } else if (res.data === false) {
+          console.log("게시판 수정 실패");
+        }
       })["catch"](function (error) {
         console.log(error);
       });
@@ -101208,52 +101213,68 @@ var Write = function Write(_ref) {
   };
 
   var deleteBtn = function deleteBtn(detailId) {
-    axios__WEBPACK_IMPORTED_MODULE_6___default()({
-      method: "delete",
-      url: "/api/boards/".concat(detailId),
-      headers: {
-        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
-      }
-    }).then(function (res) {
-      console.log(res);
-
-      if (res.data === true) {
-        history.go(-1);
-      }
-    })["catch"](function (error) {
-      return console.log(error);
-    });
+    if (userInfo) {
+      axios__WEBPACK_IMPORTED_MODULE_6___default()({
+        method: "delete",
+        url: "/api/boards/".concat(detailId),
+        headers: {
+          Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+        }
+      }).then(function (res) {
+        if (res.data === true) {
+          console.log("게시판 삭제 성공");
+          history.push("/boards");
+        } else if (res.data === false) {
+          console.log("게시판 삭제 실패");
+        }
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    } else {
+      alert("로그인 필요");
+    }
   };
 
-  var getCreate = function getCreate(detailId) {
-    axios__WEBPACK_IMPORTED_MODULE_6___default()({
-      method: "get",
-      url: "/api/boards/".concat(300),
-      headers: {
-        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
-      }
-    }).then(function (res) {
-      console.log(res.data);
-    })["catch"](function (error) {
-      return console.log(error);
-    });
+  var getCreate = function getCreate() {
+    if (userInfo) {
+      axios__WEBPACK_IMPORTED_MODULE_6___default()({
+        method: "get",
+        url: "/api/boards/create",
+        headers: {
+          Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+        }
+      }).then(function (res) {
+        console.log(res);
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    } else {
+      alert("로그인 필요");
+    }
   };
 
   var getEdit = function getEdit(detailId) {
-    axios__WEBPACK_IMPORTED_MODULE_6___default()({
-      method: "get",
-      url: "/api/boards/".concat(300, "/edit"),
-      headers: {
-        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
-      }
-    }).then(function (res) {
-      console.log(res.data);
-    })["catch"](function (error) {
-      return console.log(error);
-    });
+    if (userInfo) {
+      axios__WEBPACK_IMPORTED_MODULE_6___default()({
+        method: "get",
+        url: "/api/boards/".concat(detailId, "/edit"),
+        headers: {
+          Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+        }
+      }).then(function (res) {
+        if (res.data === false) {
+          console.log("게시판 edit 실패");
+          history.push("/boards");
+        }
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    } else {
+      alert("로그인 필요");
+    }
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Title, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, userInfo != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Title, {
     placeholder: "\uC81C\uBAA9\uC744 \uC791\uC131\uD558\uC138\uC694 ...",
     onChange: function onChange(e) {
       // console.log(e.target.value); // current.value
@@ -101280,14 +101301,14 @@ var Write = function Write(_ref) {
     }
   }, "\uC800\uC7A5"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onClick: function onClick() {
-      updateBtn(match.params.detail);
+      deleteBtn(match.params.detail);
       console.log(WriteData);
     }
   }, "\uC0AD\uC81C")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onClick: function onClick() {
       storeBtn();
     }
-  }, "\uC791\uC131"))));
+  }, "\uC791\uC131")))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Write);

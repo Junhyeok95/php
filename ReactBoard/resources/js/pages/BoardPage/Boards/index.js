@@ -79,7 +79,6 @@ const Boards = ({ match, history }) => {
       },
     })
       .then((res) => {
-        // console.log(res);
         setData(res.data);
       })
       .catch((error) => console.log(error));

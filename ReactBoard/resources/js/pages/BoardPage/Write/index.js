@@ -72,8 +72,10 @@ const Write = ({ userInfo, match, history, action }) => {
     }
     if (action === "create") {
       console.log("create API 호출");
+      getCreate();
     } else if (action === "update") {
       console.log("update API 호출");
+      getEdit(match.params.detail);
     }
   }, []);
 
@@ -93,7 +95,12 @@ const Write = ({ userInfo, match, history, action }) => {
         },
       })
         .then((res) => {
-          console.log(res.data);
+          if (res.data) {
+            console.log("게시판 작성 성공");
+            history.push(`/boards`);
+          } else {
+            console.log("게시판 작성 실패");
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -119,9 +126,12 @@ const Write = ({ userInfo, match, history, action }) => {
         },
       })
         .then((res) => {
-          console.log(res.data);
-          // console.log(`/boards/detail/${match.params.detail}`);
-          history.push(`/boards/detail/${match.params.detail}`);
+          if (res.data === true) {
+            console.log("게시판 수정 성공");
+            history.push(`/boards/detail/${match.params.detail}`);
+          } else if (res.data === false) {
+            console.log("게시판 수정 실패");
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -132,112 +142,133 @@ const Write = ({ userInfo, match, history, action }) => {
   };
 
   const deleteBtn = (detailId) => {
-    Axios({
-      method: "delete",
-      url: `/api/boards/${detailId}`,
-      headers: {
-        Authorization:
-          "Bearer " +
-          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        if (res.data === true) {
-          history.go(-1);
-        }
+    if (userInfo) {
+      Axios({
+        method: "delete",
+        url: `/api/boards/${detailId}`,
+        headers: {
+          Authorization:
+            "Bearer " +
+            (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+        },
       })
-      .catch((error) => console.log(error));
+        .then((res) => {
+          if (res.data === true) {
+            console.log("게시판 삭제 성공");
+            history.push(`/boards`);
+          } else if (res.data === false) {
+            console.log("게시판 삭제 실패");
+          }
+        })
+        .catch((error) => console.log(error));
+    } else {
+      alert("로그인 필요");
+    }
   };
 
-  const getCreate = (detailId) => {
-    Axios({
-      method: "get",
-      url: `/api/boards/${300}`,
-      headers: {
-        Authorization:
-          "Bearer " +
-          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
+  const getCreate = () => {
+    if (userInfo) {
+      Axios({
+        method: "get",
+        url: `/api/boards/create`,
+        headers: {
+          Authorization:
+            "Bearer " +
+            (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+        },
       })
-      .catch((error) => console.log(error));
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      alert("로그인 필요");
+    }
   };
 
   const getEdit = (detailId) => {
-    Axios({
-      method: "get",
-      url: `/api/boards/${300}/edit`,
-      headers: {
-        Authorization:
-          "Bearer " +
-          (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
+    if (userInfo) {
+      Axios({
+        method: "get",
+        url: `/api/boards/${detailId}/edit`,
+        headers: {
+          Authorization:
+            "Bearer " +
+            (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+        },
       })
-      .catch((error) => console.log(error));
+        .then((res) => {
+          if (res.data === false) {
+            console.log("게시판 edit 실패");
+            history.push(`/boards`);
+          }
+        })
+        .catch((error) => console.log(error));
+    } else {
+      alert("로그인 필요");
+    }
   };
 
   return (
-    <StyledDiv>
-      <Title
-        placeholder="제목을 작성하세요 ..."
-        onChange={(e) => {
-          // console.log(e.target.value); // current.value
-          let _WriteData = WriteData;
-          _WriteData.data.title = e.target.value;
-          setWriteData(_WriteData);
-        }}
-      />
-      <QuillWrapper>
-        <div ref={quillElement} />
-      </QuillWrapper>
-      <Row className="pt-2">
-        <Col className="d-flex justify-content-start">
-          <Button
-            onClick={() => {
-              history.go(-1);
+    <Fragment>
+      {userInfo != null && (
+        <StyledDiv>
+          <Title
+            placeholder="제목을 작성하세요 ..."
+            onChange={(e) => {
+              // console.log(e.target.value); // current.value
+              let _WriteData = WriteData;
+              _WriteData.data.title = e.target.value;
+              setWriteData(_WriteData);
             }}
-          >
-            글 목록
-          </Button>
-        </Col>
-        <Col className="d-flex justify-content-end">
-          {action === "update" ? (
-            <Fragment>
+          />
+          <QuillWrapper>
+            <div ref={quillElement} />
+          </QuillWrapper>
+          <Row className="pt-2">
+            <Col className="d-flex justify-content-start">
               <Button
                 onClick={() => {
-                  updateBtn(match.params.detail);
-                  console.log(WriteData);
+                  history.go(-1);
                 }}
               >
-                저장
+                글 목록
               </Button>
-              <Button
-                onClick={() => {
-                  updateBtn(match.params.detail);
-                  console.log(WriteData);
-                }}
-              >
-                삭제
-              </Button>
-            </Fragment>
-          ) : (
-            <Button
-              onClick={() => {
-                storeBtn();
-              }}
-            >
-              작성
-            </Button>
-          )}
-        </Col>
-      </Row>
-    </StyledDiv>
+            </Col>
+            <Col className="d-flex justify-content-end">
+              {action === "update" ? (
+                <Fragment>
+                  <Button
+                    onClick={() => {
+                      updateBtn(match.params.detail);
+                      console.log(WriteData);
+                    }}
+                  >
+                    저장
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      deleteBtn(match.params.detail);
+                      console.log(WriteData);
+                    }}
+                  >
+                    삭제
+                  </Button>
+                </Fragment>
+              ) : (
+                <Button
+                  onClick={() => {
+                    storeBtn();
+                  }}
+                >
+                  작성
+                </Button>
+              )}
+            </Col>
+          </Row>
+        </StyledDiv>
+      )}
+    </Fragment>
   );
 };
 

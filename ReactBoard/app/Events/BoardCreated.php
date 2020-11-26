@@ -38,3 +38,11 @@ class BoardCreated
     return new PrivateChannel('channel-name');
   }
 }
+
+// 설명 : 컨트롤러에서의 명령어
+// dump("이벤트");
+// event(
+//   // 'board.created', // 프로바이더에 등록 후 생략
+//   new \App\Events\BoardCreated(($board))
+// );
+// dump("이벤트");
