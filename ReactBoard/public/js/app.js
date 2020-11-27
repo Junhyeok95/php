@@ -100720,27 +100720,18 @@ var Boards = function Boards(_ref) {
       // setLook(sessionStorage.getItem("look"));
     } else {}
 
-    getBoards();
-    return function () {};
-  }, []);
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    console.log("데이터 변경");
     var mql = window.matchMedia("screen and (max-width: 768px)");
     mql.removeEventListener("change", function () {});
     mql.addEventListener("change", function (e) {
-      if (data) {
-        if (data.current_page) {
-          if (e.matches) {
-            console.log("모바일 화면 입니다.");
-            console.log(data.current_page); // getBoards(data.current_page);
-          } else {
-            console.log("데스크탑 화면 입니다.");
-            console.log(data.current_page); // getBoards(data.current_page);
-          }
-        }
+      if (e.matches) {
+        console.log("모바일 화면 입니다.");
+      } else {
+        console.log("데스크탑 화면 입니다.");
       }
     });
-  }, [data]);
+    getBoards();
+    return function () {};
+  }, []);
 
   var getBoards = function getBoards(pageNumber) {
     var currentPage = pageNumber; // // TEST CODE
@@ -100932,6 +100923,7 @@ var Detail = function Detail(_ref) {
       data = _useState2[0],
       setData = _useState2[1];
 
+  var content = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     getBoardsDetail(match.params.detail);
   }, []); // show
@@ -100942,6 +100934,7 @@ var Detail = function Detail(_ref) {
       url: "/api/boards/".concat(detailId)
     }).then(function (res) {
       setData(res.data);
+      content.current.innerHTML = res.data.content;
     })["catch"](function (error) {
       return console.log(error);
     });
@@ -100986,28 +100979,25 @@ var Detail = function Detail(_ref) {
       minHeight: 300
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    ref: content,
     style: {
       fontSize: 16
     },
-    className: "text-center"
-  }, data.content)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-4"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
     style: {
-      backgroundColor: "gray"
+      border: "2px solid black"
     },
-    className: "d-flex p-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-    style: {
-      backgroundColor: "yellow"
-    },
+    className: "d-flex p-1"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"] // style={{ backgroundColor: "yellow" }}
+  , {
     className: "p-1"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onClick: function onClick() {
       history.push("/boards");
     }
-  }, "\uAE00 \uBAA9\uB85D")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-    style: {
-      backgroundColor: "green"
-    },
+  }, "\uAE00 \uBAA9\uB85D")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"] // style={{ backgroundColor: "green" }}
+  , {
     className: "d-flex justify-content-end p-1"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onClick: function onClick() {
@@ -101115,7 +101105,7 @@ var Write = function Write(_ref) {
     }
   }),
       _useState2 = _slicedToArray(_useState, 2),
-      WriteData = _useState2[0],
+      writeData = _useState2[0],
       setWriteData = _useState2[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -101142,9 +101132,9 @@ var Write = function Write(_ref) {
           console.log("An API call triggered this change.");
         } else if (source == "user") {
           // console.log(quill.root.innerHTML);
-          var _WriteData = WriteData;
-          _WriteData.data.content = quill.root.innerHTML;
-          setWriteData(_WriteData);
+          var _writeData = writeData;
+          _writeData.data.content = quill.root.innerHTML;
+          setWriteData(_writeData);
         }
       });
     }
@@ -101167,8 +101157,8 @@ var Write = function Write(_ref) {
           Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
         },
         data: {
-          title: WriteData.data.title,
-          content: WriteData.data.content
+          title: writeData.data.title,
+          content: writeData.data.content
         }
       }).then(function (res) {
         if (res.data) {
@@ -101194,8 +101184,8 @@ var Write = function Write(_ref) {
           Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
         },
         data: {
-          title: WriteData.data.title,
-          content: WriteData.data.content
+          title: writeData.data.title,
+          content: writeData.data.content
         }
       }).then(function (res) {
         if (res.data === true) {
@@ -101278,9 +101268,9 @@ var Write = function Write(_ref) {
     placeholder: "\uC81C\uBAA9\uC744 \uC791\uC131\uD558\uC138\uC694 ...",
     onChange: function onChange(e) {
       // console.log(e.target.value); // current.value
-      var _WriteData = WriteData;
-      _WriteData.data.title = e.target.value;
-      setWriteData(_WriteData);
+      var _writeData = writeData;
+      _writeData.data.title = e.target.value;
+      setWriteData(_writeData);
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(QuillWrapper, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     ref: quillElement
@@ -101297,12 +101287,12 @@ var Write = function Write(_ref) {
   }, action === "update" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onClick: function onClick() {
       updateBtn(match.params.detail);
-      console.log(WriteData);
+      console.log(writeData);
     }
   }, "\uC800\uC7A5"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onClick: function onClick() {
       deleteBtn(match.params.detail);
-      console.log(WriteData);
+      console.log(writeData);
     }
   }, "\uC0AD\uC81C")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onClick: function onClick() {

@@ -1,10 +1,11 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Axios from "axios";
 import Button from "../../../components/Button";
 
 const Detail = ({ userInfo, match, history }) => {
   const [data, setData] = useState(null);
+  const content = useRef();
 
   useEffect(() => {
     getBoardsDetail(match.params.detail);
@@ -18,6 +19,7 @@ const Detail = ({ userInfo, match, history }) => {
     })
       .then((res) => {
         setData(res.data);
+        content.current.innerHTML = res.data.content;
       })
       .catch((error) => console.log(error));
   };
@@ -71,12 +73,15 @@ const Detail = ({ userInfo, match, history }) => {
             </Col>
           </Row>
           <Row style={{ minHeight: 300 }}>
-            <Col style={{ fontSize: 16 }} className="text-center">
-              {data.content}
+            <Col ref={content} style={{ fontSize: 16 }} className="p-4">
+              {/* content.current.innerHTML */}
             </Col>
           </Row>
-          <Row style={{ backgroundColor: "gray" }} className="d-flex p-3">
-            <Col style={{ backgroundColor: "yellow" }} className="p-1">
+          <Row style={{ border: "2px solid black" }} className="d-flex p-1">
+            <Col
+              // style={{ backgroundColor: "yellow" }}
+              className="p-1"
+            >
               <Button
                 onClick={() => {
                   history.push(`/boards`);
@@ -86,7 +91,7 @@ const Detail = ({ userInfo, match, history }) => {
               </Button>
             </Col>
             <Col
-              style={{ backgroundColor: "green" }}
+              // style={{ backgroundColor: "green" }}
               className="d-flex justify-content-end p-1"
             >
               <Button

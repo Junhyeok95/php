@@ -38,7 +38,7 @@ const Write = ({ userInfo, match, history, action }) => {
   const quillInstance = useRef(null);
 
   // 이게 아닌거같은데 .. ?
-  const [WriteData, setWriteData] = useState({
+  const [writeData, setWriteData] = useState({
     data: { title: "null", content: "null" },
   });
 
@@ -59,14 +59,15 @@ const Write = ({ userInfo, match, history, action }) => {
       });
 
       const quill = quillInstance.current;
+
       quill.on("text-change", function (delta, oldDelta, source) {
         if (source == "api") {
           console.log("An API call triggered this change.");
         } else if (source == "user") {
           // console.log(quill.root.innerHTML);
-          let _WriteData = WriteData;
-          _WriteData.data.content = quill.root.innerHTML;
-          setWriteData(_WriteData);
+          let _writeData = writeData;
+          _writeData.data.content = quill.root.innerHTML;
+          setWriteData(_writeData);
         }
       });
     }
@@ -90,8 +91,8 @@ const Write = ({ userInfo, match, history, action }) => {
             (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
         },
         data: {
-          title: WriteData.data.title,
-          content: WriteData.data.content,
+          title: writeData.data.title,
+          content: writeData.data.content,
         },
       })
         .then((res) => {
@@ -121,8 +122,8 @@ const Write = ({ userInfo, match, history, action }) => {
             (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
         },
         data: {
-          title: WriteData.data.title,
-          content: WriteData.data.content,
+          title: writeData.data.title,
+          content: writeData.data.content,
         },
       })
         .then((res) => {
@@ -217,9 +218,9 @@ const Write = ({ userInfo, match, history, action }) => {
             placeholder="제목을 작성하세요 ..."
             onChange={(e) => {
               // console.log(e.target.value); // current.value
-              let _WriteData = WriteData;
-              _WriteData.data.title = e.target.value;
-              setWriteData(_WriteData);
+              let _writeData = writeData;
+              _writeData.data.title = e.target.value;
+              setWriteData(_writeData);
             }}
           />
           <QuillWrapper>
@@ -241,7 +242,7 @@ const Write = ({ userInfo, match, history, action }) => {
                   <Button
                     onClick={() => {
                       updateBtn(match.params.detail);
-                      console.log(WriteData);
+                      console.log(writeData);
                     }}
                   >
                     저장
@@ -249,7 +250,7 @@ const Write = ({ userInfo, match, history, action }) => {
                   <Button
                     onClick={() => {
                       deleteBtn(match.params.detail);
-                      console.log(WriteData);
+                      console.log(writeData);
                     }}
                   >
                     삭제

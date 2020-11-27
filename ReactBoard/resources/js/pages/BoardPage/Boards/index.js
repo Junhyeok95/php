@@ -34,32 +34,20 @@ const Boards = ({ match, history }) => {
     } else {
     }
 
+    const mql = window.matchMedia("screen and (max-width: 768px)");
+    mql.removeEventListener("change", () => {});
+    mql.addEventListener("change", (e) => {
+      if (e.matches) {
+        console.log("모바일 화면 입니다.");
+      } else {
+        console.log("데스크탑 화면 입니다.");
+      }
+    });
+
     getBoards();
 
     return () => {};
   }, []);
-
-  useEffect(() => {
-    console.log("데이터 변경");
-
-    const mql = window.matchMedia("screen and (max-width: 768px)");
-    mql.removeEventListener("change", () => {});
-    mql.addEventListener("change", (e) => {
-      if (data) {
-        if (data.current_page) {
-          if (e.matches) {
-            console.log("모바일 화면 입니다.");
-            console.log(data.current_page);
-            // getBoards(data.current_page);
-          } else {
-            console.log("데스크탑 화면 입니다.");
-            console.log(data.current_page);
-            // getBoards(data.current_page);
-          }
-        }
-      }
-    });
-  }, [data]);
 
   const getBoards = (pageNumber) => {
     const currentPage = pageNumber;
