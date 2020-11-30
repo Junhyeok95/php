@@ -100161,20 +100161,25 @@ var App = function App() {
     path: "/test3",
     component: _pages_TestPage3__WEBPACK_IMPORTED_MODULE_7__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+    exact: true,
     path: "/",
-    component: _pages_HomePage__WEBPACK_IMPORTED_MODULE_8__["default"],
-    exact: true
+    component: _pages_HomePage__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+    exact: true,
     path: "/boards",
     component: _pages_BoardPage__WEBPACK_IMPORTED_MODULE_9__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-    path: "/login",
-    component: _pages_LoginPage__WEBPACK_IMPORTED_MODULE_10__["default"],
-    exact: true
+    exact: true,
+    path: "/:slug/boards",
+    component: _pages_BoardPage__WEBPACK_IMPORTED_MODULE_9__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+    exact: true,
+    path: "/login",
+    component: _pages_LoginPage__WEBPACK_IMPORTED_MODULE_10__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+    exact: true,
     path: "/register",
-    component: _pages_RegisterPage__WEBPACK_IMPORTED_MODULE_11__["default"],
-    exact: true
+    component: _pages_RegisterPage__WEBPACK_IMPORTED_MODULE_11__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
     component: _pages_NotFoundPage__WEBPACK_IMPORTED_MODULE_12__["default"]
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_layouts_Footer__WEBPACK_IMPORTED_MODULE_6__["default"], null));
@@ -100742,13 +100747,14 @@ var Boards = function Boards(_ref) {
 
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "get",
-      url: "/api/boards",
+      url: "/api" + match.url,
+      // "boards" or ":slug/boards"
       params: {
         page: currentPage,
         perPage: perPage
       }
     }).then(function (res) {
-      setData(res.data);
+      setData(res.data[0]);
     })["catch"](function (error) {
       return console.log(error);
     });

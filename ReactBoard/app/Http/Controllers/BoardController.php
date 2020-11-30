@@ -13,10 +13,11 @@ class BoardController extends Controller
     $this->middleware('JWT', ['except' => ['index', 'show']]);
   }
 
-  public function index(Request $request)
+  public function index(Request $request, $slug = null)
   {
-    $paginate = \App\Board::latest()->paginate($request->perPage);
-    return response()->json($paginate);
+    $query = $slug ? \App\Tag::whereSlug($slug)->firstOrFail()->boards() : new \App\Board;
+    $paginate = $query->latest()->paginate($request->perPage);
+    return response()->json([$paginate, $slug]);
   }
 
   public function create()

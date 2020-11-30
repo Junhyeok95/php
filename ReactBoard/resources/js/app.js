@@ -29,10 +29,11 @@ const App = () => {
       <Body>
         <Switch>
           <Route path="/test3" component={TestPage3} />
-          <Route path="/" component={HomePage} exact />
-          <Route path="/boards" component={BoardPage} />
-          <Route path="/login" component={LoginPage} exact />
-          <Route path="/register" component={RegisterPage} exact />
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/boards" component={BoardPage} />
+          <Route exact path="/:slug/boards" component={BoardPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegisterPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </Body>

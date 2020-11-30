@@ -60,14 +60,14 @@ const Boards = ({ match, history }) => {
 
     Axios({
       method: "get",
-      url: "/api/boards",
+      url: "/api" + match.url, // "boards" or ":slug/boards"
       params: {
         page: currentPage,
         perPage,
       },
     })
       .then((res) => {
-        setData(res.data);
+        setData(res.data[0]);
       })
       .catch((error) => console.log(error));
   };

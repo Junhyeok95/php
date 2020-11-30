@@ -14,3 +14,4 @@ Route::group([
 });
 
 Route::resource('boards', 'BoardController');
+Route::get('/{slug}/boards', 'BoardController@index');
