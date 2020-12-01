@@ -60,7 +60,7 @@ const Boards = ({ match, history }) => {
 
     Axios({
       method: "get",
-      url: "/api" + match.url, // "boards" or ":slug/boards"
+      url: "/api" + match.url, // "/boards" or "/:slug/boards"
       params: {
         page: currentPage,
         perPage,

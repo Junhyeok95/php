@@ -14,4 +14,16 @@ Route::group([
 });
 
 Route::resource('boards', 'BoardController');
-Route::get('/{slug}/boards', 'BoardController@index');
+Route::get('{slug}/boards', 'BoardController@index');
+
+Route::get('mail', function () {
+  $board = App\Board::with('user')->find(1);
+  return Mail::send(
+    'emails.boards.created',
+    compact('board'),
+    function ($message) use ($board) {
+      $message->to('btryaalpha@gmail.com');
+      $message->subject('게시판 등록 : ' . $board->user->name);
+    }
+  );
+});
