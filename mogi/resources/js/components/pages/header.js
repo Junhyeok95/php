@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { UserContext } from "../contexts/user";
 
 const Header = () => {
     const { userInfo, logout } = useContext(UserContext);
 
-    const onClick = e => {
-        e.preventDefault();
-        logout();
+    const activeStyle = {
+        // background: "black",
+        // color: "white",
+        fontWeight: "900"
     };
 
     return (
@@ -35,21 +36,23 @@ const Header = () => {
                     >
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">
+                                <NavLink
+                                    className="nav-link"
+                                    to="/home"
+                                    activeStyle={activeStyle}
+                                >
                                     神田ユニフォーム店
-                                </Link>
+                                </NavLink>
                             </li>
                             {userInfo && (
                                 <li className="nav-item">
-                                    <Link
+                                    <NavLink
                                         className="nav-link"
-                                        to="/"
-                                        onClick={() => {
-                                            console.log("push");
-                                        }}
+                                        to="/order"
+                                        activeStyle={activeStyle}
                                     >
                                         受注管理画面
-                                    </Link>
+                                    </NavLink>
                                 </li>
                             )}
                         </ul>
@@ -60,7 +63,10 @@ const Header = () => {
                                     <a
                                         style={{ cursor: "pointer" }}
                                         className="dropdown-item"
-                                        onClick={onClick}
+                                        onClick={e => {
+                                            e.preventDefault();
+                                            logout();
+                                        }}
                                     >
                                         Logout
                                     </a>
@@ -75,14 +81,14 @@ const Header = () => {
                                             Login
                                         </Link>
                                     </li>
-                                    {/*<li className="nav-item">
+                                    <li className="nav-item">
                                         <Link
-                                            className="nav-link"
+                                            className="dropdown-item"
                                             to="/register"
                                         >
                                             Register
                                         </Link>
-                                    </li>*/}
+                                    </li>
                                 </React.Fragment>
                             )}
                         </ul>

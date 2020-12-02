@@ -70712,9 +70712,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _contexts_user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./contexts/user */ "./resources/js/components/contexts/user.js");
 /* harmony import */ var _pages_header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/header */ "./resources/js/components/pages/header.js");
 /* harmony import */ var _pages_home__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/home */ "./resources/js/components/pages/home.js");
-/* harmony import */ var _pages_login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/login */ "./resources/js/components/pages/login.js");
-/* harmony import */ var _pages_register__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/register */ "./resources/js/components/pages/register.js");
-/* harmony import */ var _pages_not__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/not */ "./resources/js/components/pages/not.js");
+/* harmony import */ var _pages_order__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/order */ "./resources/js/components/pages/order.js");
+/* harmony import */ var _pages_login__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/login */ "./resources/js/components/pages/login.js");
+/* harmony import */ var _pages_register__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/register */ "./resources/js/components/pages/register.js");
+/* harmony import */ var _pages_not__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/not */ "./resources/js/components/pages/not.js");
+
 
 
 
@@ -70728,14 +70730,19 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pages_header__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
     exact: true,
-    path: "/",
+    path: "/home",
     component: _pages_home__WEBPACK_IMPORTED_MODULE_5__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
     exact: true,
     path: "/login",
-    component: _pages_login__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _pages_login__WEBPACK_IMPORTED_MODULE_7__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-    component: _pages_not__WEBPACK_IMPORTED_MODULE_8__["default"]
+    exact: true,
+    path: "/register",
+    component: _pages_register__WEBPACK_IMPORTED_MODULE_8__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+    path: "/order",
+    component: _pages_order__WEBPACK_IMPORTED_MODULE_6__["default"]
   })));
 };
 
@@ -70899,11 +70906,11 @@ var Header = function Header() {
       userInfo = _useContext.userInfo,
       logout = _useContext.logout;
 
-  var onClick = function onClick(e) {
-    e.preventDefault();
-    logout();
+  var activeStyle = {
+    // background: "black",
+    // color: "white",
+    fontWeight: "900"
   };
-
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
     className: "navbar navbar-expand-md navbar-light bg-white shadow-sm"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -70928,17 +70935,16 @@ var Header = function Header() {
     className: "navbar-nav mr-auto"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
     className: "nav-link",
-    to: "/"
+    to: "/home",
+    activeStyle: activeStyle
   }, "\u795E\u7530\u30E6\u30CB\u30D5\u30A9\u30FC\u30E0\u5E97")), userInfo && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
     className: "nav-link",
-    to: "/",
-    onClick: function onClick() {
-      console.log("push");
-    }
+    to: "/order",
+    activeStyle: activeStyle
   }, "\u53D7\u6CE8\u7BA1\u7406\u753B\u9762"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "navbar-nav ml-auto"
   }, userInfo ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -70948,13 +70954,21 @@ var Header = function Header() {
       cursor: "pointer"
     },
     className: "dropdown-item",
-    onClick: onClick
+    onClick: function onClick(e) {
+      e.preventDefault();
+      logout();
+    }
   }, "Logout")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     className: "dropdown-item",
     to: "/login"
-  }, "Login"))))))));
+  }, "Login")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "nav-item"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    className: "dropdown-item",
+    to: "/register"
+  }, "Register"))))))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Header);
@@ -71104,7 +71118,7 @@ var LoginPage = function LoginPage() {
     required: true,
     autoFocus: true,
     onChange: onChange,
-    value: "staff@kanda-it-school.com"
+    value: email
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "invalid-feedback",
     role: "alert"
@@ -71122,7 +71136,7 @@ var LoginPage = function LoginPage() {
     name: "password",
     required: true,
     onChange: onChange,
-    value: "password"
+    value: password
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "invalid-feedback",
     role: "alert"
@@ -71203,6 +71217,151 @@ var NotFoundPage = function NotFoundPage() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NotFoundPage);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/order-detail.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/pages/order-detail.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var OrderDetail = function OrderDetail(_ref) {
+  var match = _ref.match,
+      history = _ref.history;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, "OrderDetail");
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (OrderDetail);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/order-edit.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/pages/order-edit.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var OrderEdit = function OrderEdit(_ref) {
+  var match = _ref.match,
+      history = _ref.history;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, "OrderEdit");
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (OrderEdit);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/order-management.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/pages/order-management.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var OrderManagement = function OrderManagement(_ref) {
+  var match = _ref.match,
+      history = _ref.history;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, "OrderManagement");
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (OrderManagement);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/order.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/pages/order.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _components_contexts_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/contexts/user */ "./resources/js/components/contexts/user.js");
+/* harmony import */ var _order_management__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./order-management */ "./resources/js/components/pages/order-management.js");
+/* harmony import */ var _order_detail__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./order-detail */ "./resources/js/components/pages/order-detail.js");
+/* harmony import */ var _order_edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./order-edit */ "./resources/js/components/pages/order-edit.js");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+
+
+
+
+
+
+
+var OrderPage = function OrderPage(_ref) {
+  var match = _ref.match;
+
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_components_contexts_user__WEBPACK_IMPORTED_MODULE_2__["UserContext"]),
+      userInfo = _useContext.userInfo;
+
+  var navUl = function navUl() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      className: "nav-item m-2"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      className: "nav-item"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "/order"
+    }, "/order")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      className: "nav-item"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "/order/detail"
+    }, "/order/:detail")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      className: "nav-item"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: "/order/detail/edit"
+    }, "/order/:detail/edit")));
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, navUl(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
+    path: match.path,
+    component: _order_management__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
+    path: "".concat(match.path, "/:detail"),
+    render: function render(props) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_order_detail__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
+        userInfo: userInfo
+      }, props));
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
+    path: "".concat(match.path, "/:detail/edit"),
+    render: function render(props) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_order_edit__WEBPACK_IMPORTED_MODULE_5__["default"], _extends({
+        userInfo: userInfo
+      }, props));
+    }
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (OrderPage);
 
 /***/ }),
 

@@ -5,6 +5,7 @@ import { UserContextProvider } from "./contexts/user";
 
 import Header from "./pages/header";
 import HomePage from "./pages/home";
+import OrderPage from "./pages/order";
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 import NotFoundPage from "./pages/not";
@@ -14,10 +15,10 @@ const App = () => {
         <React.Fragment>
             <Header />
             <Switch>
-                <Route exact path="/" component={HomePage} />
+                <Route exact path="/home" component={HomePage} />
                 <Route exact path="/login" component={LoginPage} />
-                {/*<Route exact path="/register" component={RegisterPage} />*/}
-                <Route component={NotFoundPage} />
+                <Route exact path="/register" component={RegisterPage} />
+                <Route path="/order" component={OrderPage} />
             </Switch>
         </React.Fragment>
     );

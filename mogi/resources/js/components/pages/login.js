@@ -48,7 +48,7 @@ const LoginPage = () => {
                                             required
                                             autoFocus
                                             onChange={onChange}
-                                            value="staff@kanda-it-school.com"
+                                            value={email}
                                         />
                                         <span
                                             className="invalid-feedback"
@@ -74,7 +74,7 @@ const LoginPage = () => {
                                             name="password"
                                             required
                                             onChange={onChange}
-                                            value="password"
+                                            value={password}
                                         ></input>
                                         <span
                                             className="invalid-feedback"
