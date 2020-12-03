@@ -26,4 +26,14 @@ php artisan make:request RegisterRequest
 
 composer dump-autoload
 php artisan migrate:refresh --seed
+
+php artisan make:model Order
+php artisan make:model Product
+php artisan make:controller OrderController --resource
+php artisan make:controller ProductController --resource
+
+php artisan make:migration create_orders_table --create=orders
+php artisan make:migration create_products_table --create=products
+php artisan make:migration create_order_product_table --create=order_product
+
 ```
