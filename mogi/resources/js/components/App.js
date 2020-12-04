@@ -4,8 +4,8 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { UserContextProvider } from "./contexts/user";
 
 import Header from "./pages/header";
-import HomePage from "./pages/home";
 import OrderPage from "./pages/order";
+import ProductPage from "./pages/product";
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 import NotFoundPage from "./pages/not";
@@ -15,10 +15,11 @@ const App = () => {
         <React.Fragment>
             <Header />
             <Switch>
-                <Route exact path="/home" component={HomePage} />
+                <Route path="/product" component={ProductPage} />
+                <Route path="/order" component={OrderPage} />
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/register" component={RegisterPage} />
-                <Route path="/order" component={OrderPage} />
+                <Route component={NotFoundPage} />
             </Switch>
         </React.Fragment>
     );

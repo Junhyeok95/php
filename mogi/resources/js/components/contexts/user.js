@@ -18,7 +18,7 @@ const UserContextProvider = withRouter(({ children, history }) => {
         })
             .then(res => {
                 setCurrentUser(res);
-                history.push("/");
+                history.push("/product");
             })
             .catch(function(error) {
                 console.log(error);
@@ -38,7 +38,7 @@ const UserContextProvider = withRouter(({ children, history }) => {
         })
             .then(res => {
                 setCurrentUser(res);
-                history.push("/");
+                history.push("/product");
             })
             .catch(function(error) {
                 console.log(error);
@@ -57,7 +57,7 @@ const UserContextProvider = withRouter(({ children, history }) => {
                 .then(res => {
                     localStorage.removeItem("user");
                     setUserInfo(null);
-                    history.push("/");
+                    history.push("/product");
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -84,7 +84,7 @@ const UserContextProvider = withRouter(({ children, history }) => {
             };
             localStorage.setItem("user", JSON.stringify(userData));
             setUserInfo(userData);
-            history.push("/");
+            history.push("/product");
         }
     };
 

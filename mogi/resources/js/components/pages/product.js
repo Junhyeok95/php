@@ -3,9 +3,8 @@ import { Route, Link, Switch } from "react-router-dom";
 import { UserContext } from "../../components/contexts/user";
 import styled from "styled-components";
 
-import OrderManagement from "./order-management";
-import OrderDetail from "./order-detail";
-import OrderEdit from "./order-edit";
+import ProductHome from "./product-home";
+import ProductDetail from "./product-detail";
 import NotFoundPage from "../pages/not";
 
 const StyledDiv = styled.div`
@@ -16,11 +15,11 @@ const StyledDiv = styled.div`
 `;
 const StyledTitle = styled.div`
     font-size: 48px;
-    color: blue;
+    color: green;
     flex: 1;
 `;
 
-const OrderPage = ({ match }) => {
+const ProductPage = ({ match }) => {
     const { userInfo } = useContext(UserContext);
 
     const navUl = () => {
@@ -29,19 +28,16 @@ const OrderPage = ({ match }) => {
                 <StyledDiv className="flex-center position-ref full-height">
                     <div className="content">
                         <StyledTitle className="m-b-md text-center">
-                            受注管理画面
+                            神田ユニフォーム店
                         </StyledTitle>
                     </div>
                 </StyledDiv>
                 <ul className="nav-item m-2">
                     <li className="nav-item">
-                        <Link to="/order">/order</Link>
+                        <Link to="/product">/product</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/order/detail">/order/:detail</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/order/detail/edit">/order/:detail/edit</Link>
+                        <Link to="/product/detail">/product/:detail</Link>
                     </li>
                 </ul>
             </Fragment>
@@ -51,25 +47,14 @@ const OrderPage = ({ match }) => {
     return (
         <div>
             {navUl()}
-            <div style={{ height: "500px", border: "solid blue 20px" }}>
+            <div style={{ height: "500px", border: "solid green 20px" }}>
                 <Switch>
-                    <Route
-                        exact
-                        path={match.path}
-                        component={OrderManagement}
-                    />
+                    <Route exact path={match.path} component={ProductHome} />
                     <Route
                         exact
                         path={`${match.path}/:detail`}
                         render={props => (
-                            <OrderDetail userInfo={userInfo} {...props} />
-                        )}
-                    />
-                    <Route
-                        exact
-                        path={`${match.path}/:detail/edit`}
-                        render={props => (
-                            <OrderEdit userInfo={userInfo} {...props} />
+                            <ProductDetail userInfo={userInfo} {...props} />
                         )}
                     />
                     <Route component={NotFoundPage} />
@@ -79,4 +64,4 @@ const OrderPage = ({ match }) => {
     );
 };
 
-export default OrderPage;
+export default ProductPage;

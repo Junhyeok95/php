@@ -1,6 +1,20 @@
 import React, { useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { UserContext } from "../contexts/user";
+import styled from "styled-components";
+
+const StyledDiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10%;
+    border-bottom: solid black 2px;
+`;
+const StyledTitle = styled.div`
+    font-size: 24px;
+    text-align: center;
+    flex: 1;
+`;
 
 const Header = () => {
     const { userInfo, logout } = useContext(UserContext);
@@ -13,10 +27,13 @@ const Header = () => {
 
     return (
         <div>
+            <StyledDiv className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+                <StyledTitle>ユニフォーム受注管理システム</StyledTitle>
+            </StyledDiv>
             <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div className="container">
-                    <a className="navbar-brand" href="/">
-                        ユニフォーム受注管理システム
+                    <a className="navbar-brand" href="/product">
+                        神田ユニフォーム店
                     </a>
                     <button
                         className="navbar-toggler"
@@ -35,15 +52,6 @@ const Header = () => {
                         id="navbarSupportedContent"
                     >
                         <ul className="navbar-nav mr-auto">
-                            <li className="nav-item">
-                                <NavLink
-                                    className="nav-link"
-                                    to="/home"
-                                    activeStyle={activeStyle}
-                                >
-                                    神田ユニフォーム店
-                                </NavLink>
-                            </li>
                             {userInfo && (
                                 <li className="nav-item">
                                     <NavLink

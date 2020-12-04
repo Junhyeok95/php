@@ -15,8 +15,12 @@ const StyledContent = styled.div`
     font-size: 24px;
     flex: 1;
 `;
+const StyledButton = styled.button`
+    width: 100%;
+`;
 
-const NotFoundPage = () => {
+const NotFoundPage = ({ match, history }) => {
+    console.log(match, history.location);
     return (
         <StyledDiv className="flex-center position-ref full-height">
             <div className="content">
@@ -24,8 +28,11 @@ const NotFoundPage = () => {
                     404 Not Found
                 </StyledTitle>
                 <StyledContent className="m-b-md text-center">
-                    ユニフォーム受注管理システム
+                    {history.location.pathname}
                 </StyledContent>
+                <StyledButton onClick={() => history.go(-1)}>
+                    error
+                </StyledButton>
             </div>
         </StyledDiv>
     );
