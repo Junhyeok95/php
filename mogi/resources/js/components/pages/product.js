@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import ProductHome from "./product-home";
 import ProductDetail from "./product-detail";
+import ProductBuy from "./product-buy";
 import NotFoundPage from "../pages/not";
 
 const StyledDiv = styled.div`
@@ -37,6 +38,9 @@ const ProductPage = ({ match }) => {
                         <Link to="/product">/product</Link>
                     </li>
                     <li className="nav-item">
+                        <Link to="/product/create">/product/create</Link>
+                    </li>
+                    <li className="nav-item">
                         <Link to="/product/detail">/product/:detail</Link>
                     </li>
                 </ul>
@@ -50,6 +54,13 @@ const ProductPage = ({ match }) => {
             <div style={{ minHeight: 500, border: "solid green 20px" }}>
                 <Switch>
                     <Route exact path={match.path} component={ProductHome} />
+                    <Route
+                        exact
+                        path={`${match.path}/create`}
+                        render={props => (
+                            <ProductBuy userInfo={userInfo} {...props} />
+                        )}
+                    />
                     <Route
                         exact
                         path={`${match.path}/:detail`}

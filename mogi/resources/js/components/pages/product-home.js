@@ -20,7 +20,14 @@ const ProductHome = ({ match, history }) => {
                                     title and make up the bulk of the card's
                                     content.
                                 </Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
+                                <Button
+                                    variant="primary"
+                                    onClick={() =>
+                                        history.push("/product/create")
+                                    }
+                                >
+                                    Go somewhere
+                                </Button>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -37,7 +44,14 @@ const ProductHome = ({ match, history }) => {
                                     title and make up the bulk of the card's
                                     content.
                                 </Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
+                                <Button
+                                    variant="primary"
+                                    onClick={() =>
+                                        history.push("/product/create")
+                                    }
+                                >
+                                    Go somewhere
+                                </Button>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -54,7 +68,14 @@ const ProductHome = ({ match, history }) => {
                                     title and make up the bulk of the card's
                                     content.
                                 </Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
+                                <Button
+                                    variant="primary"
+                                    onClick={() =>
+                                        history.push("/product/create")
+                                    }
+                                >
+                                    Go somewhere
+                                </Button>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -71,7 +92,14 @@ const ProductHome = ({ match, history }) => {
                                     title and make up the bulk of the card's
                                     content.
                                 </Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
+                                <Button
+                                    variant="primary"
+                                    onClick={() =>
+                                        history.push("/product/create")
+                                    }
+                                >
+                                    Go somewhere
+                                </Button>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -88,7 +116,14 @@ const ProductHome = ({ match, history }) => {
                                     title and make up the bulk of the card's
                                     content.
                                 </Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
+                                <Button
+                                    variant="primary"
+                                    onClick={() =>
+                                        history.push("/product/create")
+                                    }
+                                >
+                                    Go somewhere
+                                </Button>
                             </Card.Body>
                         </Card>
                     </Col>
