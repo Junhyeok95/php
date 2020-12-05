@@ -51,7 +51,7 @@ const OrderPage = ({ match }) => {
     return (
         <div>
             {navUl()}
-            <div style={{ height: "500px", border: "solid blue 20px" }}>
+            <div style={{ minHeight: 500, border: "solid blue 20px" }}>
                 <Switch>
                     <Route
                         exact

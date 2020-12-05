@@ -32,9 +32,17 @@ const Header = () => {
             </StyledDiv>
             <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div className="container">
-                    <a className="navbar-brand" href="/product">
-                        神田ユニフォーム店
-                    </a>
+                    <ul className="navbar-nav mr-auto">
+                        <li className="nav-item">
+                            <Link
+                                className="nav-link font-weight-bold"
+                                to="/product"
+                                style={{ color: "#000000", fontSize: 16 }}
+                            >
+                                神田ユニフォーム店
+                            </Link>
+                        </li>
+                    </ul>
                     <button
                         className="navbar-toggler"
                         type="button"
@@ -57,6 +65,7 @@ const Header = () => {
                                     <NavLink
                                         className="nav-link"
                                         to="/order"
+                                        style={{ fontSize: 16 }}
                                         activeStyle={activeStyle}
                                     >
                                         受注管理画面

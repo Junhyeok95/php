@@ -60,6 +60,9 @@ const UserContextProvider = withRouter(({ children, history }) => {
                     history.push("/product");
                 })
                 .catch(function(error) {
+                    localStorage.removeItem("user");
+                    setUserInfo(null);
+                    history.push("/product");
                     console.log(error);
                 });
         }

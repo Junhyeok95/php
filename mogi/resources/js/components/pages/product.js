@@ -47,7 +47,7 @@ const ProductPage = ({ match }) => {
     return (
         <div>
             {navUl()}
-            <div style={{ height: "500px", border: "solid green 20px" }}>
+            <div style={{ minHeight: 500, border: "solid green 20px" }}>
                 <Switch>
                     <Route exact path={match.path} component={ProductHome} />
                     <Route
