@@ -30,7 +30,13 @@ const NotFoundPage = ({ match, history }) => {
                 <StyledContent className="m-b-md text-center">
                     {history.location.pathname}
                 </StyledContent>
-                <StyledButton onClick={() => history.go(-1)}>
+                <StyledButton
+                    onClick={() =>
+                        history.location.pathname == "/"
+                            ? history.push("/product")
+                            : history.go(-1)
+                    }
+                >
                     error
                 </StyledButton>
             </div>

@@ -12,7 +12,6 @@ const StyledDiv = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
 `;
 const StyledTitle = styled.div`
     font-size: 48px;

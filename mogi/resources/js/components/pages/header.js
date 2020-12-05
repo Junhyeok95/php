@@ -7,7 +7,6 @@ const StyledDiv = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 10%;
     border-bottom: solid black 2px;
 `;
 const StyledTitle = styled.div`
