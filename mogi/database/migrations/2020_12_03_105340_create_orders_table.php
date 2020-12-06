@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
       // $table->string('phone_number', 20)->nullable()->comment('전화번호');
 
       /* orders */
-      $table->bigInteger('billable_amount')->nullable()->comment('주문금액');
+      $table->bigInteger('billable_amount')->nullable()->comment('주문금액'); // 合計金額
       $table->text('message')->nullable()->comment('주문메시지');
       $table->string('deposit_status')->nullable()->comment('입금 상태'); // 入金状況
       $table->string('shipping_status')->nullable()->comment('배송 상태'); // 発送状況

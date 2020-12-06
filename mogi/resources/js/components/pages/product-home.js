@@ -9,16 +9,19 @@ const ProductHome = ({ match, history }) => {
 
         for (let i = 0; i < 5; i++) {
             cardArr.push(
-                <Col className="justify-content-center" key={"productCard" + i}>
-                    <Card style={{ minWidth: "10rem" }}>
+                <Col key={"productCard" + i}>
+                    <Card className="justify-content-center align-items-center p-1">
                         <Card.Img
-                            style={{ maxWidth: 300, maxHeight: 325 }}
+                            style={{
+                                minWidth: "10rem",
+                                maxWidth: "15rem"
+                            }}
                             variant="top"
                             src={`/images/${url[i]}.png`}
                         />
                         <Card.Body className="w-auto">
                             <Card.Title style={{ textAlign: "center" }}>
-                                Card Title
+                                {"ユニフォーム " + url[i]}
                             </Card.Title>
                             <Card.Text>
                                 Some quick example text to build on the card

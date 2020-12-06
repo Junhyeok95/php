@@ -86575,12 +86575,248 @@ var OrderEdit = function OrderEdit(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/index.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 var OrderManagement = function OrderManagement(_ref) {
   var match = _ref.match,
       history = _ref.history;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, "OrderManagement");
+  var sampleData = {
+    name: "orderData",
+    data: [{
+      name: "orderDataHeadList",
+      list: {
+        orderId: "No",
+        customerName: "氏名",
+        uniformKind: "種類",
+        uniformQuantity: "個数",
+        billableAmount: "合計金額",
+        createdAt: "発注日",
+        depositStatus: "入金状況",
+        shippingStatus: "発送状況"
+      }
+    }, {
+      name: "orderSample",
+      list: [{
+        orderId: "1",
+        customerName: "田中",
+        uniformKind: "ユニフォーム A",
+        uniformQuantity: "1",
+        billableAmount: "300",
+        createdAt: "2020年12月6日",
+        depositStatus: "入金待ち",
+        // 入金済, 入金待ち
+        shippingStatus: "発送済" // 発送済, 発送準備中, 未
+
+      }, {
+        orderId: "2",
+        customerName: "山田",
+        uniformKind: "ユニフォーム A",
+        uniformQuantity: "1",
+        billableAmount: "300",
+        createdAt: "2020年12月6日",
+        depositStatus: "入金済",
+        // 入金済, 入金待ち
+        shippingStatus: "発送準備中" // 発送済, 発送準備中, 未
+
+      }, {
+        orderId: "3",
+        customerName: "神田",
+        uniformKind: "ユニフォーム A",
+        uniformQuantity: "1",
+        billableAmount: "300",
+        createdAt: "2020年12月6日",
+        depositStatus: "入金済",
+        // 入金済, 入金待ち
+        shippingStatus: "未" // 発送済, 発送準備中, 未
+
+      }, {
+        orderId: "4",
+        customerName: "田中",
+        uniformKind: "ユニフォーム A",
+        uniformQuantity: "1",
+        billableAmount: "300",
+        createdAt: "2020年12月6日",
+        depositStatus: "入金待ち",
+        // 入金済, 入金待ち
+        shippingStatus: "発送済" // 発送済, 発送準備中, 未
+
+      }, {
+        orderId: "5",
+        customerName: "山田",
+        uniformKind: "ユニフォーム A",
+        uniformQuantity: "1",
+        billableAmount: "300",
+        createdAt: "2020年12月6日",
+        depositStatus: "入金済",
+        // 入金済, 入金待ち
+        shippingStatus: "発送準備中" // 発送済, 発送準備中, 未
+
+      }, {
+        orderId: "6",
+        customerName: "神田",
+        uniformKind: "ユニフォーム A",
+        uniformQuantity: "1",
+        billableAmount: "300",
+        createdAt: "2020年12月6日",
+        depositStatus: "入金済",
+        // 入金済, 入金待ち
+        shippingStatus: "未" // 発送済, 発送準備中, 未
+
+      }]
+    }]
+  };
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      orderData = _useState2[0],
+      setOrderData = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])((window.innerWidth || document.body.clientWidth) >= 768 ? "16px" : "12px"),
+      _useState4 = _slicedToArray(_useState3, 2),
+      mediaFontSize = _useState4[0],
+      setMediaFontSize = _useState4[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (history.location.state && history.location.state.name) {
+      console.log(orderData);
+    } else {
+      //
+      setOrderData(sampleData.data[1].list);
+    }
+
+    var mql = window.matchMedia("screen and (max-width: 768px)");
+    mql.addEventListener("change", function (e) {
+      // "1.75vmin"
+      if (e.matches) {
+        setMediaFontSize("12px"); // console.log("모바일 화면 입니다.");
+      } else {
+        setMediaFontSize("16px"); // console.log("데스크탑 화면 입니다.");
+      }
+    });
+  }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {}, [mediaFontSize]);
+
+  var monthlySales = function monthlySales() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+      className: "text-right",
+      xs: {
+        span: 5,
+        offset: 6
+      }
+    }, "11\u6708\u306E\u58F2\u308A\u4E0A\u3052(\u767A\u9001\u5B8C\u4E86\u5206)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+      className: "text-right",
+      xs: {
+        span: 1
+      }
+    }, "\uFFE58,000")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+      className: "text-right",
+      xs: {
+        span: 5,
+        offset: 6
+      }
+    }, "10\u6708\u306E\u58F2\u308A\u4E0A\u3052(\u767A\u9001\u5B8C\u4E86\u5206)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+      className: "text-right",
+      xs: {
+        span: 1
+      }
+    }, "\uFFE5900")));
+  };
+
+  var orderListHead = function orderListHead() {
+    var datalist = sampleData.data[0].list;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
+      style: {
+        fontSize: mediaFontSize
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+      style: {
+        backgroundColor: "#dfefd8"
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      className: "text-center"
+    }, datalist.orderId), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      className: "text-center"
+    }, datalist.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      className: "text-center"
+    }, datalist.uniformKind), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      className: "text-center"
+    }, datalist.uniformQuantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      className: "text-center"
+    }, datalist.billableAmount), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      className: "text-center"
+    }, datalist.createdAt), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      className: "text-center"
+    }, datalist.depositStatus), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      className: "text-center"
+    }, datalist.shippingStatus), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      className: "text-center"
+    })));
+  };
+
+  var orderListBody = function orderListBody() {
+    var bodyArr = [];
+
+    for (var i = 0; i < orderData.length; i++) {
+      bodyArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        style: {
+          fontSize: mediaFontSize
+        },
+        key: "bodyArr" + i
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-center"
+      }, orderData[i].orderId), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-center"
+      }, orderData[i].customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-center"
+      }, orderData[i].uniformKind), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-right"
+      }, orderData[i].uniformQuantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-right"
+      }, "\uFFE5", orderData[i].billableAmount), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-center"
+      }, orderData[i].createdAt), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-center"
+      }, orderData[i].depositStatus), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-center"
+      }, orderData[i].shippingStatus), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-center"
+      }, "\u8A73\u7D30 / \u66F4\u65B0")));
+    }
+
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, bodyArr);
+  };
+
+  var orderList = function orderList() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, "\u53D7\u6CE8\u7BA1\u7406\u4E00\u89A7")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"] // striped bordered
+    , {
+      hover: true,
+      size: "sm"
+    }, orderListHead(), orderListBody()));
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "pt-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+    style: {
+      width: "100%",
+      textAlign: "center",
+      borderBottom: "solid blue 2px"
+    }
+  }, "\u53D7\u6CE8\u7BA1\u7406\u30B7\u30B9\u30C6\u30E0")), orderData && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, monthlySales(), orderList())));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (OrderManagement);
@@ -86673,7 +86909,7 @@ var OrderPage = function OrderPage(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, navUl(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     style: {
       minHeight: 500,
-      border: "solid blue 20px"
+      border: "solid blue 5px"
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
@@ -86986,16 +87222,13 @@ var ProductHome = function ProductHome(_ref) {
 
     var _loop = function _loop(i) {
       cardArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Col"], {
-        className: "justify-content-center",
         key: "productCard" + i
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
-        style: {
-          minWidth: "10rem"
-        }
+        className: "justify-content-center align-items-center p-1"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Card"].Img, {
         style: {
-          maxWidth: 300,
-          maxHeight: 325
+          minWidth: "10rem",
+          maxWidth: "15rem"
         },
         variant: "top",
         src: "/images/".concat(url[i], ".png")
@@ -87005,7 +87238,7 @@ var ProductHome = function ProductHome(_ref) {
         style: {
           textAlign: "center"
         }
-      }, "Card Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Card"].Text, null, "Some quick example text to build on the card title and make up the bulk of the card's content."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+      }, "ユニフォーム " + url[i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Card"].Text, null, "Some quick example text to build on the card title and make up the bulk of the card's content."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
         variant: "primary",
         className: "w-100",
         onClick: function onClick() {
@@ -87119,7 +87352,7 @@ var ProductPage = function ProductPage(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, navUl(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     style: {
       minHeight: 500,
-      border: "solid green 20px"
+      border: "solid green 5px"
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
