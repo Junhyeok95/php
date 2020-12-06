@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 
 Route::group([
   'middleware' => 'api',
@@ -13,3 +14,5 @@ Route::group([
   Route::post('refresh', [AuthController::class, 'refresh'])->name('jwt.refresh');;
   Route::post('me', [AuthController::class, 'me'])->name('jwt.me');;
 });
+
+Route::apiResource('products', ProductController::class); // create edit 제외

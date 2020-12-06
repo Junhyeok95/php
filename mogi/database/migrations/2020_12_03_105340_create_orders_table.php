@@ -3,10 +3,10 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateOrdersTable extends Migration
 {
-
   public function up()
   {
     Schema::create('orders', function (Blueprint $table) {
@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
 
       /* customers */
       $table->string('name')->comment('구매자 이름');
-      $table->string('email')->unique()->comment('연락용 이메일');
+      $table->string('email')->comment('연락용 이메일');
       $table->string('address')->nullable()->comment('주소');
       // $table->string('phone_number', 20)->nullable()->comment('전화번호');
 
@@ -33,6 +33,10 @@ class CreateOrdersTable extends Migration
 
       $table->foreign('user_id')->references('id')->on('users')->onUpdete('cascade')->onDelete('cascade');
     });
+
+    // seeder
+    $statement = "ALTER TABLE orders AUTO_INCREMENT = 4;";
+    DB::unprepared($statement);
   }
 
   public function down()

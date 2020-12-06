@@ -36,4 +36,6 @@ php artisan make:migration create_orders_table --create=orders
 php artisan make:migration create_products_table --create=products
 php artisan make:migration create_order_product_table --create=order_product
 
+php artisan make:seeder ProductsTableSeeder
+php artisan make:seeder OrderTableSeeder
 ```
