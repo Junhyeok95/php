@@ -31,7 +31,6 @@ class Order extends Model
 
   public function products()
   {
-    // 중간 테이블은 pivot 이고 시간과 칼럼을 추가하는 방법
     return $this->belongsToMany('App\Models\Product')->withTimestamps()->withPivot('quantity');
   }
 }

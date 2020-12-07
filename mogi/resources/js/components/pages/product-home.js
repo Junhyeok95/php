@@ -1,8 +1,7 @@
-import { param } from "jquery";
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
-const ProductHome = ({ match, history }) => {
+const ProductHome = ({ history }) => {
     const productCard = () => {
         const url = ["A", "B", "C", "D", "E"];
         let cardArr = [];
@@ -10,7 +9,7 @@ const ProductHome = ({ match, history }) => {
         for (let i = 0; i < 5; i++) {
             cardArr.push(
                 <Col key={"productCard" + i}>
-                    <Card className="justify-content-center align-items-center p-1">
+                    <Card className="justify-content-center align-items-center p-1 pt-3 mb-3">
                         <Card.Img
                             style={{
                                 minWidth: "10rem",
@@ -20,16 +19,10 @@ const ProductHome = ({ match, history }) => {
                             src={`/images/${url[i]}.png`}
                         />
                         <Card.Body className="w-auto">
-                            <Card.Title style={{ textAlign: "center" }}>
-                                {"ユニフォーム " + url[i]}
-                            </Card.Title>
-                            <Card.Text>
-                                Some quick example text to build on the card
-                                title and make up the bulk of the card's
-                                content.
-                            </Card.Text>
+                            <Card.Title>{"ユニフォーム " + url[i]}</Card.Title>
+                            <Card.Text></Card.Text>
                             <Button
-                                variant="primary"
+                                variant="success"
                                 className="w-100"
                                 onClick={() =>
                                     history.push({
@@ -40,7 +33,7 @@ const ProductHome = ({ match, history }) => {
                                     })
                                 }
                             >
-                                購入
+                                注文する
                             </Button>
                         </Card.Body>
                     </Card>
@@ -51,12 +44,9 @@ const ProductHome = ({ match, history }) => {
     };
 
     return (
-        <Fragment>
-            ProductHome
-            <Container>
-                <Row>{productCard()}</Row>
-            </Container>
-        </Fragment>
+        <Container>
+            <Row>{productCard()}</Row>
+        </Container>
     );
 };
 

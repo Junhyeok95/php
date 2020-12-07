@@ -4,22 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
   public function __construct()
   {
-    // $this->middleware('JWT', ['except' => ['index', 'store']]);
+    $this->middleware('JWT', ['except' => ['index', 'store']]);
   }
 
   public function index()
   {
-    return response()->json("index");
-  }
-
-  public function create()
-  {
-    //
+    $products = Product::all();
+    return response()->json($products);
   }
 
   public function store(Request $request)
@@ -38,25 +35,5 @@ class ProductController extends Controller
     dd($order);
 
     return response()->json("store");
-  }
-
-  public function show($id)
-  {
-    //
-  }
-
-  public function edit($id)
-  {
-    //
-  }
-
-  public function update(Request $request, $id)
-  {
-    //
-  }
-
-  public function destroy($id)
-  {
-    //
   }
 }

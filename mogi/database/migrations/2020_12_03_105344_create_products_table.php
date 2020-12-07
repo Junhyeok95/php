@@ -16,6 +16,8 @@ class CreateProductsTable extends Migration
       $table->integer('price')->default(0)->comment('상품 가격');
       $table->integer('stock')->default(0)->comment('재고 수량');
 
+      $table->string('url')->comment('이미지');
+
       $table->timestamps();
     });
   }
