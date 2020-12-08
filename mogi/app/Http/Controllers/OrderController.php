@@ -46,7 +46,9 @@ class OrderController extends Controller
     }
     // dd(json_encode($total));
 
-    return response()->json($total);
+    $products = Product::all();
+
+    return response()->json([$total, $products]);
   }
 
   public function create()

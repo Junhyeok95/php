@@ -33,11 +33,20 @@ class DatabaseSeeder extends Seeder
     DB::table('order_product')->truncate();
     $temp_uniform_kind = [1, 3, 4, 1, 2, 1, 1];
     $temp_uniform_quantity = [3, 4, 5, 10, 5, 2, 1];
+    $temp_created_at = [
+      "2019-10-31 00:00:00",
+      "2019-11-03 00:00:00",
+      "2019-11-04 00:00:00",
+      "2019-11-05 00:00:00",
+      "2019-11-06 00:00:00",
+      "2019-11-07 00:00:00",
+      "2019-11-08 00:00:00"
+    ];
     $index = 0;
     $orders = Order::all();
 
     foreach ($orders as $order) {
-      $order->products()->sync([$temp_uniform_kind[$index] => ['quantity' => $temp_uniform_quantity[$index]]]);
+      $order->products()->sync([$temp_uniform_kind[$index] => ['quantity' => $temp_uniform_quantity[$index], 'created_at' => $temp_created_at[$index]]]);
       $index++;
     }
 
