@@ -14,7 +14,7 @@ const StyledDiv = styled.div`
 `;
 const StyledTitle = styled.div`
     flex: 1;
-    font-size: 42px;
+    font-size: 48px;
     color: green;
 `;
 

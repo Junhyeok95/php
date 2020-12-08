@@ -26,11 +26,9 @@ const OrderPage = ({ match }) => {
         return (
             <Fragment>
                 <StyledDiv className="flex-center position-ref full-height">
-                    <div className="content">
-                        <StyledTitle className="m-b-md text-center">
-                            受注管理画面
-                        </StyledTitle>
-                    </div>
+                    <StyledTitle className="m-b-md text-center">
+                        受注管理画面
+                    </StyledTitle>
                 </StyledDiv>
                 <ul className="nav-item m-2">
                     <li className="nav-item">
@@ -49,31 +47,27 @@ const OrderPage = ({ match }) => {
 
     return (
         <div>
-            {navUl()}
-            <div style={{ minHeight: 500, border: "solid blue 5px" }}>
-                <Switch>
-                    <Route
-                        exact
-                        path={match.path}
-                        component={OrderManagement}
-                    />
-                    <Route
-                        exact
-                        path={`${match.path}/:detail`}
-                        render={props => (
-                            <OrderDetail userInfo={userInfo} {...props} />
-                        )}
-                    />
-                    <Route
-                        exact
-                        path={`${match.path}/:detail/edit`}
-                        render={props => (
-                            <OrderEdit userInfo={userInfo} {...props} />
-                        )}
-                    />
-                    <Route component={NotFoundPage} />
-                </Switch>
-            </div>
+            <StyledDiv>
+                <StyledTitle className="text-center">受注管理画面</StyledTitle>
+            </StyledDiv>
+            <Switch>
+                <Route exact path={match.path} component={OrderManagement} />
+                <Route
+                    exact
+                    path={`${match.path}/:detail`}
+                    render={props => (
+                        <OrderDetail userInfo={userInfo} {...props} />
+                    )}
+                />
+                <Route
+                    exact
+                    path={`${match.path}/:detail/edit`}
+                    render={props => (
+                        <OrderEdit userInfo={userInfo} {...props} />
+                    )}
+                />
+                <Route component={NotFoundPage} />
+            </Switch>
         </div>
     );
 };

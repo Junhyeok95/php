@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
 
     // 주문
     DB::table('orders')->truncate();
+    // seeder
+    $statement = "ALTER TABLE orders AUTO_INCREMENT = 4;";
+    DB::unprepared($statement);
     $this->call(OrderTableSeeder::class);
 
     // 주문_제품 sync

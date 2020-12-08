@@ -118,8 +118,17 @@ const ProductBuy = ({ history }) => {
 
     const buyForm = () => {
         return (
-            <Row className="align-content-center h-100">
+            <Row className="align-content-center h-100 m-1">
                 <Col>
+                    <h1
+                        style={{
+                            width: "100%",
+                            textAlign: "center",
+                            borderBottom: "solid green 2px"
+                        }}
+                    >
+                        注文画面
+                    </h1>
                     <Form className="mt-3">
                         <Form.Group controlId="exampleForm.ControlInput1">
                             <Form.Label>名前</Form.Label>
@@ -226,7 +235,7 @@ const ProductBuy = ({ history }) => {
     };
 
     return (
-        <Container>
+        <Container style={{ border: "solid black 1px" }}>
             {productData && (
                 <Row>
                     <Col className="p-1">{cardData()}</Col>

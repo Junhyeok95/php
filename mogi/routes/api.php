@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 Route::group([
   'middleware' => 'api',
@@ -16,3 +17,4 @@ Route::group([
 });
 
 Route::apiResource('products', ProductController::class); // create edit 제외
+Route::Resource('orders', OrderController::class);

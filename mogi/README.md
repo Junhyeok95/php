@@ -15,7 +15,7 @@ composer require laravel/ui
 php artisan ui react --auth
 
 npm install
-npm i -S react-router-dom react-bootstrap bootstrap styled-components
+npm i -S react-router-dom react-bootstrap bootstrap styled-components moment
 
 composer require tymon/jwt-auth
 php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"

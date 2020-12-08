@@ -44,7 +44,7 @@ const ProductHome = ({ history }) => {
     };
 
     return (
-        <Container>
+        <Container className="p-3" style={{ border: "solid black 1px" }}>
             <Row>{productCard()}</Row>
         </Container>
     );

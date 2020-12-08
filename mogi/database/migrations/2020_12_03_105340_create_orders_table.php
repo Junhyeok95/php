@@ -33,10 +33,6 @@ class CreateOrdersTable extends Migration
 
       $table->foreign('user_id')->references('id')->on('users')->onUpdete('cascade')->onDelete('cascade');
     });
-
-    // seeder
-    $statement = "ALTER TABLE orders AUTO_INCREMENT = 4;";
-    DB::unprepared($statement);
   }
 
   public function down()
