@@ -2,7 +2,6 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Container, Row, Table, Pagination } from "react-bootstrap";
 import Axios from "axios";
 import styled from "styled-components";
-// import "./index.css";
 
 const HoverTd = styled.td`
   cursor: pointer;
@@ -13,7 +12,7 @@ const HoverTd = styled.td`
 
 const Boards = ({ userInfo, match, history }) => {
   const [perPage] = useState(
-    (window.innerWidth || document.body.clientWidth) >= 768 ? 15 : 5
+    (window.innerWidth || document.body.clientWidth) >= 768 ? 15 : 10
   );
   const [paging] = useState(
     (window.innerWidth || document.body.clientWidth) >= 768 ? 8 : 4
@@ -89,10 +88,10 @@ const Boards = ({ userInfo, match, history }) => {
           <th style={{ width: "50%" }} scope="col" className="text-center">
             제목
           </th>
-          <th style={{ width: "10%" }} scope="col" className="text-center">
+          <th style={{ width: "20%" }} scope="col" className="text-center">
             글쓴이
           </th>
-          <th style={{ width: "15%" }} scope="col" className="text-center">
+          <th style={{ width: "20%" }} scope="col" className="text-center">
             날짜
           </th>
           <th style={{ width: "5%" }} scope="col" className="text-center">
@@ -113,7 +112,7 @@ const Boards = ({ userInfo, match, history }) => {
           <HoverTd
             className="text-truncate"
             style={{
-              maxWidth: "100px",
+              maxWidth: "1px",
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
@@ -129,15 +128,34 @@ const Boards = ({ userInfo, match, history }) => {
             style={
               userInfo
                 ? userInfo.name === data.data[i].user_name
-                  ? { color: "#0000FF" }
-                  : {}
+                  ? {
+                      maxWidth: "1px",
+                      color: "#0000FF",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }
+                  : {
+                      maxWidth: "1px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }
                 : null
             }
             className="text-center"
           >
             {data.data[i].user_name}
           </td>
-          <td className="text-center">
+          <td
+            className="text-center"
+            style={{
+              maxWidth: "1px",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
             {data.data[i].updated_at.slice(5, 10) +
               " " +
               data.data[i].updated_at.slice(11, 16)}
@@ -248,7 +266,7 @@ const Boards = ({ userInfo, match, history }) => {
   return (
     <Fragment>
       {data != null && (
-        <Container>
+        <Container className="p-0">
           <Table striped bordered hover size="sm">
             {renderBoardHead()}
             {renderBoardBody()}

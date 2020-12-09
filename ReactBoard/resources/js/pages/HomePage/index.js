@@ -25,7 +25,7 @@ const HomePage = ({ history }) => {
     <StyledDiv className="flex-center position-ref full-height">
       <div className="content">
         <StyledTitle onClick={() => history.push("/boards")} className="m-b-md">
-          React Board
+          게시판 보러가기
         </StyledTitle>
       </div>
     </StyledDiv>

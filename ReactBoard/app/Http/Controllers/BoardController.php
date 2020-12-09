@@ -17,14 +17,11 @@ class BoardController extends Controller
   public function index(Request $request, $slug = null)
   {
     $query = $slug ? \App\Tag::whereSlug($slug)->firstOrFail()->boards() : new \App\Board;
-    $paginate = $query->orderBy('id', 'desc')->paginate($request->perPage);
-
-    // dd(json_encode(DB::table('boards')->orderBy('id', 'desc')->get()));
-    // dd(json_encode($paginate->orderBy('id', 'desc')->get()));
-    // dd(json_encode($query->latest()->orderBy('id', 'desc')->get()));
+    $paginate = $query->orderBy('id', 'desc')->paginate($request->perPage); // orderBy 대신 lstest
 
     for ($i = 0; $i < $paginate->count(); $i++) {
       $paginate[$i]['user_name'] = \App\User::whereId($paginate[$i]->user_id)->first()->name;
+      $paginate[$i]['content'] = null; // 데이터 낭비 방지
     }
 
     // dd(json_encode($paginate));
@@ -52,6 +49,7 @@ class BoardController extends Controller
   public function show(\App\Board $board)
   {
     $board->increment('view', 1);
+    $board['user_name'] = \App\User::whereId($board->user_id)->first()->name;
     return response()->json($board);
   }
 

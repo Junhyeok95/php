@@ -100560,7 +100560,6 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
- // import "./index.css";
 
 var HoverTd = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].td(_templateObject());
 
@@ -100569,7 +100568,7 @@ var Boards = function Boards(_ref) {
       match = _ref.match,
       history = _ref.history;
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])((window.innerWidth || document.body.clientWidth) >= 768 ? 15 : 5),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])((window.innerWidth || document.body.clientWidth) >= 768 ? 15 : 10),
       _useState2 = _slicedToArray(_useState, 1),
       perPage = _useState2[0];
 
@@ -100654,13 +100653,13 @@ var Boards = function Boards(_ref) {
       className: "text-center"
     }, "\uC81C\uBAA9"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
       style: {
-        width: "10%"
+        width: "20%"
       },
       scope: "col",
       className: "text-center"
     }, "\uAE00\uC4F4\uC774"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
       style: {
-        width: "15%"
+        width: "20%"
       },
       scope: "col",
       className: "text-center"
@@ -100685,7 +100684,7 @@ var Boards = function Boards(_ref) {
       }, data.data[i].id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HoverTd, {
         className: "text-truncate",
         style: {
-          maxWidth: "100px",
+          maxWidth: "1px",
           overflow: "hidden",
           textOverflow: "ellipsis",
           whiteSpace: "nowrap"
@@ -100696,11 +100695,26 @@ var Boards = function Boards(_ref) {
         }
       }, data.data[i].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         style: userInfo ? userInfo.name === data.data[i].user_name ? {
-          color: "#0000FF"
-        } : {} : null,
+          maxWidth: "1px",
+          color: "#0000FF",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap"
+        } : {
+          maxWidth: "1px",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap"
+        } : null,
         className: "text-center"
       }, data.data[i].user_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "text-center"
+        className: "text-center",
+        style: {
+          maxWidth: "1px",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap"
+        }
       }, data.data[i].updated_at.slice(5, 10) + " " + data.data[i].updated_at.slice(11, 16)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
       }, data.data[i].view)));
@@ -100784,7 +100798,9 @@ var Boards = function Boards(_ref) {
     }, "\uAE00\uC4F0\uAE30"));
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], {
+    className: "p-0"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Table"], {
     striped: true,
     bordered: true,
     hover: true,
@@ -100810,7 +100826,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/Button */ "./resources/js/components/Button/index.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -100826,7 +100841,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
+var hiddenStyle = {
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap"
+};
 
 var Detail = function Detail(_ref) {
   var userInfo = _ref.userInfo,
@@ -100848,8 +100867,8 @@ var Detail = function Detail(_ref) {
       method: "get",
       url: "/api/boards/".concat(detailId)
     }).then(function (res) {
-      setData(res.data);
-      console.log(res.data);
+      setData(res.data); // console.log(res.data);
+
       content.current.innerHTML = res.data.content;
     })["catch"](function (error) {
       return console.log(error);
@@ -100858,72 +100877,236 @@ var Detail = function Detail(_ref) {
 
 
   var deleteBoardsDetail = function deleteBoardsDetail(detailId) {
-    axios__WEBPACK_IMPORTED_MODULE_2___default()({
-      method: "delete",
-      url: "/api/boards/".concat(detailId),
-      headers: {
-        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
-      }
-    }).then(function (res) {
-      if (res.data === true) {
-        console.log("게시판 삭제 성공");
-        history.push("/boards");
-      } else if (res.data === false) {
-        console.log("게시판 삭제 실패");
-      }
-    })["catch"](function (error) {
-      return console.log(error);
-    });
+    if (userInfo && userInfo.name === data.user_name) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: "delete",
+        url: "/api/boards/".concat(detailId),
+        headers: {
+          Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+        }
+      }).then(function (res) {
+        if (res.data === true) {
+          console.log("게시판 삭제 성공");
+          history.push("/boards");
+        } else if (res.data === false) {
+          console.log("게시판 삭제 실패");
+        }
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    } else {
+      console.log("자기 글만 삭제 가능");
+    }
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], {
+    className: "pt-3 pb-3",
     style: {
-      padding: "2px",
-      border: "solid black 2px",
-      fontSize: 20
-    },
-    className: "col-sm-2 text-center"
-  }, "\uC81C\uBAA9", " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+      backgroundColor: "#FFFFFF"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
     style: {
-      padding: "2px",
-      border: "solid black 2px",
-      fontSize: 20
-    },
-    className: "pl-2 text-left"
-  }, data.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+      borderBottom: "solid #73B2FF 2px"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
     style: {
-      minHeight: 300
+      color: "#154B8D"
+    }
+  }, " \uAC8C\uC2DC\uAE00 \uBCF4\uAE30"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-1",
+    style: {
+      borderBottom: "solid #73B2FF 1px"
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-    ref: content,
+    style: hiddenStyle
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, data.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    style: hiddenStyle,
+    className: "text-right ",
+    xs: 3,
+    md: 2
+  }, data.user_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    style: hiddenStyle,
+    className: "text-right",
+    xs: 3,
+    md: 2
+  }, data.created_at.slice(0, 10))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-1",
     style: {
-      fontSize: 16
-    },
-    className: "p-4"
+      borderBottom: "solid #73B2FF 1px"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "text-left"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "text-right",
+    xs: 3,
+    md: 2
+  }, "\uC870\uD68C\uC218 : ", data.view)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-1",
+    style: {
+      minHeight: "200px"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    ref: content
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-2 mb-3",
     style: {
-      border: "2px solid black"
+      border: "solid #E0E0E0 3px"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "pt-2",
+    style: {
+      borderBottom: "solid #73B2FF 1px"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "pl-1",
+    xs: 2
+  }, "\uB313\uAE00 \uC791\uC131\uC790"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    style: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap"
     },
-    className: "d-flex p-1"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"] // style={{ backgroundColor: "yellow" }}
-  , {
-    className: "p-1"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    onClick: function onClick() {
-      history.push("/boards");
+    className: "pl-1"
+  }, "\uCD9C\uC11D\uC644\uB8CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "pt-5 pb-2"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
+    style: {
+      width: "100%"
     }
-  }, "\uAE00 \uBAA9\uB85D")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"] // style={{ backgroundColor: "green" }}
-  , {
-    className: "d-flex justify-content-end p-1"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    onClick: function onClick() {
-      history.push("/boards/".concat(match.params.detail, "/write"));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Row, {
+    className: "align-items-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    style: {
+      width: "100%"
     }
-  }, "\uC218\uC815"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+    size: "sm",
+    type: "text",
+    placeholder: "Small text"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    xs: "auto"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    variant: "success",
+    size: "sm",
     onClick: function onClick() {
-      deleteBoardsDetail(match.params.detail);
+      return console.log("haha");
     }
-  }, "\uC0AD\uC81C")))));
+  }, "\uD55C\uC904\uB2F5\uBCC0"))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-1",
+    style: {
+      borderTop: "solid #73B2FF 2px",
+      borderBottom: "solid #73B2FF 1px"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "text-left",
+    xs: "auto"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "\uC774\uC804")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "text-left"
+  }, "\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-1",
+    style: {
+      borderBottom: "solid #73B2FF 2px"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "text-left",
+    xs: "auto"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "\uB2E4\uC74C")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "text-left"
+  }, "\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-1 pt-2 justify-content-between"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "pl-2",
+    xs: "auto"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    variant: "outline-dark",
+    size: "sm",
+    onClick: function onClick() {
+      return history.push("/boards");
+    }
+  }, "\uBAA9\uB85D\uC73C\uB85C")), userInfo && userInfo.name === data.user_name && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "pr-2",
+    xs: "auto"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    variant: "outline-dark",
+    size: "sm",
+    onClick: function onClick() {
+      // edit
+      if (userInfo && userInfo.name === data.user_name) {
+        history.push("/boards/".concat(match.params.detail, "/write"));
+      } else {
+        console.log("자기 글만 수정가능");
+      }
+    }
+  }, "\uC218\uC815\uD558\uAE30"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    className: "ml-2",
+    variant: "outline-dark",
+    size: "sm",
+    onClick: function onClick() {
+      deleteBoardsDetail(data.id);
+    }
+  }, "\uC0AD\uC81C\uD558\uAE30")))) // <Container style={{ backgroundColor: "#FF0000" }}>
+  //   <Row>
+  //     <Col
+  //       style={{
+  //         padding: "2px",
+  //         border: "solid black 2px",
+  //         fontSize: 20,
+  //       }}
+  //       className="col-sm-2 text-center"
+  //     >
+  //       제목{" "}
+  //     </Col>
+  //     <Col
+  //       style={{
+  //         padding: "2px",
+  //         border: "solid black 2px",
+  //         fontSize: 20,
+  //       }}
+  //       className="pl-2 text-left"
+  //     >
+  //       {data.title}
+  //     </Col>
+  //   </Row>
+  // <Row>
+  //   <Col ref={content} style={{ fontSize: 16 }} className="p-4">
+  //     {/* content.current.innerHTML */}
+  //   </Col>
+  // </Row>
+  //   <Row style={{ border: "2px solid black" }} className="d-flex p-1">
+  //     <Col
+  //       // style={{ backgroundColor: "yellow" }}
+  //       className="p-1"
+  //     >
+  //       <Button
+  //         onClick={() => {
+  //           history.push(`/boards`);
+  //         }}
+  //       >
+  //         글 목록
+  //       </Button>
+  //     </Col>
+  //     <Col
+  //       // style={{ backgroundColor: "green" }}
+  //       className="d-flex justify-content-end p-1"
+  //     >
+  //       <Button
+  // onClick={() => {
+  //   history.push(`/boards/${match.params.detail}/write`);
+  // }}
+  //       >
+  //         수정
+  //       </Button>
+  //       <Button
+  // onClick={() => {
+  //   deleteBoardsDetail(match.params.detail);
+  // }}
+  //       >
+  //         삭제
+  //       </Button>
+  //     </Col>
+  //   </Row>
+  // </Container>
+  );
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Detail);
@@ -101255,7 +101438,7 @@ var BoardPage = function BoardPage(_ref) {
       userInfo = _useContext.userInfo;
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Container"], {
-    className: "pt-4"
+    className: "p-0 pt-4 h-100"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"] // write create
   , {
     path: "".concat(match.url),
@@ -101353,7 +101536,7 @@ var HomePage = function HomePage(_ref) {
       return history.push("/boards");
     },
     className: "m-b-md"
-  }, "React Board")));
+  }, "\uAC8C\uC2DC\uD310 \uBCF4\uB7EC\uAC00\uAE30")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (HomePage);
