@@ -100438,8 +100438,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Header = function Header() {
-  var history2 = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
-
   var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_contexts_User__WEBPACK_IMPORTED_MODULE_2__["UserContext"]),
       userInfo = _useContext.userInfo,
       logout = _useContext.logout;
@@ -100447,10 +100445,6 @@ var Header = function Header() {
   var onClick = function onClick(e) {
     e.preventDefault();
     logout();
-  };
-
-  var onSubmit = function onSubmit(e) {
-    e.preventDefault();
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
@@ -100492,7 +100486,11 @@ var Header = function Header() {
     "data-toggle": "dropdown",
     "aria-haspopup": "true",
     "aria-expanded": "false"
-  }, userInfo.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+    style: {
+      color: "#0000ff"
+    }
+  }, userInfo.name), " ", "\uB2D8"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "dropdown-menu dropdown-menu-right",
     "aria-labelledby": "navbarDropdown"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -100501,11 +100499,7 @@ var Header = function Header() {
     },
     className: "dropdown-item",
     onClick: onClick
-  }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    id: "logout-form",
-    className: "d-none",
-    onSubmit: onSubmit
-  }, "@csrf")))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+  }, "Logout")))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "navbar-nav ml-auto"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
@@ -100552,7 +100546,7 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  cursor: pointer;\n  &:hover {\n    color: #0000ffcc;\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  cursor: pointer;\n  &:hover {\n    color: #0000ff;\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -100575,11 +100569,11 @@ var Boards = function Boards(_ref) {
       match = _ref.match,
       history = _ref.history;
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])((window.innerWidth || document.body.clientWidth) >= 768 ? 20 : 10),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])((window.innerWidth || document.body.clientWidth) >= 768 ? 15 : 5),
       _useState2 = _slicedToArray(_useState, 1),
       perPage = _useState2[0];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])((window.innerWidth || document.body.clientWidth) >= 768 ? 10 : 5),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])((window.innerWidth || document.body.clientWidth) >= 768 ? 8 : 4),
       _useState4 = _slicedToArray(_useState3, 1),
       paging = _useState4[0];
 
@@ -100633,6 +100627,7 @@ var Boards = function Boards(_ref) {
       }
     }).then(function (res) {
       setData(res.data[0]);
+      console.log(res.data[0]);
     })["catch"](function (error) {
       return console.log(error);
     });
@@ -100651,7 +100646,7 @@ var Boards = function Boards(_ref) {
       },
       scope: "col",
       className: "text-center"
-    }, "\uBD84\uB958"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+    }, "No"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
       style: {
         width: "50%"
       },
@@ -100687,7 +100682,7 @@ var Boards = function Boards(_ref) {
         key: "BoardBody" + i
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
-      }, i), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HoverTd, {
+      }, data.data[i].id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HoverTd, {
         className: "text-truncate",
         style: {
           maxWidth: "100px",
@@ -100700,12 +100695,15 @@ var Boards = function Boards(_ref) {
           history.push("/boards/detail/".concat(data.data[i].id));
         }
       }, data.data[i].title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        style: userInfo ? userInfo.name === data.data[i].user_name ? {
+          color: "#0000FF"
+        } : {} : null,
         className: "text-center"
-      }, data.data[i].user_id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      }, data.data[i].user_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
       }, data.data[i].updated_at.slice(5, 10) + " " + data.data[i].updated_at.slice(11, 16)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
-      }, 0)));
+      }, data.data[i].view)));
     };
 
     for (var i = 0; i < data.data.length; i++) {
@@ -100851,6 +100849,7 @@ var Detail = function Detail(_ref) {
       url: "/api/boards/".concat(detailId)
     }).then(function (res) {
       setData(res.data);
+      console.log(res.data);
       content.current.innerHTML = res.data.content;
     })["catch"](function (error) {
       return console.log(error);
@@ -101257,9 +101256,14 @@ var BoardPage = function BoardPage(_ref) {
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["Container"], {
     className: "pt-4"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"] // write create
+  , {
     path: "".concat(match.url),
-    component: _Boards__WEBPACK_IMPORTED_MODULE_4__["default"],
+    render: function render(props) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Boards__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
+        userInfo: userInfo
+      }, props));
+    },
     exact: true
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"] // write create
   , {
@@ -101337,9 +101341,8 @@ var StyledTitle = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(
 
 var HomePage = function HomePage(_ref) {
   var history = _ref.history;
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    sessionStorage.clear();
-    console.log("sessionStorage.clear() !");
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {// sessionStorage.clear();
+    // console.log("sessionStorage.clear() !");
   });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv, {
     className: "flex-center position-ref full-height"
@@ -101388,7 +101391,7 @@ var LoginPage = function LoginPage() {
   var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_contexts_User__WEBPACK_IMPORTED_MODULE_1__["UserContext"]),
       login = _useContext.login;
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("test@mail.com"),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("Junheyok@mail.com"),
       _useState2 = _slicedToArray(_useState, 2),
       email = _useState2[0],
       setEmail = _useState2[1];
@@ -101447,7 +101450,7 @@ var LoginPage = function LoginPage() {
     required: true,
     autoFocus: true,
     onChange: onChange,
-    value: "test@mail.com"
+    value: email
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "invalid-feedback",
     role: "alert"
@@ -101465,7 +101468,7 @@ var LoginPage = function LoginPage() {
     name: "password",
     required: true,
     onChange: onChange,
-    value: "password"
+    value: password
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "invalid-feedback",
     role: "alert"

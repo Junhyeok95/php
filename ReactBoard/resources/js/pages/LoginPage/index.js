@@ -4,7 +4,7 @@ import { UserContext } from "../../contexts/User";
 const LoginPage = () => {
   const { login } = useContext(UserContext);
 
-  const [email, setEmail] = useState("test@mail.com");
+  const [email, setEmail] = useState("Junheyok@mail.com");
   const [password, setPassword] = useState("password");
 
   const onSubmit = (e) => {
@@ -48,7 +48,7 @@ const LoginPage = () => {
                       required
                       autoFocus
                       onChange={onChange}
-                      value="test@mail.com"
+                      value={email}
                     />
                     <span className="invalid-feedback" role="alert">
                       <strong></strong>
@@ -71,7 +71,7 @@ const LoginPage = () => {
                       name="password"
                       required
                       onChange={onChange}
-                      value="password"
+                      value={password}
                     ></input>
                     <span className="invalid-feedback" role="alert">
                       <strong></strong>

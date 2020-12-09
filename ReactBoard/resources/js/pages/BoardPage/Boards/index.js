@@ -7,16 +7,16 @@ import styled from "styled-components";
 const HoverTd = styled.td`
   cursor: pointer;
   &:hover {
-    color: #0000ffcc;
+    color: #0000ff;
   }
 `;
 
 const Boards = ({ userInfo, match, history }) => {
   const [perPage] = useState(
-    (window.innerWidth || document.body.clientWidth) >= 768 ? 20 : 10
+    (window.innerWidth || document.body.clientWidth) >= 768 ? 15 : 5
   );
   const [paging] = useState(
-    (window.innerWidth || document.body.clientWidth) >= 768 ? 10 : 5
+    (window.innerWidth || document.body.clientWidth) >= 768 ? 8 : 4
   );
   const [data, setData] = useState(null);
   const [look, setLook] = useState(0);
@@ -68,6 +68,7 @@ const Boards = ({ userInfo, match, history }) => {
     })
       .then((res) => {
         setData(res.data[0]);
+        console.log(res.data[0]);
       })
       .catch((error) => console.log(error));
   };
@@ -83,7 +84,7 @@ const Boards = ({ userInfo, match, history }) => {
       >
         <tr>
           <th style={{ width: "5%" }} scope="col" className="text-center">
-            분류
+            No
           </th>
           <th style={{ width: "50%" }} scope="col" className="text-center">
             제목
@@ -108,7 +109,7 @@ const Boards = ({ userInfo, match, history }) => {
     for (let i = 0; i < data.data.length; i++) {
       itemArr.push(
         <tr key={"BoardBody" + i}>
-          <td className="text-center">{i}</td>
+          <td className="text-center">{data.data[i].id}</td>
           <HoverTd
             className="text-truncate"
             style={{
@@ -124,13 +125,24 @@ const Boards = ({ userInfo, match, history }) => {
           >
             {data.data[i].title}
           </HoverTd>
-          <td className="text-center">{data.data[i].user_id}</td>
+          <td
+            style={
+              userInfo
+                ? userInfo.name === data.data[i].user_name
+                  ? { color: "#0000FF" }
+                  : {}
+                : null
+            }
+            className="text-center"
+          >
+            {data.data[i].user_name}
+          </td>
           <td className="text-center">
             {data.data[i].updated_at.slice(5, 10) +
               " " +
               data.data[i].updated_at.slice(11, 16)}
           </td>
-          <td className="text-center">{0}</td>
+          <td className="text-center">{data.data[i].view}</td>
         </tr>
       );
     }

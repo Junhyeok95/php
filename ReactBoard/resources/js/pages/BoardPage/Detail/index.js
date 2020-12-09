@@ -19,6 +19,7 @@ const Detail = ({ userInfo, match, history }) => {
     })
       .then((res) => {
         setData(res.data);
+        console.log(res.data);
         content.current.innerHTML = res.data.content;
       })
       .catch((error) => console.log(error));

@@ -18,6 +18,7 @@ class CreateBoardsTable extends Migration
       $table->foreignId('user_id')->index(); // Alias of $table->unsignedBigInteger('user_id')
       $table->string('title');
       $table->text('content');
+      $table->unsignedBigInteger('view')->nullable()->default(0)->comment('조회수');;
       $table->timestamps();
 
       $table->foreign('user_id')->references('id')->on('users')->onUpdete('cascade')->onDelete('cascade');

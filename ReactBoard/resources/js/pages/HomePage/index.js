@@ -18,8 +18,8 @@ const StyledTitle = styled.div`
 
 const HomePage = ({ history }) => {
   useEffect(() => {
-    sessionStorage.clear();
-    console.log("sessionStorage.clear() !");
+    // sessionStorage.clear();
+    // console.log("sessionStorage.clear() !");
   });
   return (
     <StyledDiv className="flex-center position-ref full-height">

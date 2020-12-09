@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\BoardRequest;
+use Illuminate\Support\Facades\DB;
 
 class BoardController extends Controller
 {
@@ -16,7 +17,19 @@ class BoardController extends Controller
   public function index(Request $request, $slug = null)
   {
     $query = $slug ? \App\Tag::whereSlug($slug)->firstOrFail()->boards() : new \App\Board;
-    $paginate = $query->latest()->paginate($request->perPage);
+    $paginate = $query->orderBy('id', 'desc')->paginate($request->perPage);
+
+    // dd(json_encode(DB::table('boards')->orderBy('id', 'desc')->get()));
+    // dd(json_encode($paginate->orderBy('id', 'desc')->get()));
+    // dd(json_encode($query->latest()->orderBy('id', 'desc')->get()));
+
+    for ($i = 0; $i < $paginate->count(); $i++) {
+      $paginate[$i]['user_name'] = \App\User::whereId($paginate[$i]->user_id)->first()->name;
+    }
+
+    // dd(json_encode($paginate));
+    // dd(json_encode($paginate->count()));
+
     return response()->json([$paginate, $slug]);
   }
 
@@ -38,6 +51,7 @@ class BoardController extends Controller
 
   public function show(\App\Board $board)
   {
+    $board->increment('view', 1);
     return response()->json($board);
   }
 

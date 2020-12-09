@@ -1,19 +1,14 @@
-import React, { useContext } from "react";
+import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/User";
 import { useHistory } from "react-router-dom";
 
 const Header = () => {
-  let history2 = useHistory();
   const { userInfo, logout } = useContext(UserContext);
 
   const onClick = (e) => {
     e.preventDefault();
     logout();
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
   };
 
   return (
@@ -55,7 +50,10 @@ const Header = () => {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    {userInfo.email}
+                    <strong style={{ color: "#0000ff" }}>
+                      {userInfo.name}
+                    </strong>{" "}
+                    님
                   </a>
 
                   <div
@@ -69,14 +67,6 @@ const Header = () => {
                     >
                       Logout
                     </a>
-
-                    <form
-                      id="logout-form"
-                      className="d-none"
-                      onSubmit={onSubmit}
-                    >
-                      @csrf
-                    </form>
                   </div>
                 </li>
               </ul>

@@ -13,7 +13,11 @@ const BoardPage = ({ match }) => {
   return (
     <Fragment>
       <Container className="pt-4">
-        <Route path={`${match.url}`} component={Boards} exact />
+        <Route // write create
+          path={`${match.url}`}
+          render={(props) => <Boards userInfo={userInfo} {...props} />}
+          exact
+        />
         <Route // write create
           path={`${match.url}/write`}
           render={(props) => (
