@@ -38,68 +38,62 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/test3" onClick={() => {}}>
-                  Test3
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/test3/all" onClick={() => {}}>
-                  Test3-all
-                </Link>
-              </li>
-            </ul>
-
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/" onClick={() => {}}>
-                  /
-                </Link>
-              </li>
-              <li className="nav-item">
                 <Link className="nav-link" to="/boards" onClick={() => {}}>
                   Board
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  Login
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/register">
-                  Register
-                </Link>
-              </li>
-              <li className="nav-item dropdown">
-                <a
-                  id="navbarDropdown"
-                  className="nav-link dropdown-toggle"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  {userInfo ? userInfo + " 님" : "미 로그인"}
-                </a>
+            </ul>
 
-                <div
-                  className="dropdown-menu dropdown-menu-right"
-                  aria-labelledby="navbarDropdown"
-                >
+            {userInfo ? (
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item dropdown">
                   <a
-                    style={{ cursor: "pointer" }}
-                    className="dropdown-item"
-                    onClick={onClick}
+                    id="navbarDropdown"
+                    className="nav-link dropdown-toggle"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
                   >
-                    Logout
+                    {userInfo.email}
                   </a>
 
-                  <form id="logout-form" className="d-none" onSubmit={onSubmit}>
-                    @csrf
-                  </form>
-                </div>
-              </li>
-            </ul>
+                  <div
+                    className="dropdown-menu dropdown-menu-right"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <a
+                      style={{ cursor: "pointer" }}
+                      className="dropdown-item"
+                      onClick={onClick}
+                    >
+                      Logout
+                    </a>
+
+                    <form
+                      id="logout-form"
+                      className="d-none"
+                      onSubmit={onSubmit}
+                    >
+                      @csrf
+                    </form>
+                  </div>
+                </li>
+              </ul>
+            ) : (
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">
+                    Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/register">
+                    Register
+                  </Link>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </nav>

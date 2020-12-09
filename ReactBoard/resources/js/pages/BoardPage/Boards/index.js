@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Container, Row, Table, Pagination } from "react-bootstrap";
 import Axios from "axios";
 import styled from "styled-components";
-import "./index.css";
+// import "./index.css";
 
 const HoverTd = styled.td`
   cursor: pointer;
@@ -11,7 +11,7 @@ const HoverTd = styled.td`
   }
 `;
 
-const Boards = ({ match, history }) => {
+const Boards = ({ userInfo, match, history }) => {
   const [perPage] = useState(
     (window.innerWidth || document.body.clientWidth) >= 768 ? 20 : 10
   );
@@ -74,21 +74,27 @@ const Boards = ({ match, history }) => {
 
   const renderBoardHead = () => {
     return (
-      <thead>
-        <tr md={9} className="css_media">
-          <th scope="col" className="text-center">
+      <thead
+        style={{
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+        }}
+      >
+        <tr>
+          <th style={{ width: "5%" }} scope="col" className="text-center">
             분류
           </th>
-          <th scope="col" className="text-center">
+          <th style={{ width: "50%" }} scope="col" className="text-center">
             제목
           </th>
-          <th scope="col" className="text-center">
+          <th style={{ width: "10%" }} scope="col" className="text-center">
             글쓴이
           </th>
-          <th scope="col" className="text-center">
+          <th style={{ width: "15%" }} scope="col" className="text-center">
             날짜
           </th>
-          <th scope="col" className="text-center">
+          <th style={{ width: "5%" }} scope="col" className="text-center">
             조회
           </th>
         </tr>
@@ -101,13 +107,19 @@ const Boards = ({ match, history }) => {
     let itemArr = [];
     for (let i = 0; i < data.data.length; i++) {
       itemArr.push(
-        <tr className="css_media" key={"BoardBody" + i}>
+        <tr key={"BoardBody" + i}>
           <td className="text-center">{i}</td>
           <HoverTd
             className="text-truncate"
+            style={{
+              maxWidth: "100px",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
             onClick={() => {
               // console.log(data.data[i].id, "history push");
-              history.push(`${match.url}/detail/${data.data[i].id}`);
+              history.push(`/boards/detail/${data.data[i].id}`);
             }}
           >
             {data.data[i].title}
@@ -122,7 +134,17 @@ const Boards = ({ match, history }) => {
         </tr>
       );
     }
-    return <tbody>{itemArr}</tbody>;
+    return (
+      <tbody
+        style={{
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {itemArr}
+      </tbody>
+    );
   };
 
   const renderPagination = () => {
@@ -196,7 +218,15 @@ const Boards = ({ match, history }) => {
             </Fragment>
           )}
         </Row>
-        <Pagination.Item onClick={() => history.push("/boards/write")}>
+        <Pagination.Item
+          onClick={() => {
+            if (userInfo) {
+              history.push("/boards/write");
+            } else {
+              alert("로그인이 필요합니다");
+            }
+          }}
+        >
           글쓰기
         </Pagination.Item>
       </Pagination>

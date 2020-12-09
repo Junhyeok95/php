@@ -10,9 +10,13 @@ const StyledDiv = styled.div`
 const StyledTitle = styled.div`
   font-size: 84px;
   flex: 1;
+  cursor: pointer;
+  &:hover {
+    color: #0000ffcc;
+  }
 `;
 
-const HomePage = () => {
+const HomePage = ({ history }) => {
   useEffect(() => {
     sessionStorage.clear();
     console.log("sessionStorage.clear() !");
@@ -20,7 +24,9 @@ const HomePage = () => {
   return (
     <StyledDiv className="flex-center position-ref full-height">
       <div className="content">
-        <StyledTitle className="m-b-md">React Board</StyledTitle>
+        <StyledTitle onClick={() => history.push("/boards")} className="m-b-md">
+          React Board
+        </StyledTitle>
       </div>
     </StyledDiv>
   );

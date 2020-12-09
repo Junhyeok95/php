@@ -1,13 +1,23 @@
-###
+##
 
 ```
 php artisan serve
+```
+
+### err
+
+```
+
+composer fix
+
+```
 
 ```
 
 ### install
 
 ```
+
 composer create-project --prefer-dist laravel/laravel ReactBoard
 copy .env.example .env
 php artisan key:generate
@@ -39,8 +49,8 @@ php artisan make:controller TagController --resource
 php artisan make:migration create_board_tag_table --create=board_tag
 
 php artisan make:seeder UsersTableSeeder
-  php artisan db:seed --class=UsersTableSeeder 또는
-  DatabaseSeeder.php 의 $this->call(UsersTableSeeder::class);
+php artisan db:seed --class=UsersTableSeeder 또는
+DatabaseSeeder.php 의 $this->call(UsersTableSeeder::class);
 
 composer dump-autoload
 php artisan migrate:refresh --seed
@@ -63,4 +73,7 @@ php artisan make:middleware JWT
 php artisan make:listener UserEventListener
 php artisan make:event UserCreated
 php artisan event:generate
+
+```
+
 ```
