@@ -10,22 +10,22 @@ class CreateCommentsTable extends Migration
   {
     Schema::create('comments', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('user_id');
-      $table->foreignId('board_id')->index();
+      $table->foreignId('user_id')->index();
+      $table->foreignId('board_id');
       $table->text('content');
       $table->timestamps();
 
-      $table->foreign('user_id')->references('id')->on('users')->onUpdete('cascade')->onDelete('cascade');
-      $table->foreign('board_id')->references('id')->on('users')->onUpdete('cascade')->onDelete('cascade');
+      // $table->foreign('user_id')->references('id')->on('users');
+      // $table->foreign('board_id')->references('id')->on('users');
     });
   }
 
   public function down()
   {
-    Schema::table('comments', function (Blueprint $table) {
-      $table->dropForeign('comments_board_id_foreign');
-      $table->dropForeign('comments_user_id_foreign');
-    });
+    // Schema::table('comments', function (Blueprint $table) {
+    //   $table->dropForeign('comments_user_id_foreign');
+    //   $table->dropForeign('comments_board_id_foreign');
+    // });
 
     Schema::dropIfExists('comments');
   }

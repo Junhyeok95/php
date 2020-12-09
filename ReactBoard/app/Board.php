@@ -14,13 +14,13 @@ class Board extends Model
     return $this->belongsTo(User::class);
   }
 
+  public function comments()
+  {
+    return $this->hasMany(Comment::class);
+  }
+
   public function tags()
   {
     return $this->belongsToMany(Tag::class);
-  }
-
-  public function coments()
-  {
-    return $this->hasMany(Coment::class);
   }
 }

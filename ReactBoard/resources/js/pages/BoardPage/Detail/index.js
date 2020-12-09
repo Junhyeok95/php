@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect, useRef } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Axios from "axios";
+import styled from "styled-components";
 
 const hiddenStyle = {
   overflow: "hidden",
@@ -8,10 +9,18 @@ const hiddenStyle = {
   whiteSpace: "nowrap",
 };
 
+const MyStrong = styled.strong`
+  cursor: pointer;
+  &:hover {
+    color: #0000ff;
+  }
+`;
+
 const Detail = ({ userInfo, match, history }) => {
   const [data, setData] = useState(null);
   const [comments, setComments] = useState(null);
   const [myComment, setMyComment] = useState("");
+  const [btnData, setBtnData] = useState(null);
   const content = useRef();
 
   useEffect(() => {
@@ -24,7 +33,6 @@ const Detail = ({ userInfo, match, history }) => {
       url: `/api/comments/${boardId}`,
     })
       .then((res) => {
-        // console.log(res.data);
         setComments(res.data);
       })
       .catch((error) => {
@@ -32,7 +40,37 @@ const Detail = ({ userInfo, match, history }) => {
       });
   };
 
-  const createComment = () => {};
+  const createComment = () => {
+    if (userInfo) {
+      Axios({
+        method: "post",
+        url: "/api/comments",
+        headers: {
+          Authorization:
+            "Bearer " +
+            (userInfo ? (userInfo.token ? userInfo.token : "null") : "null"),
+        },
+        data: {
+          board_id: data.id,
+          content: myComment ? myComment : "null",
+        },
+      })
+        .then((res) => {
+          if (res.data) {
+            alert("댓글이 작성됬습니다.");
+            getComments(match.params.detail);
+          } else {
+            console.log("댓글 작성 실패");
+          }
+          setMyComment("");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      alert("로그인 필요");
+    }
+  };
 
   // show
   const getBoardsDetail = (detailId) => {
@@ -44,6 +82,11 @@ const Detail = ({ userInfo, match, history }) => {
         setData(res.data);
         // console.log(res.data);
         content.current.innerHTML = res.data.content;
+        setBtnData({
+          now: res.data.now,
+          prevTitle: res.data.prev_title,
+          nextTitle: res.data.next_title,
+        });
         getComments(detailId); // 게시판 후 댓글 요청
       })
       .catch((error) => console.log(error));
@@ -86,11 +129,12 @@ const Detail = ({ userInfo, match, history }) => {
           }}
           key={"commentsArr" + i}
         >
-          <Col style={hiddenStyle} className="pl-1" xs={2}>
+          <Col style={hiddenStyle} className="pl-1 text-left" xs={2}>
             {comments[i].user_name}
           </Col>
-          <Col style={hiddenStyle} className="pl-1">
-            {comments[i].content}
+          <Col className="pl-1 text-left">{comments[i].content}</Col>
+          <Col style={hiddenStyle} className="pl-1 text-right" xs={3} md={2}>
+            {comments[i].created_at.slice(5, 16)}
           </Col>
         </Row>
       );
@@ -142,7 +186,7 @@ const Detail = ({ userInfo, match, history }) => {
                   <Form
                     onSubmit={(e) => {
                       e.preventDefault();
-                      console.log("enter");
+                      createComment();
                     }}
                     style={{ width: "100%" }}
                   >
@@ -161,7 +205,7 @@ const Detail = ({ userInfo, match, history }) => {
                         <Button
                           variant="success"
                           size="sm"
-                          onClick={() => console.log("haha")}
+                          onClick={() => createComment()}
                         >
                           한줄답변
                         </Button>
@@ -180,9 +224,20 @@ const Detail = ({ userInfo, match, history }) => {
             }}
           >
             <Col className="text-left" xs="auto">
-              <strong>이전</strong>
+              <strong>이전글</strong>
             </Col>
-            <Col className="text-left">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</Col>
+            {btnData && (
+              <Col style={hiddenStyle} className="text-left">
+                <MyStrong
+                  onClick={() => {
+                    history.push("/boards/detail/" + (btnData.now + 1));
+                    getBoardsDetail(btnData.now + 1);
+                  }}
+                >
+                  {btnData.prevTitle}
+                </MyStrong>
+              </Col>
+            )}
           </Row>
           <Row
             className="p-1"
@@ -191,9 +246,20 @@ const Detail = ({ userInfo, match, history }) => {
             }}
           >
             <Col className="text-left" xs="auto">
-              <strong>다음</strong>
+              <strong>다음글</strong>
             </Col>
-            <Col className="text-left">ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</Col>
+            {btnData && (
+              <Col style={hiddenStyle} className="text-left">
+                <MyStrong
+                  onClick={() => {
+                    history.push("/boards/detail/" + (btnData.now - 1));
+                    getBoardsDetail(btnData.now - 1);
+                  }}
+                >
+                  {btnData.nextTitle}
+                </MyStrong>
+              </Col>
+            )}
           </Row>
           <Row className="p-1 pt-2 justify-content-between">
             <Col className="pl-2" xs="auto">

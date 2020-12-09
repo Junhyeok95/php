@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Board;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\CommentRequest;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -14,6 +16,7 @@ class CommentController extends Controller
 
   public function index()
   {
+    dd(\App\Board::get()->count());
     // $query = new \App\Board;
     // $query->all();
     // dd(json_encode($query));
@@ -24,8 +27,15 @@ class CommentController extends Controller
   {
   }
 
-  public function store(Request $request)
+  public function store(CommentRequest $request)
   {
+    $comment = \App\Board::find($request->board_id)->comments()->create(
+      array_merge(
+        ['user_id' => auth()->user()->id],
+        $request->all()
+      )
+    );
+    return response()->json($comment);
   }
 
   public function show($id) // == board id

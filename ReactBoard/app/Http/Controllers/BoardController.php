@@ -47,8 +47,27 @@ class BoardController extends Controller
 
   public function show(\App\Board $board)
   {
-    $board->increment('view', 1);
+    $number = $board->id;
+    $cnt = \App\Board::get()->count();
+    $prevNumber = $number + 1;
+    $nextNumber = $number - 1;
+
+    $board['now'] = $number;
     $board['user_name'] = \App\User::whereId($board->user_id)->first()->name;
+
+    if ($cnt !== $number) {
+      // dd("cnt !== number XXXXX", $cnt, $number);
+      $board['prev_title'] = \App\Board::whereId($prevNumber)->first()->title;
+    } else {
+      // dd("cnt === number OOOOO", $cnt, $number);
+    }
+    if ($number > 1) {
+      // dd("number > 1 OOOO", $number);
+      $board['next_title'] = \App\Board::whereId($nextNumber)->first()->title;
+    } else {
+      // dd("nuber <= 1 XXXXX", $number);
+    }
+    $board->increment('view', 1);
     return response()->json($board);
   }
 

@@ -76,5 +76,6 @@ php artisan event:generate
 php artisan make:seeder CommentsTableSeeder
 php artisan db:seed --class=CommentsTableSeeder
 php artisan make:factory CommentFactory --model=Comment
+php artisan make:request CommentRequest
 
 ```

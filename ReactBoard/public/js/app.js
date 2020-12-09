@@ -100826,6 +100826,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -100838,6 +100839,19 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n  cursor: pointer;\n  &:hover {\n    color: #0000ff;\n  }\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
 
 
 
@@ -100846,6 +100860,7 @@ var hiddenStyle = {
   textOverflow: "ellipsis",
   whiteSpace: "nowrap"
 };
+var MyStrong = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].strong(_templateObject());
 
 var Detail = function Detail(_ref) {
   var userInfo = _ref.userInfo,
@@ -100867,6 +100882,11 @@ var Detail = function Detail(_ref) {
       myComment = _useState6[0],
       setMyComment = _useState6[1];
 
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState8 = _slicedToArray(_useState7, 2),
+      btnData = _useState8[0],
+      setBtnData = _useState8[1];
+
   var content = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     getBoardsDetail(match.params.detail);
@@ -100877,14 +100897,40 @@ var Detail = function Detail(_ref) {
       method: "get",
       url: "/api/comments/".concat(boardId)
     }).then(function (res) {
-      // console.log(res.data);
       setComments(res.data);
     })["catch"](function (error) {
       console.log(error);
     });
   };
 
-  var createComment = function createComment() {}; // show
+  var createComment = function createComment() {
+    if (userInfo) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: "post",
+        url: "/api/comments",
+        headers: {
+          Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+        },
+        data: {
+          board_id: data.id,
+          content: myComment ? myComment : "null"
+        }
+      }).then(function (res) {
+        if (res.data) {
+          alert("댓글이 작성됬습니다.");
+          getComments(match.params.detail);
+        } else {
+          console.log("댓글 작성 실패");
+        }
+
+        setMyComment("");
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    } else {
+      alert("로그인 필요");
+    }
+  }; // show
 
 
   var getBoardsDetail = function getBoardsDetail(detailId) {
@@ -100895,6 +100941,11 @@ var Detail = function Detail(_ref) {
       setData(res.data); // console.log(res.data);
 
       content.current.innerHTML = res.data.content;
+      setBtnData({
+        now: res.data.now,
+        prevTitle: res.data.prev_title,
+        nextTitle: res.data.next_title
+      });
       getComments(detailId); // 게시판 후 댓글 요청
     })["catch"](function (error) {
       return console.log(error);
@@ -100937,12 +100988,16 @@ var Detail = function Detail(_ref) {
         key: "commentsArr" + i
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
         style: hiddenStyle,
-        className: "pl-1",
+        className: "pl-1 text-left",
         xs: 2
       }, comments[i].user_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+        className: "pl-1 text-left"
+      }, comments[i].content), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
         style: hiddenStyle,
-        className: "pl-1"
-      }, comments[i].content)));
+        className: "pl-1 text-right",
+        xs: 3,
+        md: 2
+      }, comments[i].created_at.slice(5, 16))));
     }
 
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, commentsArr);
@@ -101008,7 +101063,7 @@ var Detail = function Detail(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
     onSubmit: function onSubmit(e) {
       e.preventDefault();
-      console.log("enter");
+      createComment();
     },
     style: {
       width: "100%"
@@ -101032,7 +101087,7 @@ var Detail = function Detail(_ref) {
     variant: "success",
     size: "sm",
     onClick: function onClick() {
-      return console.log("haha");
+      return createComment();
     }
   }, "\uD55C\uC904\uB2F5\uBCC0"))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
     className: "p-1",
@@ -101043,9 +101098,15 @@ var Detail = function Detail(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     className: "text-left",
     xs: "auto"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "\uC774\uC804")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "\uC774\uC804\uAE00")), btnData && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    style: hiddenStyle,
     className: "text-left"
-  }, "\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MyStrong, {
+    onClick: function onClick() {
+      history.push("/boards/detail/" + (btnData.now + 1));
+      getBoardsDetail(btnData.now + 1);
+    }
+  }, btnData.prevTitle))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
     className: "p-1",
     style: {
       borderBottom: "solid #73B2FF 2px"
@@ -101053,9 +101114,15 @@ var Detail = function Detail(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     className: "text-left",
     xs: "auto"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "\uB2E4\uC74C")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "\uB2E4\uC74C\uAE00")), btnData && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    style: hiddenStyle,
     className: "text-left"
-  }, "\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MyStrong, {
+    onClick: function onClick() {
+      history.push("/boards/detail/" + (btnData.now - 1));
+      getBoardsDetail(btnData.now - 1);
+    }
+  }, btnData.nextTitle))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
     className: "p-1 pt-2 justify-content-between"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     className: "pl-2",
