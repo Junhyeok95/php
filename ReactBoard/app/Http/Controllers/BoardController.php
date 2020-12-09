@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class BoardController extends Controller
 {
-
   public function __construct()
   {
     $this->middleware('JWT', ['except' => ['index', 'show']]);

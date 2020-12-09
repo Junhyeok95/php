@@ -9,8 +9,7 @@ php artisan serve
 ```
 
 composer fix
-
-```
+php artisan migrate:refresh --seed
 
 ```
 
@@ -74,6 +73,8 @@ php artisan make:listener UserEventListener
 php artisan make:event UserCreated
 php artisan event:generate
 
-```
+php artisan make:seeder CommentsTableSeeder
+php artisan db:seed --class=CommentsTableSeeder
+php artisan make:factory CommentFactory --model=Comment
 
 ```

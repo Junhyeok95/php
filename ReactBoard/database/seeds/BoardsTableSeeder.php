@@ -37,22 +37,6 @@ class BoardsTableSeeder extends Seeder
         );
       }
     });
-    $users->each(function ($user) {
-      for ($i = 0; $i < 1; $i++) {
-        $user->boards()->save(
-          // 팩토리 활용
-          factory(Board::class)->make()
-        );
-      }
-    });
-    $users->each(function ($user) {
-      for ($i = 0; $i < 1; $i++) {
-        $user->boards()->save(
-          // 팩토리 활용
-          factory(Board::class)->make()
-        );
-      }
-    });
 
     // 마지막 글
     DB::table('boards')->insert([

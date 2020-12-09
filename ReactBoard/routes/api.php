@@ -15,6 +15,7 @@ Route::group([
 
 Route::resource('boards', 'BoardController');
 Route::get('{slug}/boards', 'BoardController@index');
+Route::resource('comments', 'CommentController');
 
 Route::get('mail', function () {
   $board = App\Board::with('user')->find(1);

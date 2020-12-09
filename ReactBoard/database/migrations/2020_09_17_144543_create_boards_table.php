@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateBoardsTable extends Migration
 {
-  /**
-   * Run the migrations.
-   *
-   * @return void
-   */
   public function up()
   {
     Schema::create('boards', function (Blueprint $table) {
@@ -25,13 +20,12 @@ class CreateBoardsTable extends Migration
     });
   }
 
-  /**
-   * Reverse the migrations.
-   *
-   * @return void
-   */
   public function down()
   {
+    Schema::table('boards', function (Blueprint $table) {
+      $table->dropForeign('boards_user_id_foreign');
+    });
+
     Schema::dropIfExists('boards');
   }
 }

@@ -10,11 +10,29 @@ const hiddenStyle = {
 
 const Detail = ({ userInfo, match, history }) => {
   const [data, setData] = useState(null);
+  const [comments, setComments] = useState(null);
+  const [myComment, setMyComment] = useState("");
   const content = useRef();
 
   useEffect(() => {
     getBoardsDetail(match.params.detail);
   }, []);
+
+  const getComments = (boardId) => {
+    Axios({
+      method: "get",
+      url: `/api/comments/${boardId}`,
+    })
+      .then((res) => {
+        // console.log(res.data);
+        setComments(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const createComment = () => {};
 
   // show
   const getBoardsDetail = (detailId) => {
@@ -26,6 +44,7 @@ const Detail = ({ userInfo, match, history }) => {
         setData(res.data);
         // console.log(res.data);
         content.current.innerHTML = res.data.content;
+        getComments(detailId); // 게시판 후 댓글 요청
       })
       .catch((error) => console.log(error));
   };
@@ -54,6 +73,30 @@ const Detail = ({ userInfo, match, history }) => {
     } else {
       console.log("자기 글만 삭제 가능");
     }
+  };
+
+  const commentsReturn = () => {
+    let commentsArr = [];
+    for (let i = 0; i < comments.length; i++) {
+      commentsArr.push(
+        <Row
+          className="pt-2"
+          style={{
+            borderBottom: "solid #73B2FF 1px",
+          }}
+          key={"commentsArr" + i}
+        >
+          <Col style={hiddenStyle} className="pl-1" xs={2}>
+            {comments[i].user_name}
+          </Col>
+          <Col style={hiddenStyle} className="pl-1">
+            {comments[i].content}
+          </Col>
+        </Row>
+      );
+    }
+
+    return <Fragment>{commentsArr}</Fragment>;
   };
 
   return (
@@ -85,56 +128,48 @@ const Detail = ({ userInfo, match, history }) => {
           <Row className="p-1" style={{ minHeight: "200px" }}>
             <Col ref={content}>{/*data.content*/}</Col>
           </Row>
+
           <Row
             className="p-2 mb-3"
             style={{
               border: "solid #E0E0E0 3px",
             }}
           >
-            <Col>
-              <Row
-                className="pt-2"
-                style={{
-                  borderBottom: "solid #73B2FF 1px",
-                }}
-              >
-                <Col className="pl-1" xs={2}>
-                  댓글 작성자
-                </Col>
-                <Col
-                  style={{
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                  className="pl-1"
-                >
-                  출석완료
-                </Col>
-              </Row>
-
-              <Row className="pt-5 pb-2">
-                <Form style={{ width: "100%" }}>
-                  <Form.Row className="align-items-center">
-                    <Col style={{ width: "100%" }}>
-                      <Form.Control
-                        size="sm"
-                        type="text"
-                        placeholder="Small text"
-                      />
-                    </Col>
-                    <Col xs="auto">
-                      <Button
-                        variant="success"
-                        size="sm"
-                        onClick={() => console.log("haha")}
-                      >
-                        한줄답변
-                      </Button>
-                    </Col>
-                  </Form.Row>
-                </Form>
-              </Row>
+            <Col className="pb-3">
+              {comments && commentsReturn()}
+              {userInfo && userInfo.email && (
+                <Row className="pt-5">
+                  <Form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      console.log("enter");
+                    }}
+                    style={{ width: "100%" }}
+                  >
+                    <Form.Row className="align-items-center">
+                      <Col style={{ width: "100%" }}>
+                        <Form.Control
+                          size="sm"
+                          type="text"
+                          value={myComment}
+                          onChange={(e) => {
+                            setMyComment(e.target.value);
+                          }}
+                        />
+                      </Col>
+                      <Col xs="auto">
+                        <Button
+                          variant="success"
+                          size="sm"
+                          onClick={() => console.log("haha")}
+                        >
+                          한줄답변
+                        </Button>
+                      </Col>
+                    </Form.Row>
+                  </Form>
+                </Row>
+              )}
             </Col>
           </Row>
           <Row
@@ -200,69 +235,6 @@ const Detail = ({ userInfo, match, history }) => {
             )}
           </Row>
         </Container>
-
-        // <Container style={{ backgroundColor: "#FF0000" }}>
-        //   <Row>
-        //     <Col
-        //       style={{
-        //         padding: "2px",
-        //         border: "solid black 2px",
-        //         fontSize: 20,
-        //       }}
-        //       className="col-sm-2 text-center"
-        //     >
-        //       제목{" "}
-        //     </Col>
-        //     <Col
-        //       style={{
-        //         padding: "2px",
-        //         border: "solid black 2px",
-        //         fontSize: 20,
-        //       }}
-        //       className="pl-2 text-left"
-        //     >
-        //       {data.title}
-        //     </Col>
-        //   </Row>
-        // <Row>
-        //   <Col ref={content} style={{ fontSize: 16 }} className="p-4">
-        //     {/* content.current.innerHTML */}
-        //   </Col>
-        // </Row>
-        //   <Row style={{ border: "2px solid black" }} className="d-flex p-1">
-        //     <Col
-        //       // style={{ backgroundColor: "yellow" }}
-        //       className="p-1"
-        //     >
-        //       <Button
-        //         onClick={() => {
-        //           history.push(`/boards`);
-        //         }}
-        //       >
-        //         글 목록
-        //       </Button>
-        //     </Col>
-        //     <Col
-        //       // style={{ backgroundColor: "green" }}
-        //       className="d-flex justify-content-end p-1"
-        //     >
-        //       <Button
-        // onClick={() => {
-        //   history.push(`/boards/${match.params.detail}/write`);
-        // }}
-        //       >
-        //         수정
-        //       </Button>
-        //       <Button
-        // onClick={() => {
-        //   deleteBoardsDetail(match.params.detail);
-        // }}
-        //       >
-        //         삭제
-        //       </Button>
-        //     </Col>
-        //   </Row>
-        // </Container>
       )}
     </Fragment>
   );

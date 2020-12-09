@@ -100857,10 +100857,35 @@ var Detail = function Detail(_ref) {
       data = _useState2[0],
       setData = _useState2[1];
 
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      comments = _useState4[0],
+      setComments = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+      _useState6 = _slicedToArray(_useState5, 2),
+      myComment = _useState6[0],
+      setMyComment = _useState6[1];
+
   var content = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     getBoardsDetail(match.params.detail);
-  }, []); // show
+  }, []);
+
+  var getComments = function getComments(boardId) {
+    axios__WEBPACK_IMPORTED_MODULE_2___default()({
+      method: "get",
+      url: "/api/comments/".concat(boardId)
+    }).then(function (res) {
+      // console.log(res.data);
+      setComments(res.data);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  };
+
+  var createComment = function createComment() {}; // show
+
 
   var getBoardsDetail = function getBoardsDetail(detailId) {
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
@@ -100870,6 +100895,7 @@ var Detail = function Detail(_ref) {
       setData(res.data); // console.log(res.data);
 
       content.current.innerHTML = res.data.content;
+      getComments(detailId); // 게시판 후 댓글 요청
     })["catch"](function (error) {
       return console.log(error);
     });
@@ -100897,6 +100923,29 @@ var Detail = function Detail(_ref) {
     } else {
       console.log("자기 글만 삭제 가능");
     }
+  };
+
+  var commentsReturn = function commentsReturn() {
+    var commentsArr = [];
+
+    for (var i = 0; i < comments.length; i++) {
+      commentsArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+        className: "pt-2",
+        style: {
+          borderBottom: "solid #73B2FF 1px"
+        },
+        key: "commentsArr" + i
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+        style: hiddenStyle,
+        className: "pl-1",
+        xs: 2
+      }, comments[i].user_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+        style: hiddenStyle,
+        className: "pl-1"
+      }, comments[i].content)));
+    }
+
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, commentsArr);
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], {
@@ -100952,24 +101001,15 @@ var Detail = function Detail(_ref) {
     style: {
       border: "solid #E0E0E0 3px"
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
-    className: "pt-2",
-    style: {
-      borderBottom: "solid #73B2FF 1px"
-    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-    className: "pl-1",
-    xs: 2
-  }, "\uB313\uAE00 \uC791\uC131\uC790"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-    style: {
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap"
-    },
-    className: "pl-1"
-  }, "\uCD9C\uC11D\uC644\uB8CC")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
-    className: "pt-5 pb-2"
+    className: "pb-3"
+  }, comments && commentsReturn(), userInfo && userInfo.email && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "pt-5"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"], {
+    onSubmit: function onSubmit(e) {
+      e.preventDefault();
+      console.log("enter");
+    },
     style: {
       width: "100%"
     }
@@ -100982,7 +101022,10 @@ var Detail = function Detail(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
     size: "sm",
     type: "text",
-    placeholder: "Small text"
+    value: myComment,
+    onChange: function onChange(e) {
+      setMyComment(e.target.value);
+    }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     xs: "auto"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
@@ -101044,69 +101087,7 @@ var Detail = function Detail(_ref) {
     onClick: function onClick() {
       deleteBoardsDetail(data.id);
     }
-  }, "\uC0AD\uC81C\uD558\uAE30")))) // <Container style={{ backgroundColor: "#FF0000" }}>
-  //   <Row>
-  //     <Col
-  //       style={{
-  //         padding: "2px",
-  //         border: "solid black 2px",
-  //         fontSize: 20,
-  //       }}
-  //       className="col-sm-2 text-center"
-  //     >
-  //       제목{" "}
-  //     </Col>
-  //     <Col
-  //       style={{
-  //         padding: "2px",
-  //         border: "solid black 2px",
-  //         fontSize: 20,
-  //       }}
-  //       className="pl-2 text-left"
-  //     >
-  //       {data.title}
-  //     </Col>
-  //   </Row>
-  // <Row>
-  //   <Col ref={content} style={{ fontSize: 16 }} className="p-4">
-  //     {/* content.current.innerHTML */}
-  //   </Col>
-  // </Row>
-  //   <Row style={{ border: "2px solid black" }} className="d-flex p-1">
-  //     <Col
-  //       // style={{ backgroundColor: "yellow" }}
-  //       className="p-1"
-  //     >
-  //       <Button
-  //         onClick={() => {
-  //           history.push(`/boards`);
-  //         }}
-  //       >
-  //         글 목록
-  //       </Button>
-  //     </Col>
-  //     <Col
-  //       // style={{ backgroundColor: "green" }}
-  //       className="d-flex justify-content-end p-1"
-  //     >
-  //       <Button
-  // onClick={() => {
-  //   history.push(`/boards/${match.params.detail}/write`);
-  // }}
-  //       >
-  //         수정
-  //       </Button>
-  //       <Button
-  // onClick={() => {
-  //   deleteBoardsDetail(match.params.detail);
-  // }}
-  //       >
-  //         삭제
-  //       </Button>
-  //     </Col>
-  //   </Row>
-  // </Container>
-  );
+  }, "\uC0AD\uC81C\uD558\uAE30")))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Detail);
