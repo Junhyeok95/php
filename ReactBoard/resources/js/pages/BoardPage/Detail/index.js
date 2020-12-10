@@ -80,8 +80,6 @@ const Detail = ({ userInfo, match, history }) => {
     })
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
-        console.log(res.data.urls);
         content.current.innerHTML = res.data.content;
         setBtnData({
           now: res.data.now,
@@ -107,10 +105,9 @@ const Detail = ({ userInfo, match, history }) => {
       })
         .then((res) => {
           if (res.data === true) {
-            console.log("게시판 삭제 성공");
+            alert("게시글을 삭제했습니다");
             history.push(`/boards`);
           } else if (res.data === false) {
-            console.log("게시판 삭제 실패");
           }
         })
         .catch((error) => console.log(error));
@@ -151,12 +148,11 @@ const Detail = ({ userInfo, match, history }) => {
         <Col
           key={"imagege" + i}
           style={{
-            maxWidth: "33%",
-            padding: "2px",
-            border: "solid black 2px",
             overflow: "hidden",
           }}
-          xs="auto"
+          xs={12}
+          sm={6}
+          md={4}
         >
           <Image src={list[i]}></Image>
         </Col>
@@ -171,31 +167,39 @@ const Detail = ({ userInfo, match, history }) => {
         <Container className="pt-3 pb-3" style={{ backgroundColor: "#FFFFFF" }}>
           <Row style={{ borderBottom: "solid #73B2FF 2px" }}>
             <Col>
-              <h3 style={{ color: "#154B8D" }}> 게시글 보기</h3>
+              <h1 style={{ color: "#154B8D" }}> 게시글 보기</h1>
             </Col>
           </Row>
-          <Row className="p-1" style={{ borderBottom: "solid #73B2FF 1px" }}>
-            <Col style={hiddenStyle}>
-              {data.title ? (
-                <strong>{data.title}</strong>
-              ) : (
-                <strong>---</strong>
-              )}
+          <Row
+            className="p-1 align-items-center"
+            style={{ borderBottom: "solid #73B2FF 1px" }}
+          >
+            <Col
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                fontSize: 20,
+              }}
+            >
+              {data && data.title && <strong>{data.title}</strong>}
             </Col>
             <Col style={hiddenStyle} className="text-right " xs={3} md={2}>
-              {data.user_name}
+              <span>{data.user_name}</span>
             </Col>
             <Col style={hiddenStyle} className="text-right" xs={3} md={2}>
-              {data.created_at.slice(0, 10)}
+              <span>{data.created_at.slice(0, 10)}</span>
             </Col>
           </Row>
           <Row className="p-1" style={{ borderBottom: "solid #73B2FF 1px" }}>
             <Col className="text-left"></Col>
             <Col className="text-right" xs={3} md={2}>
-              조회수 : {data.view}
+              <span>조회수 : {data.view}</span>
             </Col>
           </Row>
-          <Row className="p-1">{data.urls != "" && returnImage(data.urls)}</Row>
+          <Row className="p-1">
+            {data.urls != "" && data.urls != null && returnImage(data.urls)}
+          </Row>
           <Row className="p-1" style={{ minHeight: "200px" }}>
             <Col ref={content}>{/*data.content*/}</Col>
           </Row>
@@ -298,10 +302,10 @@ const Detail = ({ userInfo, match, history }) => {
                 목록으로
               </Button>
             </Col>
-            {userInfo && userInfo.name === data.user_name && (
+            {userInfo && userInfo.name === data.user_name ? (
               <Col className="pr-2" xs="auto">
                 <Button
-                  variant="outline-dark"
+                  variant="outline-success"
                   size="sm"
                   onClick={() => {
                     // edit
@@ -316,13 +320,29 @@ const Detail = ({ userInfo, match, history }) => {
                 </Button>
                 <Button
                   className="ml-2"
-                  variant="outline-dark"
+                  variant="outline-danger"
                   size="sm"
                   onClick={() => {
                     deleteBoardsDetail(data.id);
                   }}
                 >
                   삭제하기
+                </Button>
+              </Col>
+            ) : (
+              <Col className="pr-2" xs="auto">
+                <Button
+                  variant="outline-primary"
+                  size="sm"
+                  onClick={() => {
+                    if (userInfo) {
+                      history.push("/boards/write");
+                    } else {
+                      alert("로그인이 필요합니다");
+                    }
+                  }}
+                >
+                  글쓰기
                 </Button>
               </Col>
             )}

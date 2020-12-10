@@ -76,24 +76,28 @@ class BoardController extends Controller
     }
     $urls = [];
     if ($board->attachments()->get()->first()) {
-      for ($i = 0; $i < count($board->attachments()->get()); $i++) {
-        $num = $i + 1;
-        array_push($urls, $board->attachments()->whereId($num)->first()->url);
+      foreach ($board->attachments()->get() as $data) {
+        array_push($urls, $data->url);
       }
-    } else {
     }
     $board['urls'] = $urls; // 첨부파일
-
     $board->increment('view', 1);
     return response()->json($board);
   }
 
-  public function edit($id)
+  public function edit(\App\Board $board)
   {
-    return response()->json("edit");
+    $urls = [];
+    if ($board->attachments()->get()->first()) {
+      foreach ($board->attachments()->get() as $data) {
+        array_push($urls, $data->url);
+      }
+    }
+    $board['urls'] = $urls; // 첨부파일
+    return response()->json($board);
   }
 
-  public function update(\App\Board $board, BoardRequest $request)
+  public function update(\App\Board $board, Request $request)
   {
     return response()->json(auth()->user()->id === $board->user_id ? $board->update($request->all()) : false);
   }

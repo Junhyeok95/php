@@ -100210,46 +100210,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/Button/index.js":
-/*!*************************************************!*\
-  !*** ./resources/js/components/Button/index.js ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  border: 1px solid black;\n  border-radius: 4px;\n  font-size: 1rem;\n  padding: 0.25rem 1rem;\n  margin: 2px;\n  outline: none;\n  cursor: pointer;\n\n  color: ", ";\n  background: ", ";\n  &:hover {\n    background: #62b0b2;\n  }\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-
-
-var StyledButton = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].button(_templateObject(), function (props) {
-  return props.color || "black";
-}, function (props) {
-  return props.background || "#FFFFFF";
-});
-
-var Button = function Button(props) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledButton, props);
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Button);
-
-/***/ }),
-
 /***/ "./resources/js/contexts/User/index.js":
 /*!*********************************************!*\
   !*** ./resources/js/contexts/User/index.js ***!
@@ -100944,8 +100904,6 @@ var Detail = function Detail(_ref) {
       url: "/api/boards/".concat(detailId)
     }).then(function (res) {
       setData(res.data);
-      console.log(res.data);
-      console.log(res.data.urls);
       content.current.innerHTML = res.data.content;
       setBtnData({
         now: res.data.now,
@@ -100969,11 +100927,9 @@ var Detail = function Detail(_ref) {
         }
       }).then(function (res) {
         if (res.data === true) {
-          console.log("게시판 삭제 성공");
+          alert("게시글을 삭제했습니다");
           history.push("/boards");
-        } else if (res.data === false) {
-          console.log("게시판 삭제 실패");
-        }
+        } else if (res.data === false) {}
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -101016,12 +100972,11 @@ var Detail = function Detail(_ref) {
       imageArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
         key: "imagege" + i,
         style: {
-          maxWidth: "33%",
-          padding: "2px",
-          border: "solid black 2px",
           overflow: "hidden"
         },
-        xs: "auto"
+        xs: 12,
+        sm: 6,
+        md: 4
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Image"], {
         src: list[i]
       })));
@@ -101039,28 +100994,33 @@ var Detail = function Detail(_ref) {
     style: {
       borderBottom: "solid #73B2FF 2px"
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
     style: {
       color: "#154B8D"
     }
   }, " \uAC8C\uC2DC\uAE00 \uBCF4\uAE30"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
-    className: "p-1",
+    className: "p-1 align-items-center",
     style: {
       borderBottom: "solid #73B2FF 1px"
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-    style: hiddenStyle
-  }, data.title ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, data.title) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "---")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    style: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      fontSize: 20
+    }
+  }, data && data.title && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, data.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     style: hiddenStyle,
     className: "text-right ",
     xs: 3,
     md: 2
-  }, data.user_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, data.user_name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     style: hiddenStyle,
     className: "text-right",
     xs: 3,
     md: 2
-  }, data.created_at.slice(0, 10))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, data.created_at.slice(0, 10)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
     className: "p-1",
     style: {
       borderBottom: "solid #73B2FF 1px"
@@ -101071,9 +101031,9 @@ var Detail = function Detail(_ref) {
     className: "text-right",
     xs: 3,
     md: 2
-  }, "\uC870\uD68C\uC218 : ", data.view)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\uC870\uD68C\uC218 : ", data.view))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
     className: "p-1"
-  }, data.urls != "" && returnImage(data.urls)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+  }, data.urls != "" && data.urls != null && returnImage(data.urls)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
     className: "p-1",
     style: {
       minHeight: "200px"
@@ -101162,11 +101122,11 @@ var Detail = function Detail(_ref) {
     onClick: function onClick() {
       return history.push("/boards");
     }
-  }, "\uBAA9\uB85D\uC73C\uB85C")), userInfo && userInfo.name === data.user_name && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+  }, "\uBAA9\uB85D\uC73C\uB85C")), userInfo && userInfo.name === data.user_name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
     className: "pr-2",
     xs: "auto"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
-    variant: "outline-dark",
+    variant: "outline-success",
     size: "sm",
     onClick: function onClick() {
       // edit
@@ -101178,12 +101138,25 @@ var Detail = function Detail(_ref) {
     }
   }, "\uC218\uC815\uD558\uAE30"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
     className: "ml-2",
-    variant: "outline-dark",
+    variant: "outline-danger",
     size: "sm",
     onClick: function onClick() {
       deleteBoardsDetail(data.id);
     }
-  }, "\uC0AD\uC81C\uD558\uAE30")))));
+  }, "\uC0AD\uC81C\uD558\uAE30")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "pr-2",
+    xs: "auto"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    variant: "outline-primary",
+    size: "sm",
+    onClick: function onClick() {
+      if (userInfo) {
+        history.push("/boards/write");
+      } else {
+        alert("로그인이 필요합니다");
+      }
+    }
+  }, "\uAE00\uC4F0\uAE30")))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Detail);
@@ -101207,9 +101180,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var quill__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(quill__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var quill_dist_quill_snow_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! quill/dist/quill.snow.css */ "./node_modules/quill/dist/quill.snow.css");
 /* harmony import */ var quill_dist_quill_snow_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(quill_dist_quill_snow_css__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../components/Button */ "./resources/js/components/Button/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -101223,7 +101197,7 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  padding: 2rem;\n  border: 1px black solid;\n  background-color: white;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n"]);
+  var data = _taggedTemplateLiteral(["\n  .ql-editor {\n    padding: 0;\n    min-height: 320px;\n    font-size: 1.125rem;\n    line-height: 1.5;\n  }\n  .ql-editor.ql-blank::before {\n    left: 0px;\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -101238,69 +101212,264 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
+ // bubble.css
 
 
- // import "quill/dist/quill.bubble.css";
-
-var StyledDiv = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject());
+var hiddenStyle = {
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap"
+};
+var QuillWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject());
 
 var Write = function Write(_ref) {
   var userInfo = _ref.userInfo,
       match = _ref.match,
       history = _ref.history,
       action = _ref.action;
+  var today = new Date();
+  var quillElement = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var quillInstance = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState2 = _slicedToArray(_useState, 2),
-      selectedFiles = _useState2[0],
-      setSelectedFiles = _useState2[1];
+      title = _useState2[0],
+      setTitle = _useState2[1];
 
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState4 = _slicedToArray(_useState3, 2),
-      text = _useState4[0],
-      setText = _useState4[1];
+      content = _useState4[0],
+      setContent = _useState4[1];
 
-  var onClickHandler = function onClickHandler(e) {
-    var formData = new FormData();
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState6 = _slicedToArray(_useState5, 2),
+      selectedFiles = _useState6[0],
+      setSelectedFiles = _useState6[1];
 
-    if (selectedFiles) {
-      for (var i = 0; i < selectedFiles.length; i++) {
-        formData.append("file" + i, selectedFiles[i]);
-      }
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState8 = _slicedToArray(_useState7, 2),
+      data = _useState8[0],
+      setData = _useState8[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (action === "update") {
+      axios__WEBPACK_IMPORTED_MODULE_5___default.a.get("/api/boards/".concat(match.params.detail, "/edit")).then(function (res) {
+        setTitle(res.data.title);
+        setData(res.data);
+      });
+    } else {
+      axios__WEBPACK_IMPORTED_MODULE_5___default.a.get("/api/boards/create").then(function (res) {
+        setData(res.data);
+      });
+    }
+  }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (quillElement.current) {
+      quillInstance.current = new quill__WEBPACK_IMPORTED_MODULE_3___default.a(quillElement.current, {
+        theme: "snow",
+        modules: {
+          toolbar: [[{
+            header: 1
+          }, {
+            header: 2
+          }], ["bold", "italic", "underline", "strike"], [{
+            list: "ordered"
+          }, {
+            list: "bullet"
+          }], ["blockquote", "code-block", "image"]]
+        }
+      });
+      var quill = quillInstance.current;
+      quill.on("text-change", function (delta, oldDelta, source) {
+        if (source == "user") {
+          setContent(quill.root.innerHTML);
+        }
+      });
     }
 
-    console.log(setSelectedFiles.length);
-    formData.append("title", "myTitle");
-    formData.append("content", "myContent");
-    var config = {
-      headers: {
-        "content-type": "multipart/form-data",
-        Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
-      }
+    return function () {// console.log("리턴");
     };
-    axios__WEBPACK_IMPORTED_MODULE_6___default.a.post("/api/boards", formData, config);
-  };
+  }, [data]);
 
   var fileChangedHandler = function fileChangedHandler(e) {
     e.preventDefault();
     setSelectedFiles(e.target.files);
   };
 
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    console.log("useEffect");
-  }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "App",
-    style: {
-      marginTop: "100px"
+  var storeHandler = function storeHandler() {
+    if (userInfo) {
+      var formData = new FormData();
+
+      if (selectedFiles) {
+        for (var i = 0; i < selectedFiles.length; i++) {
+          formData.append("file" + i, selectedFiles[i]);
+        }
+      }
+
+      formData.append("title", title);
+      formData.append("content", content);
+      var config = {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+        }
+      };
+      axios__WEBPACK_IMPORTED_MODULE_5___default.a.post("/api/boards", formData, config).then(function (res) {
+        if (res.data) {
+          // console.log("게시판 작성 성공");
+          history.push("/boards");
+          alert("작성완료");
+        }
+      })["catch"](function (err) {
+        return console.log(err);
+      });
     }
+  };
+
+  var updateHandler = function updateHandler() {
+    setContent(quillInstance.current.root.innerHTML);
+
+    if (userInfo) {
+      axios__WEBPACK_IMPORTED_MODULE_5___default()({
+        method: "put",
+        url: "/api/boards/".concat(match.params.detail),
+        headers: {
+          Authorization: "Bearer " + (userInfo ? userInfo.token ? userInfo.token : "null" : "null")
+        },
+        data: {
+          title: title,
+          content: content
+        }
+      }).then(function (res) {
+        if (res.data === true) {
+          // console.log("게시판 수정 성공");
+          history.push("/boards");
+          alert("저장완료");
+        }
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  };
+
+  var returnImage = function returnImage(list) {
+    var imageArr = [];
+
+    for (var i = 0; i < list.length; i++) {
+      imageArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], _defineProperty({
+        key: "imagege" + i,
+        style: {
+          overflow: "hidden"
+        },
+        xs: 12,
+        sm: 6
+      }, "sm", 4), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Image"], {
+        src: list[i]
+      })));
+    }
+
+    return imageArr;
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, userInfo != null && data != null && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], {
+    className: "pt-3 pb-3",
+    style: {
+      backgroundColor: "#FFFFFF"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    style: {
+      borderBottom: "solid #73B2FF 2px"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+    style: {
+      color: "#154B8D"
+    }
+  }, " ", "\uAC8C\uC2DC\uAE00 ", action && action === "update" ? "수정하기" : "작성하기"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-1  align-items-center",
+    style: {
+      borderBottom: "solid #73B2FF 1px"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    style: hiddenStyle
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
+    type: "text",
+    name: "title",
+    placeholder: title,
+    onChange: function onChange(e) {
+      setTitle(e.target.value);
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    style: hiddenStyle,
+    className: "text-right",
+    xs: 3,
+    md: 3
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, JSON.parse(localStorage.getItem("user")).name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    style: hiddenStyle,
+    className: "text-right",
+    xs: 3,
+    md: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, today.toLocaleTimeString()))), action !== "update" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-1",
+    style: {
+      borderBottom: "solid #73B2FF 1px"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "text-right",
+    xs: 3,
+    md: 2
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "file",
     multiple: true,
     onChange: fileChangedHandler
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: onClickHandler
-  }, "\uC800\uC7A5\uD558\uAE30")));
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "text-right"
+  })), action === "update" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-1"
+  }, data.urls != "" && data.urls != null && returnImage(data.urls)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-1 mt-2"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(QuillWrapper, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    ref: quillElement
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-1 mt-2",
+    style: {
+      borderBottom: "solid #73B2FF 2px"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "text-left",
+    xs: "auto"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "p-1 pt-2 justify-content-between"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "pl-2",
+    xs: "auto"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    variant: "outline-dark",
+    size: "sm",
+    onClick: function onClick() {
+      return history.push("/boards");
+    }
+  }, "\uBAA9\uB85D\uC73C\uB85C")), action === "update" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "pr-2",
+    xs: "auto"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    variant: "primary",
+    size: "sm",
+    onClick: updateHandler
+  }, "\uC800\uC7A5\uD558\uAE30"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    className: "ml-2",
+    variant: "outline-danger",
+    size: "sm",
+    onClick: function onClick() {
+      return history.go(-1);
+    }
+  }, "\uCDE8\uC18C\uD558\uAE30")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+    className: "pr-2",
+    xs: "auto"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    variant: "primary",
+    size: "sm",
+    onClick: storeHandler
+  }, "\uC791\uC131\uC644\uB8CC")))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Write);

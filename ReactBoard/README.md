@@ -1,15 +1,11 @@
-##
+# Laravel + React + JWT
+
+## start
 
 ```
 php artisan serve
 rm ./public/images/upload/board/*
 php artisan migrate:refresh --seed
-```
-
-### err
-
-```
-
 ```
 
 ### install
