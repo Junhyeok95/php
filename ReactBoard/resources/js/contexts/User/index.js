@@ -56,11 +56,16 @@ const UserContextProvider = withRouter(({ children, history }) => {
       })
         .then((res) => {
           localStorage.removeItem("user");
+          localStorage.removeItem("token");
           setUserInfo(null);
           history.push("/");
         })
         .catch(function (error) {
-          console.log(error);
+          // console.log(error);
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          setUserInfo(null);
+          history.push("/");
         });
     }
   };
@@ -83,6 +88,7 @@ const UserContextProvider = withRouter(({ children, history }) => {
         token: res.data.access_token,
       };
       localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.setItem("token", JSON.stringify(res.data.access_token));
       setUserInfo(userData);
       history.push("/");
     }

@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useRef } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
 import Axios from "axios";
 import styled from "styled-components";
 
@@ -80,7 +80,8 @@ const Detail = ({ userInfo, match, history }) => {
     })
       .then((res) => {
         setData(res.data);
-        // console.log(res.data);
+        console.log(res.data);
+        console.log(res.data.urls);
         content.current.innerHTML = res.data.content;
         setBtnData({
           now: res.data.now,
@@ -143,6 +144,27 @@ const Detail = ({ userInfo, match, history }) => {
     return <Fragment>{commentsArr}</Fragment>;
   };
 
+  const returnImage = (list) => {
+    let imageArr = [];
+    for (let i = 0; i < list.length; i++) {
+      imageArr.push(
+        <Col
+          key={"imagege" + i}
+          style={{
+            maxWidth: "33%",
+            padding: "2px",
+            border: "solid black 2px",
+            overflow: "hidden",
+          }}
+          xs="auto"
+        >
+          <Image src={list[i]}></Image>
+        </Col>
+      );
+    }
+    return imageArr;
+  };
+
   return (
     <Fragment>
       {data != null && (
@@ -154,7 +176,11 @@ const Detail = ({ userInfo, match, history }) => {
           </Row>
           <Row className="p-1" style={{ borderBottom: "solid #73B2FF 1px" }}>
             <Col style={hiddenStyle}>
-              <strong>{data.title}</strong>
+              {data.title ? (
+                <strong>{data.title}</strong>
+              ) : (
+                <strong>---</strong>
+              )}
             </Col>
             <Col style={hiddenStyle} className="text-right " xs={3} md={2}>
               {data.user_name}
@@ -169,6 +195,7 @@ const Detail = ({ userInfo, match, history }) => {
               조회수 : {data.view}
             </Col>
           </Row>
+          <Row className="p-1">{data.urls != "" && returnImage(data.urls)}</Row>
           <Row className="p-1" style={{ minHeight: "200px" }}>
             <Col ref={content}>{/*data.content*/}</Col>
           </Row>

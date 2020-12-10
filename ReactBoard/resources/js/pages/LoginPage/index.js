@@ -9,7 +9,7 @@ const LoginPage = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("- login onSubmit - \n", email, password);
+    // console.log("- login onSubmit - \n", email, password);
     login(email, password);
   };
 
@@ -76,22 +76,6 @@ const LoginPage = () => {
                     <span className="invalid-feedback" role="alert">
                       <strong></strong>
                     </span>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <div className="col-md-6 offset-md-4">
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        name="remember"
-                        id="remember"
-                      />
-                      <label htmlFor="remember" className="form-check-label">
-                        Remember Me
-                      </label>
-                    </div>
                   </div>
                 </div>
 

@@ -67,7 +67,7 @@ const Boards = ({ userInfo, match, history }) => {
     })
       .then((res) => {
         setData(res.data[0]);
-        console.log(res.data[0]);
+        // console.log(res.data[0]);
       })
       .catch((error) => console.log(error));
   };

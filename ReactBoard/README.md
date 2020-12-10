@@ -2,14 +2,13 @@
 
 ```
 php artisan serve
+rm ./public/images/upload/board/*
+php artisan migrate:refresh --seed
 ```
 
 ### err
 
 ```
-
-composer fix
-php artisan migrate:refresh --seed
 
 ```
 
@@ -78,4 +77,6 @@ php artisan db:seed --class=CommentsTableSeeder
 php artisan make:factory CommentFactory --model=Comment
 php artisan make:request CommentRequest
 
+php artisan make:model Attachment
+php artisan make:migration create_attachments_table --create=attachments
 ```

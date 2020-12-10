@@ -10,7 +10,7 @@ class BoardController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('JWT', ['except' => ['index', 'show']]);
+    $this->middleware('JWT', ['except' => ['index', 'show', 'create', 'edit']]);
   }
 
   public function index(Request $request, $slug = null)
@@ -42,6 +42,20 @@ class BoardController extends Controller
         $request->all()
       )
     );
+    if ($request->file()) {
+      $files = $request->file();
+      foreach ($files as $file) {
+        $filename = \Str::random(5) . filter_var($file->getClientOriginalName(), FILTER_SANITIZE_URL);
+        $board->attachments()->create([
+          'url' => DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR . 'board' . DIRECTORY_SEPARATOR . $filename,
+          'filename' => $filename,
+          'bytes' => $file->getSize(),
+          'mime' => $file->getClientMimeType(),
+        ]);
+        move_uploaded_file($file, public_path('images' . DIRECTORY_SEPARATOR . 'upload' . DIRECTORY_SEPARATOR . 'board' . DIRECTORY_SEPARATOR . $filename));
+      }
+    }
+
     return response()->json($board);
   }
 
@@ -52,28 +66,31 @@ class BoardController extends Controller
     $prevNumber = $number + 1;
     $nextNumber = $number - 1;
 
-    $board['now'] = $number;
-    $board['user_name'] = \App\User::whereId($board->user_id)->first()->name;
-
+    $board['now'] = $number; // show id
+    $board['user_name'] = \App\User::whereId($board->user_id)->first()->name; // 글쓴이
     if ($cnt !== $number) {
-      // dd("cnt !== number XXXXX", $cnt, $number);
-      $board['prev_title'] = \App\Board::whereId($prevNumber)->first()->title;
-    } else {
-      // dd("cnt === number OOOOO", $cnt, $number);
+      $board['prev_title'] = \App\Board::whereId($prevNumber)->first()->title; // 이전글
     }
     if ($number > 1) {
-      // dd("number > 1 OOOO", $number);
-      $board['next_title'] = \App\Board::whereId($nextNumber)->first()->title;
-    } else {
-      // dd("nuber <= 1 XXXXX", $number);
+      $board['next_title'] = \App\Board::whereId($nextNumber)->first()->title; // 다음글
     }
+    $urls = [];
+    if ($board->attachments()->get()->first()) {
+      for ($i = 0; $i < count($board->attachments()->get()); $i++) {
+        $num = $i + 1;
+        array_push($urls, $board->attachments()->whereId($num)->first()->url);
+      }
+    } else {
+    }
+    $board['urls'] = $urls; // 첨부파일
+
     $board->increment('view', 1);
     return response()->json($board);
   }
 
-  public function edit(\App\Board $board)
+  public function edit($id)
   {
-    return response()->json(auth()->user()->id === $board->user_id ? $board : false);
+    return response()->json("edit");
   }
 
   public function update(\App\Board $board, BoardRequest $request)
