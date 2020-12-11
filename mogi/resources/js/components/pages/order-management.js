@@ -102,6 +102,22 @@ const OrderManagement = ({ history }) => {
         editClone.childNodes[5].textContent =
             targetTr.childNodes[5].textContent;
 
+        editClone.childNodes[8].childNodes[0].children[0].addEventListener(
+            "click",
+            () => {
+                console.log("저장");
+            },
+            false
+        );
+        editClone.childNodes[8].childNodes[0].children[1].addEventListener(
+            "click",
+            () => {
+                console.log("삭제");
+            },
+            false
+        );
+        console.log(editClone.childNodes[8].childNodes[0].childNodes[0]);
+
         editClone.style.display = null; // 보이기
         targetTr.after(editClone);
 

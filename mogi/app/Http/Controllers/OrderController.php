@@ -16,6 +16,7 @@ class OrderController extends Controller
 
   public function index()
   {
+    // Validation 필요
     $total = [];
     $orders = User::find(1)->orders()->get(); // Order::all();
     $products = Product::all();

@@ -6,11 +6,11 @@ const ProductBuy = ({ history }) => {
     const [getData, setGetData] = useState(null);
     const [productData, setProductData] = useState(null);
     const [buyData, setBuyData] = useState({
-        name: "",
-        email: "",
-        address: "",
+        name: "name",
+        email: "email",
+        address: "address",
         quantity: "1",
-        message: ""
+        message: "message"
     });
 
     const selectSearch = e => {

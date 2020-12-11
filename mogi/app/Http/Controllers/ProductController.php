@@ -29,11 +29,7 @@ class ProductController extends Controller
         $request->all() // product_id, quantity 필요
       )
     );
-
     $order->products()->sync([$request->product_id => ['quantity' => $request->quantity]]);
-
-    dd($order);
-
     return response()->json("store");
   }
 }

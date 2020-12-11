@@ -108275,6 +108275,13 @@ var OrderManagement = function OrderManagement(_ref) {
     autoSelected(editClone, targetTr, 7);
     editClone.childNodes[4].textContent = targetTr.childNodes[4].textContent;
     editClone.childNodes[5].textContent = targetTr.childNodes[5].textContent;
+    editClone.childNodes[8].childNodes[0].children[0].addEventListener("click", function () {
+      console.log("저장");
+    }, false);
+    editClone.childNodes[8].childNodes[0].children[1].addEventListener("click", function () {
+      console.log("삭제");
+    }, false);
+    console.log(editClone.childNodes[8].childNodes[0].childNodes[0]);
     editClone.style.display = null; // 보이기
 
     targetTr.after(editClone); // AJAX -> targetTr.childNodes[0]
@@ -108700,11 +108707,11 @@ var ProductBuy = function ProductBuy(_ref) {
       setProductData = _useState4[1];
 
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
-    name: "",
-    email: "",
-    address: "",
+    name: "name",
+    email: "email",
+    address: "address",
     quantity: "1",
-    message: ""
+    message: "message"
   }),
       _useState6 = _slicedToArray(_useState5, 2),
       buyData = _useState6[0],
