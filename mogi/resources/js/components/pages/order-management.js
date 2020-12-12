@@ -141,12 +141,6 @@ const OrderManagement = ({ history }) => {
         const editClone = document.getElementById("edit").cloneNode(true);
         editDisplay(editClone, editOld); // new, old
 
-        // 아직 남은거
-        // console.log(editOld.childNodes[3]); // product_quantity
-        // console.log(editClone.childNodes[3].childNodes[0]); // product_quantity
-        // console.log(editOld.childNodes[4]); // billable_amount
-        // console.log(editOld.childNodes[8]); // Button
-
         // 1. 이름
         editClone.childNodes[1].childNodes[0].placeholder =
             editOld.childNodes[1].textContent;
@@ -167,6 +161,8 @@ const OrderManagement = ({ history }) => {
         });
 
         // 3. 입력 클릭
+        editClone.childNodes[3].childNodes[0].value =
+            editOld.childNodes[3].textContent;
         editClone.childNodes[3].childNodes[0].addEventListener("input", e => {
             if (parseInt(e.target.value) && parseInt(e.target.value) > 0) {
                 calculation(editClone, getProductList, e.target.value);
@@ -203,7 +199,20 @@ const OrderManagement = ({ history }) => {
         editClone.childNodes[8].childNodes[0].children[1].addEventListener(
             "click",
             () => {
-                console.log("삭제");
+                Axios({
+                    method: "delete",
+                    url: `/api/orders/${id.substr(2)}`,
+                    headers: {
+                        Authorization:
+                            "Bearer " +
+                            JSON.parse(localStorage.getItem("user")).token
+                    }
+                })
+                    .then(res => {
+                        console.log(res);
+                        console.log(res.data);
+                    })
+                    .catch(err => console.log(err));
             },
             false
         );
@@ -220,7 +229,7 @@ const OrderManagement = ({ history }) => {
         mql.addEventListener("change", e => {
             // "1.75vmin"
             if (e.matches) {
-                setMediaFontSize("11px");
+                setMediaFontSize("8px");
                 // console.log("모바일 화면 입니다.");
             } else {
                 setMediaFontSize("16px");
