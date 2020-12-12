@@ -108164,8 +108164,18 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function _templateObject3() {
+function _templateObject4() {
   var data = _taggedTemplateLiteral(["\n    cursor: pointer;\n    color: red;\n    &:hover {\n        background-color: red;\n        color: white;\n    }\n"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n    cursor: pointer;\n    color: green;\n    &:hover {\n        background-color: green;\n        color: white;\n    }\n"]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -108175,7 +108185,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    cursor: pointer;\n    color: green;\n    &:hover {\n        background-color: green;\n        color: white;\n    }\n"]);
+  var data = _taggedTemplateLiteral(["\n    cursor: pointer;\n    color: blue;\n    display: none;\n    &:hover {\n        background-color: blue;\n        color: white;\n    }\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -108202,8 +108212,9 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 var StyledSpan = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].span(_templateObject());
-var StyledSpanGreen = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].span(_templateObject2());
-var StyledSpanRed = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].span(_templateObject3());
+var StyledSpanCancel = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].span(_templateObject2());
+var StyledSpanGreen = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].span(_templateObject3());
+var StyledSpanRed = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].span(_templateObject4());
 
 var OrderManagement = function OrderManagement(_ref) {
   var history = _ref.history;
@@ -108220,8 +108231,8 @@ var OrderManagement = function OrderManagement(_ref) {
 
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState6 = _slicedToArray(_useState5, 2),
-      getProductName = _useState6[0],
-      setGetProductName = _useState6[1];
+      getProductList = _useState6[0],
+      setGetProductList = _useState6[1];
 
   var getOrders = function getOrders() {
     axios__WEBPACK_IMPORTED_MODULE_3___default()({
@@ -108237,7 +108248,8 @@ var OrderManagement = function OrderManagement(_ref) {
         setOrderData(res.data[0]);
       }
 
-      setGetProductName(res.data[1]);
+      setGetProductList(res.data[1]);
+      console.log(res.data[1]);
     })["catch"](function (error) {
       return console.log(error);
     });
@@ -108250,16 +108262,22 @@ var OrderManagement = function OrderManagement(_ref) {
   };
 
   var edit = function edit(id) {
-    var targetTr = document.getElementById(id);
-    targetTr.childNodes[8].childNodes[0].style.display = "none";
-    var editClone = document.getElementById("edit").cloneNode(true);
-    console.log("edit"); // 아직 남은거
-
-    console.log(targetTr.childNodes[3]); // product_quantity
-
-    console.log(targetTr.childNodes[4]); // billable_amount
-
-    console.log(targetTr.childNodes[8]); // Button
+    var editDisplay = function editDisplay(newEl, oldEl) {
+      oldEl.style.border = "solid 3px green";
+      oldEl.style.borderBottom = "";
+      oldEl.childNodes[8].childNodes[0].childNodes[0].style.display = "none";
+      oldEl.childNodes[8].childNodes[0].childNodes[1].style.display = "none";
+      oldEl.childNodes[8].childNodes[0].childNodes[2].style.display = "none";
+      oldEl.childNodes[8].childNodes[0].childNodes[3].style.display = "unset";
+      oldEl.childNodes[8].childNodes[0].childNodes[3].addEventListener("click", function () {
+        newEl.remove();
+        oldEl.childNodes[8].childNodes[0].childNodes[0].style.display = "unset";
+        oldEl.childNodes[8].childNodes[0].childNodes[1].style.display = "unset";
+        oldEl.childNodes[8].childNodes[0].childNodes[2].style.display = "unset";
+        oldEl.childNodes[8].childNodes[0].childNodes[3].style.display = "none";
+        oldEl.style.border = "";
+      }, false);
+    };
 
     var autoSelected = function autoSelected(newEl, oldEl, num) {
       for (var i = 0; i < newEl.childNodes[num].childNodes[0].length; i++) {
@@ -108269,22 +108287,73 @@ var OrderManagement = function OrderManagement(_ref) {
       }
     };
 
-    editClone.childNodes[1].childNodes[0].placeholder = targetTr.childNodes[1].textContent;
-    autoSelected(editClone, targetTr, 2);
-    autoSelected(editClone, targetTr, 6);
-    autoSelected(editClone, targetTr, 7);
-    editClone.childNodes[4].textContent = targetTr.childNodes[4].textContent;
-    editClone.childNodes[5].textContent = targetTr.childNodes[5].textContent;
+    var calculation = function calculation(newEl, list, quantity) {
+      for (var i = 0; i < newEl.childNodes[2].childNodes[0].length; i++) {
+        if (newEl.childNodes[2].childNodes[0].childNodes[i].selected) {
+          var selectedName = newEl.childNodes[2].childNodes[0].childNodes[i].value;
+
+          for (var j = 0; j < list.length; j++) {
+            if (list[j].name === selectedName) {
+              var result = list[j].price * quantity;
+              newEl.childNodes[4].textContent = "￥" + result;
+              return;
+            }
+          }
+        }
+      }
+    };
+
+    var editOld = document.getElementById(id);
+    var editClone = document.getElementById("edit").cloneNode(true);
+    editDisplay(editClone, editOld); // new, old
+    // 아직 남은거
+    // console.log(editOld.childNodes[3]); // product_quantity
+    // console.log(editClone.childNodes[3].childNodes[0]); // product_quantity
+    // console.log(editOld.childNodes[4]); // billable_amount
+    // console.log(editOld.childNodes[8]); // Button
+    // 1. 이름
+
+    editClone.childNodes[1].childNodes[0].placeholder = editOld.childNodes[1].textContent;
+    editClone.childNodes[1].childNodes[0].value = editOld.childNodes[1].textContent; // editClone.childNodes[1].childNodes[0].addEventListener("input", e => {
+    //     console.log(e.target.value);
+    // });
+    // 2. 제품
+
+    autoSelected(editClone, editOld, 2);
+    editClone.childNodes[2].childNodes[0].addEventListener("change", function (e) {
+      calculation(editClone, getProductList, editClone.childNodes[3].childNodes[0].value);
+    }); // 3. 입력 클릭
+
+    editClone.childNodes[3].childNodes[0].addEventListener("input", function (e) {
+      if (parseInt(e.target.value) && parseInt(e.target.value) > 0) {
+        calculation(editClone, getProductList, e.target.value);
+      } else {
+        // alert("数字のみ入力可能です。");
+        e.target.value = 1;
+        calculation(editClone, getProductList, 1);
+      }
+    }); // editClone.childNodes[3].childNodes[0].addEventListener("change", e => {
+    //     console.log("체인지");
+    // });
+    // 4. 가격
+
+    editClone.childNodes[4].textContent = editOld.childNodes[4].textContent; // 5. 주문일은 그대로
+
+    editClone.childNodes[5].textContent = editOld.childNodes[5].textContent; // 6. 입금 선택값
+
+    autoSelected(editClone, editOld, 6); // 7. 배송 선택값
+
+    autoSelected(editClone, editOld, 7); // 8. 저장, 삭제 이벤트
+
     editClone.childNodes[8].childNodes[0].children[0].addEventListener("click", function () {
       console.log("저장");
     }, false);
     editClone.childNodes[8].childNodes[0].children[1].addEventListener("click", function () {
       console.log("삭제");
-    }, false);
-    console.log(editClone.childNodes[8].childNodes[0].childNodes[0]);
-    editClone.style.display = null; // 보이기
+    }, false); // 0. 폼 보이기, 추가
 
-    targetTr.after(editClone); // AJAX -> targetTr.childNodes[0]
+    editClone.style.display = null;
+    editOld.after(editClone);
   };
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -108400,10 +108469,10 @@ var OrderManagement = function OrderManagement(_ref) {
   var option = function option() {
     var optionArr = [];
 
-    for (var i = 0; i < getProductName.length; i++) {
+    for (var i = 0; i < getProductList.length; i++) {
       optionArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         key: "option" + i
-      }, getProductName[i].name));
+      }, getProductList[i].name));
     }
 
     return optionArr;
@@ -108447,12 +108516,15 @@ var OrderManagement = function OrderManagement(_ref) {
             }
           });
         }
-      }, "\u8A73\u7D30"), " / ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpan, {
+      }, "\u8A73\u7D30"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " / "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpan, {
         className: "pr-1 pl-1 m-0",
         onClick: function onClick(e) {
           edit(e.target.parentNode.parentNode.parentNode.id);
         }
-      }, "\u66F4\u65B0")))));
+      }, "\u66F4\u65B0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpanCancel, {
+        className: "pr-1 pl-1 m-0",
+        onClick: function onClick(e) {}
+      }, "\u30AD\u30E3\u30F3\u30BB\u30EB")))));
     }
 
     bodyArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
@@ -108460,7 +108532,9 @@ var OrderManagement = function OrderManagement(_ref) {
       key: "bodyArrUpdate",
       style: {
         display: "none",
-        fontSize: mediaFontSize
+        fontSize: mediaFontSize,
+        border: "solid 3px green",
+        borderTop: ""
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
       style: {
@@ -108490,9 +108564,9 @@ var OrderManagement = function OrderManagement(_ref) {
       size: "sm"
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
       className: "text-right"
-    }, "\uFFE5 \uAC00\uACA9"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+    }, "billableAmount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
       className: "text-center"
-    }, "\uC8FC\uBB38\uC77C"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+    }, "createdAt"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
       className: "text-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
       as: "select",
@@ -108538,7 +108612,7 @@ var OrderManagement = function OrderManagement(_ref) {
       textAlign: "center",
       borderBottom: "solid blue 2px"
     }
-  }, "\u53D7\u6CE8\u7BA1\u7406\u30B7\u30B9\u30C6\u30E0")), orderData && getProductName && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, monthlySales(), orderList()));
+  }, "\u53D7\u6CE8\u7BA1\u7406\u30B7\u30B9\u30C6\u30E0")), orderData && getProductList && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, monthlySales(), orderList()));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (OrderManagement);

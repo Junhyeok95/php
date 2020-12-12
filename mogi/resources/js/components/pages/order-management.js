@@ -11,6 +11,15 @@ const StyledSpan = styled.span`
         color: green;
     }
 `;
+const StyledSpanCancel = styled.span`
+    cursor: pointer;
+    color: blue;
+    display: none;
+    &:hover {
+        background-color: blue;
+        color: white;
+    }
+`;
 const StyledSpanGreen = styled.span`
     cursor: pointer;
     color: green;
@@ -37,7 +46,7 @@ const OrderManagement = ({ history }) => {
             : "11px"
     );
 
-    const [getProductName, setGetProductName] = useState(null);
+    const [getProductList, setGetProductList] = useState(null);
 
     const getOrders = () => {
         Axios({
@@ -53,7 +62,8 @@ const OrderManagement = ({ history }) => {
                     console.log(res.data);
                     setOrderData(res.data[0]);
                 }
-                setGetProductName(res.data[1]);
+                setGetProductList(res.data[1]);
+                console.log(res.data[1]);
             })
             .catch(error => console.log(error));
     };
@@ -65,16 +75,35 @@ const OrderManagement = ({ history }) => {
     };
 
     const edit = id => {
-        const targetTr = document.getElementById(id);
-        targetTr.childNodes[8].childNodes[0].style.display = "none";
-        let editClone = document.getElementById("edit").cloneNode(true);
-        console.log("edit");
+        const editDisplay = (newEl, oldEl) => {
+            oldEl.style.border = "solid 3px green";
+            oldEl.style.borderBottom = "";
+            oldEl.childNodes[8].childNodes[0].childNodes[0].style.display =
+                "none";
+            oldEl.childNodes[8].childNodes[0].childNodes[1].style.display =
+                "none";
+            oldEl.childNodes[8].childNodes[0].childNodes[2].style.display =
+                "none";
+            oldEl.childNodes[8].childNodes[0].childNodes[3].style.display =
+                "unset";
 
-        // 아직 남은거
-        console.log(targetTr.childNodes[3]); // product_quantity
-        console.log(targetTr.childNodes[4]); // billable_amount
-        console.log(targetTr.childNodes[8]); // Button
-
+            oldEl.childNodes[8].childNodes[0].childNodes[3].addEventListener(
+                "click",
+                () => {
+                    newEl.remove();
+                    oldEl.childNodes[8].childNodes[0].childNodes[0].style.display =
+                        "unset";
+                    oldEl.childNodes[8].childNodes[0].childNodes[1].style.display =
+                        "unset";
+                    oldEl.childNodes[8].childNodes[0].childNodes[2].style.display =
+                        "unset";
+                    oldEl.childNodes[8].childNodes[0].childNodes[3].style.display =
+                        "none";
+                    oldEl.style.border = "";
+                },
+                false
+            );
+        };
         const autoSelected = (newEl, oldEl, num) => {
             for (
                 let i = 0;
@@ -92,16 +121,78 @@ const OrderManagement = ({ history }) => {
                 }
             }
         };
-        editClone.childNodes[1].childNodes[0].placeholder =
-            targetTr.childNodes[1].textContent;
-        autoSelected(editClone, targetTr, 2);
-        autoSelected(editClone, targetTr, 6);
-        autoSelected(editClone, targetTr, 7);
-        editClone.childNodes[4].textContent =
-            targetTr.childNodes[4].textContent;
-        editClone.childNodes[5].textContent =
-            targetTr.childNodes[5].textContent;
+        const calculation = (newEl, list, quantity) => {
+            for (let i = 0; i < newEl.childNodes[2].childNodes[0].length; i++) {
+                if (newEl.childNodes[2].childNodes[0].childNodes[i].selected) {
+                    const selectedName =
+                        newEl.childNodes[2].childNodes[0].childNodes[i].value;
+                    for (let j = 0; j < list.length; j++) {
+                        if (list[j].name === selectedName) {
+                            const result = list[j].price * quantity;
+                            newEl.childNodes[4].textContent = "￥" + result;
+                            return;
+                        }
+                    }
+                }
+            }
+        };
 
+        const editOld = document.getElementById(id);
+        const editClone = document.getElementById("edit").cloneNode(true);
+        editDisplay(editClone, editOld); // new, old
+
+        // 아직 남은거
+        // console.log(editOld.childNodes[3]); // product_quantity
+        // console.log(editClone.childNodes[3].childNodes[0]); // product_quantity
+        // console.log(editOld.childNodes[4]); // billable_amount
+        // console.log(editOld.childNodes[8]); // Button
+
+        // 1. 이름
+        editClone.childNodes[1].childNodes[0].placeholder =
+            editOld.childNodes[1].textContent;
+        editClone.childNodes[1].childNodes[0].value =
+            editOld.childNodes[1].textContent;
+        // editClone.childNodes[1].childNodes[0].addEventListener("input", e => {
+        //     console.log(e.target.value);
+        // });
+
+        // 2. 제품
+        autoSelected(editClone, editOld, 2);
+        editClone.childNodes[2].childNodes[0].addEventListener("change", e => {
+            calculation(
+                editClone,
+                getProductList,
+                editClone.childNodes[3].childNodes[0].value
+            );
+        });
+
+        // 3. 입력 클릭
+        editClone.childNodes[3].childNodes[0].addEventListener("input", e => {
+            if (parseInt(e.target.value) && parseInt(e.target.value) > 0) {
+                calculation(editClone, getProductList, e.target.value);
+            } else {
+                // alert("数字のみ入力可能です。");
+                e.target.value = 1;
+                calculation(editClone, getProductList, 1);
+            }
+        });
+        // editClone.childNodes[3].childNodes[0].addEventListener("change", e => {
+        //     console.log("체인지");
+        // });
+
+        // 4. 가격
+        editClone.childNodes[4].textContent = editOld.childNodes[4].textContent;
+
+        // 5. 주문일은 그대로
+        editClone.childNodes[5].textContent = editOld.childNodes[5].textContent;
+
+        // 6. 입금 선택값
+        autoSelected(editClone, editOld, 6);
+
+        // 7. 배송 선택값
+        autoSelected(editClone, editOld, 7);
+
+        // 8. 저장, 삭제 이벤트
         editClone.childNodes[8].childNodes[0].children[0].addEventListener(
             "click",
             () => {
@@ -116,12 +207,10 @@ const OrderManagement = ({ history }) => {
             },
             false
         );
-        console.log(editClone.childNodes[8].childNodes[0].childNodes[0]);
 
-        editClone.style.display = null; // 보이기
-        targetTr.after(editClone);
-
-        // AJAX -> targetTr.childNodes[0]
+        // 0. 폼 보이기, 추가
+        editClone.style.display = null;
+        editOld.after(editClone);
     };
 
     useEffect(() => {
@@ -218,9 +307,9 @@ const OrderManagement = ({ history }) => {
 
     const option = () => {
         let optionArr = [];
-        for (let i = 0; i < getProductName.length; i++) {
+        for (let i = 0; i < getProductList.length; i++) {
             optionArr.push(
-                <option key={"option" + i}>{getProductName[i].name}</option>
+                <option key={"option" + i}>{getProductList[i].name}</option>
             );
         }
         return optionArr;
@@ -292,7 +381,7 @@ const OrderManagement = ({ history }) => {
                             >
                                 詳細
                             </StyledSpan>
-                            {" / "}
+                            <span>{" / "}</span>
                             <StyledSpan
                                 className="pr-1 pl-1 m-0"
                                 onClick={e => {
@@ -304,6 +393,12 @@ const OrderManagement = ({ history }) => {
                             >
                                 更新
                             </StyledSpan>
+                            <StyledSpanCancel
+                                className="pr-1 pl-1 m-0"
+                                onClick={e => {}}
+                            >
+                                キャンセル
+                            </StyledSpanCancel>
                         </span>
                     </td>
                 </tr>
@@ -315,7 +410,9 @@ const OrderManagement = ({ history }) => {
                 key={"bodyArrUpdate"}
                 style={{
                     display: "none",
-                    fontSize: mediaFontSize
+                    fontSize: mediaFontSize,
+                    border: "solid 3px green",
+                    borderTop: ""
                 }}
             >
                 <td style={{ color: "green" }} className="text-center">
@@ -344,8 +441,8 @@ const OrderManagement = ({ history }) => {
                         size="sm"
                     />
                 </td>
-                <td className="text-right">￥ 가격</td>
-                <td className="text-center">주문일</td>
+                <td className="text-right">billableAmount</td>
+                <td className="text-center">createdAt</td>
                 <td className="text-center">
                     <Form.Control as="select" size="sm">
                         <option>入金待ち</option>
@@ -417,7 +514,7 @@ const OrderManagement = ({ history }) => {
                     受注管理システム
                 </h1>
             </Row>
-            {orderData && getProductName && (
+            {orderData && getProductList && (
                 <Fragment>
                     {monthlySales()}
                     {orderList()}
