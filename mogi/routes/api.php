@@ -16,5 +16,5 @@ Route::group([
   Route::post('me', [AuthController::class, 'me'])->name('jwt.me');;
 });
 
-Route::apiResource('products', ProductController::class); // create edit 제외
+Route::Resource('products', ProductController::class)->only(['index']);
 Route::Resource('orders', OrderController::class);

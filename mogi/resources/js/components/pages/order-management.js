@@ -49,177 +49,280 @@ const OrderManagement = ({ history }) => {
     const [getProductList, setGetProductList] = useState(null);
 
     const getOrders = () => {
-        Axios({
-            method: "get",
-            url: "/api/orders"
-        })
-            .then(res => {
-                if (history.location.state && history.location.state.name) {
-                    console.log("history.location.state.name");
-                    console.log(history.location.state.name);
-                    setOrderData(res.data[0]);
-                } else {
-                    console.log(res.data);
-                    setOrderData(res.data[0]);
+        try {
+            Axios({
+                method: "get",
+                url: "/api/orders",
+                headers: {
+                    Authorization:
+                        "Bearer " +
+                        JSON.parse(localStorage.getItem("user")).token
                 }
-                setGetProductList(res.data[1]);
-                console.log(res.data[1]);
             })
-            .catch(error => console.log(error));
+                .then(res => {
+                    if (res.data) {
+                        setOrderData(res.data[0]);
+                        setGetProductList(res.data[1]);
+                    }
+                })
+                .catch(err => {
+                    history.push("/");
+                    console.log(err);
+                });
+        } catch (err) {
+            history.push("/");
+            console.log(err);
+        }
     };
 
-    const detail = id => {
-        const tr = document.getElementById("tr") + id;
-
-        for (let i = 0; i < tr.childNodes.length; i++) {}
+    const show = id => {
+        try {
+            Axios({
+                method: "get",
+                url: `/api/orders/${id.substr(2)}`,
+                headers: {
+                    Authorization:
+                        "Bearer " +
+                        JSON.parse(localStorage.getItem("user")).token
+                }
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data) {
+                    }
+                })
+                .catch(err => console.log(err));
+        } catch (err) {
+            history.push("/");
+            console.log(err);
+        }
     };
 
     const edit = id => {
-        const editDisplay = (newEl, oldEl) => {
-            oldEl.style.border = "solid 3px green";
-            oldEl.style.borderBottom = "";
-            oldEl.childNodes[8].childNodes[0].childNodes[0].style.display =
-                "none";
-            oldEl.childNodes[8].childNodes[0].childNodes[1].style.display =
-                "none";
-            oldEl.childNodes[8].childNodes[0].childNodes[2].style.display =
-                "none";
-            oldEl.childNodes[8].childNodes[0].childNodes[3].style.display =
-                "unset";
-
-            oldEl.childNodes[8].childNodes[0].childNodes[3].addEventListener(
-                "click",
-                () => {
-                    newEl.remove();
-                    oldEl.childNodes[8].childNodes[0].childNodes[0].style.display =
-                        "unset";
-                    oldEl.childNodes[8].childNodes[0].childNodes[1].style.display =
-                        "unset";
-                    oldEl.childNodes[8].childNodes[0].childNodes[2].style.display =
-                        "unset";
-                    oldEl.childNodes[8].childNodes[0].childNodes[3].style.display =
-                        "none";
-                    oldEl.style.border = "";
-                },
-                false
-            );
-        };
-        const autoSelected = (newEl, oldEl, num) => {
-            for (
-                let i = 0;
-                i < newEl.childNodes[num].childNodes[0].length;
-                i++
-            ) {
-                if (
-                    oldEl.childNodes[num].textContent ===
-                    newEl.childNodes[num].childNodes[0].childNodes[i]
-                        .textContent
-                ) {
-                    newEl.childNodes[num].childNodes[0].childNodes[
-                        i
-                    ].selected = true;
+        try {
+            Axios({
+                method: "get",
+                url: `/api/orders/${id.substr(2)}`,
+                headers: {
+                    Authorization:
+                        "Bearer " +
+                        JSON.parse(localStorage.getItem("user")).token
                 }
-            }
-        };
-        const calculation = (newEl, list, quantity) => {
-            for (let i = 0; i < newEl.childNodes[2].childNodes[0].length; i++) {
-                if (newEl.childNodes[2].childNodes[0].childNodes[i].selected) {
-                    const selectedName =
-                        newEl.childNodes[2].childNodes[0].childNodes[i].value;
-                    for (let j = 0; j < list.length; j++) {
-                        if (list[j].name === selectedName) {
-                            const result = list[j].price * quantity;
-                            newEl.childNodes[4].textContent = "￥" + result;
-                            return;
-                        }
-                    }
-                }
-            }
-        };
+            })
+                .then(res => {
+                    if (res.data) {
+                        const editDisplay = (newEl, oldEl) => {
+                            oldEl.style.border = "solid 3px green";
+                            oldEl.style.borderBottom = "";
+                            oldEl.childNodes[8].childNodes[0].childNodes[0].style.display =
+                                "none";
+                            oldEl.childNodes[8].childNodes[0].childNodes[1].style.display =
+                                "none";
+                            oldEl.childNodes[8].childNodes[0].childNodes[2].style.display =
+                                "none";
+                            oldEl.childNodes[8].childNodes[0].childNodes[3].style.display =
+                                "unset";
 
-        const editOld = document.getElementById(id);
-        const editClone = document.getElementById("edit").cloneNode(true);
-        editDisplay(editClone, editOld); // new, old
+                            oldEl.childNodes[8].childNodes[0].childNodes[3].addEventListener(
+                                "click",
+                                () => {
+                                    newEl.remove();
+                                    oldEl.style.border = "";
+                                    oldEl.childNodes[8].childNodes[0].childNodes[3].style.display =
+                                        "none";
+                                    oldEl.childNodes[8].childNodes[0].childNodes[0].style.display =
+                                        "unset";
+                                    oldEl.childNodes[8].childNodes[0].childNodes[1].style.display =
+                                        "unset";
+                                    oldEl.childNodes[8].childNodes[0].childNodes[2].style.display =
+                                        "unset";
+                                },
+                                false
+                            );
+                        };
+                        const autoSelected = (newEl, oldEl, num) => {
+                            for (
+                                let i = 0;
+                                i < newEl.childNodes[num].childNodes[0].length;
+                                i++
+                            ) {
+                                if (
+                                    oldEl.childNodes[num].textContent ===
+                                    newEl.childNodes[num].childNodes[0]
+                                        .childNodes[i].textContent
+                                ) {
+                                    newEl.childNodes[
+                                        num
+                                    ].childNodes[0].childNodes[
+                                        i
+                                    ].selected = true;
+                                }
+                            }
+                        };
+                        const calculation = (newEl, list, quantity) => {
+                            for (
+                                let i = 0;
+                                i < newEl.childNodes[2].childNodes[0].length;
+                                i++
+                            ) {
+                                if (
+                                    newEl.childNodes[2].childNodes[0]
+                                        .childNodes[i].selected
+                                ) {
+                                    const selectedName =
+                                        newEl.childNodes[2].childNodes[0]
+                                            .childNodes[i].value;
+                                    for (let j = 0; j < list.length; j++) {
+                                        if (list[j].name === selectedName) {
+                                            const result =
+                                                list[j].price * quantity;
+                                            newEl.childNodes[4].textContent =
+                                                "￥" + result;
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+                        };
 
-        // 1. 이름
-        editClone.childNodes[1].childNodes[0].placeholder =
-            editOld.childNodes[1].textContent;
-        editClone.childNodes[1].childNodes[0].value =
-            editOld.childNodes[1].textContent;
-        // editClone.childNodes[1].childNodes[0].addEventListener("input", e => {
-        //     console.log(e.target.value);
-        // });
+                        const editOld = document.getElementById(id);
+                        const editClone = document
+                            .getElementById("edit")
+                            .cloneNode(true);
+                        editDisplay(editClone, editOld); // new, old
 
-        // 2. 제품
-        autoSelected(editClone, editOld, 2);
-        editClone.childNodes[2].childNodes[0].addEventListener("change", e => {
-            calculation(
-                editClone,
-                getProductList,
-                editClone.childNodes[3].childNodes[0].value
-            );
-        });
+                        // 1. 이름
+                        editClone.childNodes[1].childNodes[0].placeholder =
+                            editOld.childNodes[1].textContent;
+                        editClone.childNodes[1].childNodes[0].value =
+                            editOld.childNodes[1].textContent;
+                        // editClone.childNodes[1].childNodes[0].addEventListener("input", e => {
+                        //     console.log(e.target.value);
+                        // });
 
-        // 3. 입력 클릭
-        editClone.childNodes[3].childNodes[0].value =
-            editOld.childNodes[3].textContent;
-        editClone.childNodes[3].childNodes[0].addEventListener("input", e => {
-            if (parseInt(e.target.value) && parseInt(e.target.value) > 0) {
-                calculation(editClone, getProductList, e.target.value);
-            } else {
-                // alert("数字のみ入力可能です。");
-                e.target.value = 1;
-                calculation(editClone, getProductList, 1);
-            }
-        });
-        // editClone.childNodes[3].childNodes[0].addEventListener("change", e => {
-        //     console.log("체인지");
-        // });
+                        // 2. 제품
+                        autoSelected(editClone, editOld, 2);
+                        editClone.childNodes[2].childNodes[0].addEventListener(
+                            "change",
+                            e => {
+                                calculation(
+                                    editClone,
+                                    getProductList,
+                                    editClone.childNodes[3].childNodes[0].value
+                                );
+                            }
+                        );
 
-        // 4. 가격
-        editClone.childNodes[4].textContent = editOld.childNodes[4].textContent;
+                        // 3. 입력 클릭
+                        editClone.childNodes[3].childNodes[0].value =
+                            editOld.childNodes[3].textContent;
+                        editClone.childNodes[3].childNodes[0].addEventListener(
+                            "input",
+                            e => {
+                                if (
+                                    parseInt(e.target.value) &&
+                                    parseInt(e.target.value) > 0
+                                ) {
+                                    calculation(
+                                        editClone,
+                                        getProductList,
+                                        e.target.value
+                                    );
+                                } else {
+                                    // alert("数字のみ入力可能です。");
+                                    e.target.value = 1;
+                                    calculation(editClone, getProductList, 1);
+                                }
+                            }
+                        );
+                        // editClone.childNodes[3].childNodes[0].addEventListener("change", e => {
+                        //     console.log("체인지");
+                        // });
 
-        // 5. 주문일은 그대로
-        editClone.childNodes[5].textContent = editOld.childNodes[5].textContent;
+                        // 4. 가격
+                        editClone.childNodes[4].textContent =
+                            editOld.childNodes[4].textContent;
 
-        // 6. 입금 선택값
-        autoSelected(editClone, editOld, 6);
+                        // 5. 주문일은 그대로
+                        editClone.childNodes[5].textContent =
+                            editOld.childNodes[5].textContent;
 
-        // 7. 배송 선택값
-        autoSelected(editClone, editOld, 7);
+                        // 6. 입금 선택값
+                        autoSelected(editClone, editOld, 6);
 
-        // 8. 저장, 삭제 이벤트
-        editClone.childNodes[8].childNodes[0].children[0].addEventListener(
-            "click",
-            () => {
-                console.log("저장");
-            },
-            false
-        );
-        editClone.childNodes[8].childNodes[0].children[1].addEventListener(
-            "click",
-            () => {
-                Axios({
-                    method: "delete",
-                    url: `/api/orders/${id.substr(2)}`,
-                    headers: {
-                        Authorization:
-                            "Bearer " +
-                            JSON.parse(localStorage.getItem("user")).token
+                        // 7. 배송 선택값
+                        autoSelected(editClone, editOld, 7);
+
+                        // 8. 저장, 삭제 이벤트
+                        editClone.childNodes[8].childNodes[0].children[0].addEventListener(
+                            "click",
+                            () => {
+                                Axios({
+                                    method: "put",
+                                    url: `/api/orders/${id.substr(2)}`,
+                                    headers: {
+                                        Authorization:
+                                            "Bearer " +
+                                            JSON.parse(
+                                                localStorage.getItem("user")
+                                            ).token
+                                    }
+                                })
+                                    .then(res => {
+                                        if (res.data) {
+                                            console.log(res.data);
+                                            getOrders();
+                                        }
+                                    })
+                                    .catch(err => console.log(err));
+                            },
+                            false
+                        );
+                        editClone.childNodes[8].childNodes[0].children[1].addEventListener(
+                            "click",
+                            () => {
+                                Axios({
+                                    method: "delete",
+                                    url: `/api/orders/${id.substr(2)}`,
+                                    headers: {
+                                        Authorization:
+                                            "Bearer " +
+                                            JSON.parse(
+                                                localStorage.getItem("user")
+                                            ).token
+                                    }
+                                })
+                                    .then(res => {
+                                        if (res.data) {
+                                            alert("削除　完了");
+                                            editClone.remove();
+                                            editOld.style.border = "";
+                                            editOld.childNodes[8].childNodes[0].childNodes[3].style.display =
+                                                "none";
+                                            editOld.childNodes[8].childNodes[0].childNodes[0].style.display =
+                                                "unset";
+                                            editOld.childNodes[8].childNodes[0].childNodes[1].style.display =
+                                                "unset";
+                                            editOld.childNodes[8].childNodes[0].childNodes[2].style.display =
+                                                "unset";
+                                            getOrders();
+                                        }
+                                    })
+                                    .catch(err => console.log(err));
+                            },
+                            false
+                        );
+
+                        // 0. 폼 보이기, 추가
+                        editClone.style.display = null;
+                        editOld.after(editClone);
                     }
                 })
-                    .then(res => {
-                        console.log(res);
-                        console.log(res.data);
-                    })
-                    .catch(err => console.log(err));
-            },
-            false
-        );
-
-        // 0. 폼 보이기, 추가
-        editClone.style.display = null;
-        editOld.after(editClone);
+                .catch(err => console.log(err));
+        } catch (err) {
+            history.push("/");
+            console.log(err);
+        }
     };
 
     useEffect(() => {
@@ -379,13 +482,11 @@ const OrderManagement = ({ history }) => {
                         <span>
                             <StyledSpan
                                 className="pr-1 pl-1 m-0"
-                                onClick={() => {
-                                    history.push({
-                                        pathname: "/order/" + 1,
-                                        state: {
-                                            name: ""
-                                        }
-                                    });
+                                onClick={e => {
+                                    show(
+                                        e.target.parentNode.parentNode
+                                            .parentNode.id
+                                    );
                                 }}
                             >
                                 詳細
@@ -468,7 +569,7 @@ const OrderManagement = ({ history }) => {
                 <td className="text-center">
                     <span>
                         <StyledSpanGreen className="pr-1 pl-1 m-0">
-                            修整
+                            保存
                         </StyledSpanGreen>
                         {" / "}
                         <StyledSpanRed className="pr-1 pl-1 m-0">

@@ -28,7 +28,7 @@ const NotFoundPage = ({ match, history }) => {
                     404 Not Found
                 </StyledTitle>
                 <StyledContent className="m-b-md text-center">
-                    {history.location.pathname}
+                    {window.location.href}
                 </StyledContent>
                 <StyledButton
                     onClick={() =>
@@ -37,7 +37,7 @@ const NotFoundPage = ({ match, history }) => {
                             : history.go(-1)
                     }
                 >
-                    error
+                    戻る
                 </StyledButton>
             </div>
         </StyledDiv>

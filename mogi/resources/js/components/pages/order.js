@@ -4,8 +4,6 @@ import { UserContext } from "../../components/contexts/user";
 import styled from "styled-components";
 
 import OrderManagement from "./order-management";
-import OrderDetail from "./order-detail";
-import OrderEdit from "./order-edit";
 import NotFoundPage from "../pages/not";
 
 const StyledDiv = styled.div`
@@ -20,31 +18,6 @@ const StyledTitle = styled.div`
 `;
 
 const OrderPage = ({ match }) => {
-    const { userInfo } = useContext(UserContext);
-
-    const navUl = () => {
-        return (
-            <Fragment>
-                <StyledDiv className="flex-center position-ref full-height">
-                    <StyledTitle className="m-b-md text-center">
-                        受注管理画面
-                    </StyledTitle>
-                </StyledDiv>
-                <ul className="nav-item m-2">
-                    <li className="nav-item">
-                        <Link to="/order">/order</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/order/detail">/order/:detail</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/order/detail/edit">/order/:detail/edit</Link>
-                    </li>
-                </ul>
-            </Fragment>
-        );
-    };
-
     return (
         <div>
             <StyledDiv>
@@ -52,20 +25,6 @@ const OrderPage = ({ match }) => {
             </StyledDiv>
             <Switch>
                 <Route exact path={match.path} component={OrderManagement} />
-                <Route
-                    exact
-                    path={`${match.path}/:detail`}
-                    render={props => (
-                        <OrderDetail userInfo={userInfo} {...props} />
-                    )}
-                />
-                <Route
-                    exact
-                    path={`${match.path}/:detail/edit`}
-                    render={props => (
-                        <OrderEdit userInfo={userInfo} {...props} />
-                    )}
-                />
                 <Route component={NotFoundPage} />
             </Switch>
         </div>

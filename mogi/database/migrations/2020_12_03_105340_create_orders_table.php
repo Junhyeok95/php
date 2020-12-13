@@ -31,7 +31,7 @@ class CreateOrdersTable extends Migration
       /* order-product */
       // 수량
 
-      $table->foreign('user_id')->references('id')->on('users')->onUpdete('cascade')->onDelete('cascade');
+      $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
     });
   }
 

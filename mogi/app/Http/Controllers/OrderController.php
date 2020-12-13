@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('JWT', ['except' => ['index', 'store']]);
+    $this->middleware('JWT', ['except' => ['store']]);
   }
 
   public function index()
@@ -59,26 +59,36 @@ class OrderController extends Controller
 
   public function store(Request $request)
   {
-    //
+    // $order = auth()->user()->orders()->create(
+    $order = User::find(1)->orders()->create( // 관리자
+      array_merge(
+        // ['user_id' => auth()->user()->id],
+        ['user_id' => 1], // 관리자
+        $request->all() // product_id, quantity 필요
+      )
+    );
+    $order->products()->sync([$request->product_id => ['quantity' => $request->quantity]]);
+    return response()->json($order);
   }
 
-  public function show($id)
+  public function show(\App\Models\Order $order)
   {
-    //
+    return response()->json($order);
   }
 
-  public function edit($id)
+  public function edit(\App\Models\Order $order)
   {
-    //
+    return response()->json(auth()->user()->id === $order->user_id ? $order : false);
   }
 
-  public function update(Request $request, $id)
+  public function update(Request $request, \App\Models\Order $order)
   {
-    //
+    // dd($request->all());
+    return response()->json($order);
   }
 
-  public function destroy($id)
+  public function destroy(\App\Models\Order $order)
   {
-    return response()->json($id);
+    return response()->json(auth()->user()->id === $order->user_id ? $order->delete() : false);
   }
 }

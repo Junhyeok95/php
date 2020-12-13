@@ -26,7 +26,7 @@ const ProductHome = ({ history }) => {
                                 className="w-100"
                                 onClick={() =>
                                     history.push({
-                                        pathname: "/product/create",
+                                        pathname: "/product/buy",
                                         state: {
                                             name: "ユニフォーム " + url[i]
                                         }

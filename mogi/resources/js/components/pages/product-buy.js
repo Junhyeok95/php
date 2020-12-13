@@ -54,7 +54,7 @@ const ProductBuy = ({ history }) => {
         e.preventDefault();
         Axios({
             method: "post",
-            url: "/api/products",
+            url: "/api/orders",
             data: {
                 name: buyData.name ? buyData.name : "name",
                 email: buyData.email ? buyData.name : "email@example.com",
@@ -66,7 +66,14 @@ const ProductBuy = ({ history }) => {
             }
         })
             .then(res => {
-                alert("주문성공");
+                if (res.data) {
+                    console.log(res.data);
+                    const { name, email } = res.data;
+                    alert(
+                        `注文　完了\n\n名前：${name}\nメールアドレス：${email}`
+                    );
+                    history.push("/product");
+                }
             })
             .catch(function(error) {
                 console.log(error);

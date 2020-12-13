@@ -108078,60 +108078,14 @@ var NotFoundPage = function NotFoundPage(_ref) {
     className: "m-b-md text-center"
   }, "404 Not Found"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledContent, {
     className: "m-b-md text-center"
-  }, history.location.pathname), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledButton, {
+  }, window.location.href), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledButton, {
     onClick: function onClick() {
       return history.location.pathname == "/" ? history.push("/product") : history.go(-1);
     }
-  }, "error")));
+  }, "\u623B\u308B")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NotFoundPage);
-
-/***/ }),
-
-/***/ "./resources/js/components/pages/order-detail.js":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/pages/order-detail.js ***!
-  \*******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-
-var OrderDetail = function OrderDetail(_ref) {
-  var match = _ref.match,
-      history = _ref.history;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, "OrderDetail");
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (OrderDetail);
-
-/***/ }),
-
-/***/ "./resources/js/components/pages/order-edit.js":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/pages/order-edit.js ***!
-  \*****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-
-var OrderEdit = function OrderEdit(_ref) {
-  var match = _ref.match,
-      history = _ref.history;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, "OrderEdit");
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (OrderEdit);
 
 /***/ }),
 
@@ -108235,132 +108189,187 @@ var OrderManagement = function OrderManagement(_ref) {
       setGetProductList = _useState6[1];
 
   var getOrders = function getOrders() {
-    axios__WEBPACK_IMPORTED_MODULE_3___default()({
-      method: "get",
-      url: "/api/orders"
-    }).then(function (res) {
-      if (history.location.state && history.location.state.name) {
-        console.log("history.location.state.name");
-        console.log(history.location.state.name);
-        setOrderData(res.data[0]);
-      } else {
-        console.log(res.data);
-        setOrderData(res.data[0]);
-      }
-
-      setGetProductList(res.data[1]);
-      console.log(res.data[1]);
-    })["catch"](function (error) {
-      return console.log(error);
-    });
-  };
-
-  var detail = function detail(id) {
-    var tr = document.getElementById("tr") + id;
-
-    for (var i = 0; i < tr.childNodes.length; i++) {}
-  };
-
-  var edit = function edit(id) {
-    var editDisplay = function editDisplay(newEl, oldEl) {
-      oldEl.style.border = "solid 3px green";
-      oldEl.style.borderBottom = "";
-      oldEl.childNodes[8].childNodes[0].childNodes[0].style.display = "none";
-      oldEl.childNodes[8].childNodes[0].childNodes[1].style.display = "none";
-      oldEl.childNodes[8].childNodes[0].childNodes[2].style.display = "none";
-      oldEl.childNodes[8].childNodes[0].childNodes[3].style.display = "unset";
-      oldEl.childNodes[8].childNodes[0].childNodes[3].addEventListener("click", function () {
-        newEl.remove();
-        oldEl.childNodes[8].childNodes[0].childNodes[0].style.display = "unset";
-        oldEl.childNodes[8].childNodes[0].childNodes[1].style.display = "unset";
-        oldEl.childNodes[8].childNodes[0].childNodes[2].style.display = "unset";
-        oldEl.childNodes[8].childNodes[0].childNodes[3].style.display = "none";
-        oldEl.style.border = "";
-      }, false);
-    };
-
-    var autoSelected = function autoSelected(newEl, oldEl, num) {
-      for (var i = 0; i < newEl.childNodes[num].childNodes[0].length; i++) {
-        if (oldEl.childNodes[num].textContent === newEl.childNodes[num].childNodes[0].childNodes[i].textContent) {
-          newEl.childNodes[num].childNodes[0].childNodes[i].selected = true;
-        }
-      }
-    };
-
-    var calculation = function calculation(newEl, list, quantity) {
-      for (var i = 0; i < newEl.childNodes[2].childNodes[0].length; i++) {
-        if (newEl.childNodes[2].childNodes[0].childNodes[i].selected) {
-          var selectedName = newEl.childNodes[2].childNodes[0].childNodes[i].value;
-
-          for (var j = 0; j < list.length; j++) {
-            if (list[j].name === selectedName) {
-              var result = list[j].price * quantity;
-              newEl.childNodes[4].textContent = "￥" + result;
-              return;
-            }
-          }
-        }
-      }
-    };
-
-    var editOld = document.getElementById(id);
-    var editClone = document.getElementById("edit").cloneNode(true);
-    editDisplay(editClone, editOld); // new, old
-    // 1. 이름
-
-    editClone.childNodes[1].childNodes[0].placeholder = editOld.childNodes[1].textContent;
-    editClone.childNodes[1].childNodes[0].value = editOld.childNodes[1].textContent; // editClone.childNodes[1].childNodes[0].addEventListener("input", e => {
-    //     console.log(e.target.value);
-    // });
-    // 2. 제품
-
-    autoSelected(editClone, editOld, 2);
-    editClone.childNodes[2].childNodes[0].addEventListener("change", function (e) {
-      calculation(editClone, getProductList, editClone.childNodes[3].childNodes[0].value);
-    }); // 3. 입력 클릭
-
-    editClone.childNodes[3].childNodes[0].value = editOld.childNodes[3].textContent;
-    editClone.childNodes[3].childNodes[0].addEventListener("input", function (e) {
-      if (parseInt(e.target.value) && parseInt(e.target.value) > 0) {
-        calculation(editClone, getProductList, e.target.value);
-      } else {
-        // alert("数字のみ入力可能です。");
-        e.target.value = 1;
-        calculation(editClone, getProductList, 1);
-      }
-    }); // editClone.childNodes[3].childNodes[0].addEventListener("change", e => {
-    //     console.log("체인지");
-    // });
-    // 4. 가격
-
-    editClone.childNodes[4].textContent = editOld.childNodes[4].textContent; // 5. 주문일은 그대로
-
-    editClone.childNodes[5].textContent = editOld.childNodes[5].textContent; // 6. 입금 선택값
-
-    autoSelected(editClone, editOld, 6); // 7. 배송 선택값
-
-    autoSelected(editClone, editOld, 7); // 8. 저장, 삭제 이벤트
-
-    editClone.childNodes[8].childNodes[0].children[0].addEventListener("click", function () {
-      console.log("저장");
-    }, false);
-    editClone.childNodes[8].childNodes[0].children[1].addEventListener("click", function () {
+    try {
       axios__WEBPACK_IMPORTED_MODULE_3___default()({
-        method: "delete",
+        method: "get",
+        url: "/api/orders",
+        headers: {
+          Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token
+        }
+      }).then(function (res) {
+        if (res.data) {
+          setOrderData(res.data[0]);
+          setGetProductList(res.data[1]);
+        }
+      })["catch"](function (err) {
+        history.push("/");
+        console.log(err);
+      });
+    } catch (err) {
+      history.push("/");
+      console.log(err);
+    }
+  };
+
+  var show = function show(id) {
+    try {
+      axios__WEBPACK_IMPORTED_MODULE_3___default()({
+        method: "get",
         url: "/api/orders/".concat(id.substr(2)),
         headers: {
           Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token
         }
       }).then(function (res) {
         console.log(res);
-        console.log(res.data);
+
+        if (res.data) {}
       })["catch"](function (err) {
         return console.log(err);
       });
-    }, false); // 0. 폼 보이기, 추가
+    } catch (err) {
+      history.push("/");
+      console.log(err);
+    }
+  };
 
-    editClone.style.display = null;
-    editOld.after(editClone);
+  var edit = function edit(id) {
+    try {
+      axios__WEBPACK_IMPORTED_MODULE_3___default()({
+        method: "get",
+        url: "/api/orders/".concat(id.substr(2)),
+        headers: {
+          Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token
+        }
+      }).then(function (res) {
+        if (res.data) {
+          var editDisplay = function editDisplay(newEl, oldEl) {
+            oldEl.style.border = "solid 3px green";
+            oldEl.style.borderBottom = "";
+            oldEl.childNodes[8].childNodes[0].childNodes[0].style.display = "none";
+            oldEl.childNodes[8].childNodes[0].childNodes[1].style.display = "none";
+            oldEl.childNodes[8].childNodes[0].childNodes[2].style.display = "none";
+            oldEl.childNodes[8].childNodes[0].childNodes[3].style.display = "unset";
+            oldEl.childNodes[8].childNodes[0].childNodes[3].addEventListener("click", function () {
+              newEl.remove();
+              oldEl.style.border = "";
+              oldEl.childNodes[8].childNodes[0].childNodes[3].style.display = "none";
+              oldEl.childNodes[8].childNodes[0].childNodes[0].style.display = "unset";
+              oldEl.childNodes[8].childNodes[0].childNodes[1].style.display = "unset";
+              oldEl.childNodes[8].childNodes[0].childNodes[2].style.display = "unset";
+            }, false);
+          };
+
+          var autoSelected = function autoSelected(newEl, oldEl, num) {
+            for (var i = 0; i < newEl.childNodes[num].childNodes[0].length; i++) {
+              if (oldEl.childNodes[num].textContent === newEl.childNodes[num].childNodes[0].childNodes[i].textContent) {
+                newEl.childNodes[num].childNodes[0].childNodes[i].selected = true;
+              }
+            }
+          };
+
+          var calculation = function calculation(newEl, list, quantity) {
+            for (var i = 0; i < newEl.childNodes[2].childNodes[0].length; i++) {
+              if (newEl.childNodes[2].childNodes[0].childNodes[i].selected) {
+                var selectedName = newEl.childNodes[2].childNodes[0].childNodes[i].value;
+
+                for (var j = 0; j < list.length; j++) {
+                  if (list[j].name === selectedName) {
+                    var result = list[j].price * quantity;
+                    newEl.childNodes[4].textContent = "￥" + result;
+                    return;
+                  }
+                }
+              }
+            }
+          };
+
+          var editOld = document.getElementById(id);
+          var editClone = document.getElementById("edit").cloneNode(true);
+          editDisplay(editClone, editOld); // new, old
+          // 1. 이름
+
+          editClone.childNodes[1].childNodes[0].placeholder = editOld.childNodes[1].textContent;
+          editClone.childNodes[1].childNodes[0].value = editOld.childNodes[1].textContent; // editClone.childNodes[1].childNodes[0].addEventListener("input", e => {
+          //     console.log(e.target.value);
+          // });
+          // 2. 제품
+
+          autoSelected(editClone, editOld, 2);
+          editClone.childNodes[2].childNodes[0].addEventListener("change", function (e) {
+            calculation(editClone, getProductList, editClone.childNodes[3].childNodes[0].value);
+          }); // 3. 입력 클릭
+
+          editClone.childNodes[3].childNodes[0].value = editOld.childNodes[3].textContent;
+          editClone.childNodes[3].childNodes[0].addEventListener("input", function (e) {
+            if (parseInt(e.target.value) && parseInt(e.target.value) > 0) {
+              calculation(editClone, getProductList, e.target.value);
+            } else {
+              // alert("数字のみ入力可能です。");
+              e.target.value = 1;
+              calculation(editClone, getProductList, 1);
+            }
+          }); // editClone.childNodes[3].childNodes[0].addEventListener("change", e => {
+          //     console.log("체인지");
+          // });
+          // 4. 가격
+
+          editClone.childNodes[4].textContent = editOld.childNodes[4].textContent; // 5. 주문일은 그대로
+
+          editClone.childNodes[5].textContent = editOld.childNodes[5].textContent; // 6. 입금 선택값
+
+          autoSelected(editClone, editOld, 6); // 7. 배송 선택값
+
+          autoSelected(editClone, editOld, 7); // 8. 저장, 삭제 이벤트
+
+          editClone.childNodes[8].childNodes[0].children[0].addEventListener("click", function () {
+            axios__WEBPACK_IMPORTED_MODULE_3___default()({
+              method: "put",
+              url: "/api/orders/".concat(id.substr(2)),
+              headers: {
+                Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token
+              }
+            }).then(function (res) {
+              if (res.data) {
+                console.log(res.data);
+                getOrders();
+              }
+            })["catch"](function (err) {
+              return console.log(err);
+            });
+          }, false);
+          editClone.childNodes[8].childNodes[0].children[1].addEventListener("click", function () {
+            axios__WEBPACK_IMPORTED_MODULE_3___default()({
+              method: "delete",
+              url: "/api/orders/".concat(id.substr(2)),
+              headers: {
+                Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token
+              }
+            }).then(function (res) {
+              if (res.data) {
+                alert("削除　完了");
+                editClone.remove();
+                editOld.style.border = "";
+                editOld.childNodes[8].childNodes[0].childNodes[3].style.display = "none";
+                editOld.childNodes[8].childNodes[0].childNodes[0].style.display = "unset";
+                editOld.childNodes[8].childNodes[0].childNodes[1].style.display = "unset";
+                editOld.childNodes[8].childNodes[0].childNodes[2].style.display = "unset";
+                getOrders();
+              }
+            })["catch"](function (err) {
+              return console.log(err);
+            });
+          }, false); // 0. 폼 보이기, 추가
+
+          editClone.style.display = null;
+          editOld.after(editClone);
+        }
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    } catch (err) {
+      history.push("/");
+      console.log(err);
+    }
   };
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -108515,13 +108524,8 @@ var OrderManagement = function OrderManagement(_ref) {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpan, {
         className: "pr-1 pl-1 m-0",
-        onClick: function onClick() {
-          history.push({
-            pathname: "/order/" + 1,
-            state: {
-              name: ""
-            }
-          });
+        onClick: function onClick(e) {
+          show(e.target.parentNode.parentNode.parentNode.id);
         }
       }, "\u8A73\u7D30"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " / "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpan, {
         className: "pr-1 pl-1 m-0",
@@ -108587,7 +108591,7 @@ var OrderManagement = function OrderManagement(_ref) {
       className: "text-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpanGreen, {
       className: "pr-1 pl-1 m-0"
-    }, "\u4FEE\u6574"), " / ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpanRed, {
+    }, "\u4FDD\u5B58"), " / ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpanRed, {
       className: "pr-1 pl-1 m-0"
     }, "\u524A\u9664")))));
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
@@ -108641,11 +108645,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_contexts_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/contexts/user */ "./resources/js/components/contexts/user.js");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _order_management__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./order-management */ "./resources/js/components/pages/order-management.js");
-/* harmony import */ var _order_detail__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./order-detail */ "./resources/js/components/pages/order-detail.js");
-/* harmony import */ var _order_edit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./order-edit */ "./resources/js/components/pages/order-edit.js");
-/* harmony import */ var _pages_not__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pages/not */ "./resources/js/components/pages/not.js");
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
+/* harmony import */ var _pages_not__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../pages/not */ "./resources/js/components/pages/not.js");
 function _templateObject2() {
   var data = _taggedTemplateLiteral(["\n    font-size: 48px;\n    color: blue;\n    flex: 1;\n"]);
 
@@ -108674,39 +108674,11 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
-
-
 var StyledDiv = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div(_templateObject());
 var StyledTitle = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div(_templateObject2());
 
 var OrderPage = function OrderPage(_ref) {
   var match = _ref.match;
-
-  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_components_contexts_user__WEBPACK_IMPORTED_MODULE_2__["UserContext"]),
-      userInfo = _useContext.userInfo;
-
-  var navUl = function navUl() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv, {
-      className: "flex-center position-ref full-height"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledTitle, {
-      className: "m-b-md text-center"
-    }, "\u53D7\u6CE8\u7BA1\u7406\u753B\u9762")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      className: "nav-item m-2"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      className: "nav-item"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "/order"
-    }, "/order")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      className: "nav-item"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "/order/detail"
-    }, "/order/:detail")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      className: "nav-item"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      to: "/order/detail/edit"
-    }, "/order/:detail/edit"))));
-  };
-
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledTitle, {
     className: "text-center"
   }, "\u53D7\u6CE8\u7BA1\u7406\u753B\u9762")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
@@ -108714,23 +108686,7 @@ var OrderPage = function OrderPage(_ref) {
     path: match.path,
     component: _order_management__WEBPACK_IMPORTED_MODULE_4__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    exact: true,
-    path: "".concat(match.path, "/:detail"),
-    render: function render(props) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_order_detail__WEBPACK_IMPORTED_MODULE_5__["default"], _extends({
-        userInfo: userInfo
-      }, props));
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    exact: true,
-    path: "".concat(match.path, "/:detail/edit"),
-    render: function render(props) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_order_edit__WEBPACK_IMPORTED_MODULE_6__["default"], _extends({
-        userInfo: userInfo
-      }, props));
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-    component: _pages_not__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _pages_not__WEBPACK_IMPORTED_MODULE_5__["default"]
   })));
 };
 
@@ -108842,7 +108798,7 @@ var ProductBuy = function ProductBuy(_ref) {
     e.preventDefault();
     axios__WEBPACK_IMPORTED_MODULE_2___default()({
       method: "post",
-      url: "/api/products",
+      url: "/api/orders",
       data: {
         name: buyData.name ? buyData.name : "name",
         email: buyData.email ? buyData.name : "email@example.com",
@@ -108853,7 +108809,14 @@ var ProductBuy = function ProductBuy(_ref) {
         billable_amount: productData.price * buyData.quantity
       }
     }).then(function (res) {
-      alert("주문성공");
+      if (res.data) {
+        console.log(res.data);
+        var _res$data = res.data,
+            name = _res$data.name,
+            email = _res$data.email;
+        alert("\u6CE8\u6587\u3000\u5B8C\u4E86\n\n\u540D\u524D\uFF1A".concat(name, "\n\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\uFF1A").concat(email));
+        history.push("/product");
+      }
     })["catch"](function (error) {
       console.log(error);
     });
@@ -109038,7 +109001,7 @@ var ProductHome = function ProductHome(_ref) {
         className: "w-100",
         onClick: function onClick() {
           return history.push({
-            pathname: "/product/create",
+            pathname: "/product/buy",
             state: {
               name: "ユニフォーム " + url[i]
             }
@@ -109131,7 +109094,7 @@ var ProductPage = function ProductPage(_ref) {
     component: _product_home__WEBPACK_IMPORTED_MODULE_4__["default"]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
-    path: "".concat(match.path, "/create"),
+    path: "".concat(match.path, "/buy"),
     render: function render(props) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_product_buy__WEBPACK_IMPORTED_MODULE_5__["default"], _extends({
         userInfo: userInfo

@@ -32,7 +32,7 @@ const ProductPage = ({ match }) => {
                 <Route exact path={match.path} component={ProductHome} />
                 <Route
                     exact
-                    path={`${match.path}/create`}
+                    path={`${match.path}/buy`}
                     render={props => (
                         <ProductBuy userInfo={userInfo} {...props} />
                     )}

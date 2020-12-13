@@ -17,8 +17,8 @@ class CreateOrderProductTable extends Migration
       $table->unsignedBigInteger('quantity')->default(1)->comment('상품 수량');
       $table->timestamps();
 
-      $table->foreign('order_id')->references('id')->on('orders'); // ->onDelete('cascade');
-      $table->foreign('product_id')->references('id')->on('products'); // ->onDelete('cascade');
+      $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+      $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
     });
   }
 
