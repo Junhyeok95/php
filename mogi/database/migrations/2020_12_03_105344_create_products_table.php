@@ -12,7 +12,7 @@ class CreateProductsTable extends Migration
       $table->bigIncrements('id'); // $table->id();
 
       /* products */
-      $table->string('name')->comment('상품명');
+      $table->string('name')->unique()->comment('상품명');
       $table->integer('price')->default(0)->comment('상품 가격');
       $table->integer('stock')->default(0)->comment('재고 수량');
 

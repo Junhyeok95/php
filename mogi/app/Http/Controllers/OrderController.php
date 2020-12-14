@@ -32,22 +32,19 @@ class OrderController extends Controller
         'address' => $order->address, // 구매자 주소
 
         'product_id' => $order->products()->first()->pivot->product_id, // 제품 아이디
-        'product_name' => $products->get($order->products()->first()->pivot->product_id)->name, // 제품 이름
-        'product_price' => $products->get($order->products()->first()->pivot->product_id)->price, // 제품 가격
+        'product_name' => $products->find($order->products()->first()->pivot->product_id)->name, // 제품 이름
+        'product_price' => $products->find($order->products()->first()->pivot->product_id)->price, // 제품 가격
 
         'quantity' => $order->products()->first()->pivot->quantity, // 주문 제품 수량
         'created_at' => $order->products()->first()->pivot->created_at, // 주문 제품 날짜
 
-        'billable_amount' => ($products->get($order->products()->first()->pivot->product_id)->price * $order->products()->first()->pivot->quantity), // 구매자 총 금액
+        'billable_amount' => ($products->find($order->products()->first()->pivot->product_id)->price * $order->products()->first()->pivot->quantity), // 구매자 총 금액
         'message' => $order->message, // 구매자 메세지
         'deposit_status' => $order->deposit_status, // 입금 상태
         'shipping_status' => $order->shipping_status // 배송 상태
       ]);
       $total = array_merge($list, $total);
     }
-    // dd(json_encode($total));
-
-    $products = Product::all();
 
     return response()->json([$total, $products]);
   }
@@ -83,8 +80,12 @@ class OrderController extends Controller
 
   public function update(Request $request, \App\Models\Order $order)
   {
-    // dd($request->all());
-    return response()->json($order);
+    if ($request->type === "edit_update") {
+      $order->update($request->all());
+      $order->products()->sync([Product::whereName($request->product_name)->first()->id => ['quantity' => $request->quantity, 'created_at' => $order->products()->first()->pivot->created_at]]);
+      return response()->json($order);
+    }
+    return response()->json(false);
   }
 
   public function destroy(\App\Models\Order $order)

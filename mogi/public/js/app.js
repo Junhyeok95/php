@@ -108327,10 +108327,26 @@ var OrderManagement = function OrderManagement(_ref) {
               url: "/api/orders/".concat(id.substr(2)),
               headers: {
                 Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token
+              },
+              data: {
+                type: "edit_update",
+                name: editClone.childNodes[1].childNodes[0].value,
+                product_name: editClone.childNodes[2].childNodes[0].value,
+                quantity: editClone.childNodes[3].childNodes[0].value,
+                deposit_status: editClone.childNodes[6].childNodes[0].value,
+                shipping_status: editClone.childNodes[7].childNodes[0].value
               }
             }).then(function (res) {
+              console.log(res);
+
               if (res.data) {
-                console.log(res.data);
+                alert("保存　完了");
+                editClone.remove();
+                editOld.style.border = "";
+                editOld.childNodes[8].childNodes[0].childNodes[3].style.display = "none";
+                editOld.childNodes[8].childNodes[0].childNodes[0].style.display = "unset";
+                editOld.childNodes[8].childNodes[0].childNodes[1].style.display = "unset";
+                editOld.childNodes[8].childNodes[0].childNodes[2].style.display = "unset";
                 getOrders();
               }
             })["catch"](function (err) {
