@@ -13,7 +13,7 @@ class UserFactory extends Factory
   public function definition()
   {
     return [
-      'name' => "冨田茜",
+      'name' => "staff",
       'email' => "staff@kanda-it-school.com",
       'email_verified_at' => now(),
       'password' => 'password', // App\Models\User setPasswordAttribute

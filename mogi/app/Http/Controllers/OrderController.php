@@ -65,6 +65,23 @@ class OrderController extends Controller
       )
     );
     $order->products()->sync([$request->product_id => ['quantity' => $request->quantity]]);
+    $order['account'] = "1234-56-7890";
+    $order['quantity'] = $request->quantity;
+    $product_name = Product::find($request->product_id)->name;
+    $order['product_name'] = $product_name;
+    $order['product_url'] = public_path() . "/" . "images" . "/" . substr($product_name, -1, 1) . ".png";
+
+    \Mail::send(
+      'buy',
+      compact('order'),
+      function ($message) use ($order) {
+        $res_email = $order->email;
+        $message->to($res_email);
+        $message->subject(`神田ユニフォーム店：{$order->name}様のご注文内容`);
+        // $message->attach(public_path($order->product_url));
+      }
+    );
+
     return response()->json($order);
   }
 

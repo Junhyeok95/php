@@ -108817,7 +108817,7 @@ var ProductBuy = function ProductBuy(_ref) {
       url: "/api/orders",
       data: {
         name: buyData.name ? buyData.name : "name",
-        email: buyData.email ? buyData.name : "email@example.com",
+        email: buyData.email ? buyData.email : "email@example.com",
         address: buyData.address ? buyData.address : "address",
         quantity: buyData.quantity,
         message: buyData.message,
