@@ -41,12 +41,19 @@ const OrderManagement = ({ history }) => {
     const [orderData, setOrderData] = useState(null);
 
     let [mediaFontSize, setMediaFontSize] = useState(
-        (window.innerWidth || document.body.clientWidth) >= 768
-            ? "16px"
-            : "11px"
+        (window.innerWidth || document.body.clientWidth) <= 992
+            ? (window.innerWidth || document.body.clientWidth) <= 768
+                ? "10px"
+                : "13px"
+            : "16px"
     );
 
     const [getProductList, setGetProductList] = useState(null);
+    const [getMonthlySalesList, setGetMonthlySalesList] = useState(null);
+
+    const AddComma = data_value => {
+        return "￥" + Number(data_value).toLocaleString("en");
+    };
 
     const getOrders = () => {
         try {
@@ -63,6 +70,7 @@ const OrderManagement = ({ history }) => {
                     if (res.data) {
                         setOrderData(res.data[0]);
                         setGetProductList(res.data[1]);
+                        setGetMonthlySalesList(res.data[2]);
                     }
                 })
                 .catch(err => {
@@ -176,8 +184,9 @@ const OrderManagement = ({ history }) => {
                                         if (list[j].name === selectedName) {
                                             const result =
                                                 list[j].price * quantity;
-                                            newEl.childNodes[4].textContent =
-                                                "￥" + result;
+                                            newEl.childNodes[4].textContent = AddComma(
+                                                result
+                                            );
                                             return;
                                         }
                                     }
@@ -287,9 +296,8 @@ const OrderManagement = ({ history }) => {
                                     }
                                 })
                                     .then(res => {
-                                        console.log(res);
                                         if (res.data) {
-                                            alert("保存　完了");
+                                            alert("保存完了");
                                             editClone.remove();
                                             editOld.style.border = "";
                                             editOld.childNodes[8].childNodes[0].childNodes[3].style.display =
@@ -357,43 +365,25 @@ const OrderManagement = ({ history }) => {
     useEffect(() => {
         getOrders();
 
-        const mql = window.matchMedia("screen and (max-width: 768px)");
+        const mql = window.matchMedia("screen and (max-width: 992px)");
         mql.addEventListener("change", e => {
-            // "1.75vmin"
             if (e.matches) {
-                setMediaFontSize("8px");
-                // console.log("모바일 화면 입니다.");
+                setMediaFontSize("13px");
             } else {
                 setMediaFontSize("16px");
-                // console.log("데스크탑 화면 입니다.");
+            }
+        });
+        const mql2 = window.matchMedia("screen and (max-width: 768px)");
+        mql2.addEventListener("change", e => {
+            if (e.matches) {
+                setMediaFontSize("10px");
+            } else {
+                setMediaFontSize("13px");
             }
         });
     }, []);
 
     useEffect(() => {}, [mediaFontSize]);
-
-    const monthlySales = () => {
-        return (
-            <Container>
-                <Row>
-                    <Col className="text-right" xs={{ span: 5, offset: 6 }}>
-                        11月の売り上げ(発送完了分)
-                    </Col>
-                    <Col className="text-right" xs={{ span: 1 }}>
-                        ￥8,000
-                    </Col>
-                </Row>
-                <Row>
-                    <Col className="text-right" xs={{ span: 5, offset: 6 }}>
-                        10月の売り上げ(発送完了分)
-                    </Col>
-                    <Col className="text-right" xs={{ span: 1 }}>
-                        ￥900
-                    </Col>
-                </Row>
-            </Container>
-        );
-    };
 
     const orderListHead = () => {
         const datalist = {
@@ -446,6 +436,29 @@ const OrderManagement = ({ history }) => {
         );
     };
 
+    const monthlySales = () => {
+        let salesArr = [];
+        for (let i = 0; i < getMonthlySalesList.length; i++) {
+            salesArr.push(
+                <Row
+                    style={{
+                        fontSize: mediaFontSize
+                    }}
+                    key={"sales" + i}
+                    className="p-0"
+                >
+                    <Col className="text-right" xs={{ span: 6, offset: 4 }}>
+                        {getMonthlySalesList[i].key}の売り上げ(発送完了分)
+                    </Col>
+                    <Col className="text-right pr-3" xs={2}>
+                        {AddComma(getMonthlySalesList[i].value)}
+                    </Col>
+                </Row>
+            );
+        }
+        return <Fragment>{salesArr}</Fragment>;
+    };
+
     const option = () => {
         let optionArr = [];
         for (let i = 0; i < getProductList.length; i++) {
@@ -483,18 +496,21 @@ const OrderManagement = ({ history }) => {
                         {orderData[i].quantity ? orderData[i].quantity : "X"}
                     </td>
                     <td className="text-right">
-                        ￥
                         {orderData[i].billable_amount
-                            ? orderData[i].billable_amount
+                            ? AddComma(orderData[i].billable_amount)
                             : "X"}
                     </td>
                     <td className="text-center">
                         {moment(orderData[i].created_at).format(
-                            "YYYY年MM月DD日"
+                            "YYYY年MM月DD日 HH:mm"
                         )
-                            ? moment(orderData[i].created_at).format(
-                                  "YYYY年MM月DD日"
-                              )
+                            ? mediaFontSize == "10px"
+                                ? moment(orderData[i].created_at).format(
+                                      "MM月DD日 HH:mm"
+                                  )
+                                : moment(orderData[i].created_at).format(
+                                      "YYYY年MM月DD日 HH:mm"
+                                  )
                             : "X"}
                     </td>
                     <td className="text-center">
@@ -655,7 +671,7 @@ const OrderManagement = ({ history }) => {
             </Row>
             {orderData && getProductList && (
                 <Fragment>
-                    {monthlySales()}
+                    {getMonthlySalesList && monthlySales()}
                     {orderList()}
                 </Fragment>
             )}

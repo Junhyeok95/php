@@ -18,9 +18,10 @@ class OrderController extends Controller
   {
     // Validation 필요
     $total = [];
-    $orders = User::find(1)->orders()->get(); // Order::all();
     $products = Product::all();
+    $monthly_sales = [];
 
+    $orders = User::find(1)->orders()->get(); // Order::all();
     foreach ($orders as $order) {
       $list = [];
       array_push($list, [
@@ -46,7 +47,42 @@ class OrderController extends Controller
       $total = array_merge($list, $total);
     }
 
-    return response()->json([$total, $products]);
+    $sales_i = $sales_j = $sales_k = 0;
+    $this_month = \Carbon\Carbon::now();
+    $this_m = $order->whereYear('created_at', $this_month->year)->whereMonth('created_at', $this_month->month)->where('deposit_status', '入金済')->get();
+    $last_month = \Carbon\Carbon::now()->subMonth(1);
+    $last_m = $order->whereYear('created_at', $last_month->year)->whereMonth('created_at', $last_month->month)->where('deposit_status', '入金済')->get();
+    $the_month_before_last = \Carbon\Carbon::now()->subMonth(2);
+    $the_m = $order->whereYear('created_at', $the_month_before_last->year)->whereMonth('created_at', $the_month_before_last->month)->where('deposit_status', '入金済')->get();
+
+    foreach ($this_m as $i) {
+      $sales_i += $i->billable_amount;
+    }
+    if ($sales_i != 0) {
+      array_push($monthly_sales, [
+        "key" => $this_month->year . "年-" . $this_month->month . "月",
+        "value" => $sales_i
+      ]);
+    }
+    foreach ($last_m as $j) {
+      $sales_j += $j->billable_amount;
+    }
+    if ($sales_j != 0) {
+      array_push($monthly_sales, [
+        "key" => $last_month->year . "年-" . $last_month->month . "月",
+        "value"  => $sales_j
+      ]);
+    }
+    foreach ($the_m as $k) {
+      $sales_k += $k->billable_amount;
+    }
+    if ($sales_k != 0) {
+      array_push($monthly_sales, [
+        "key" => $the_month_before_last->year . "年-" . $the_month_before_last->month . "月",
+        "value"  => $sales_k
+      ]);
+    }
+    return response()->json([$total, $products, $monthly_sales]);
   }
 
   public function create()
@@ -71,16 +107,17 @@ class OrderController extends Controller
     $order['product_name'] = $product_name;
     $order['product_url'] = public_path() . "/" . "images" . "/" . substr($product_name, -1, 1) . ".png";
 
-    \Mail::send(
-      'buy',
-      compact('order'),
-      function ($message) use ($order) {
-        $res_email = $order->email;
-        $message->to($res_email);
-        $message->subject(`神田ユニフォーム店：{$order->name}様のご注文内容`);
-        // $message->attach(public_path($order->product_url));
-      }
-    );
+    // 이벤트 처리
+    // \Mail::send(
+    //   'buy',
+    //   compact('order'),
+    //   function ($message) use ($order) {
+    //     $res_email = $order->email;
+    //     $message->to($res_email);
+    //     $message->subject(`神田ユニフォーム店：{$order->name}様のご注文内容`);
+    //     // $message->attach(public_path($order->product_url));
+    //   }
+    // );
 
     return response()->json($order);
   }

@@ -18,8 +18,8 @@ class OrderTableSeeder extends Seeder
       'message' => "失礼ですが、お名前がなんとお読みすればよろしいのでしょうか。",
       'deposit_status' => "入金済", // 入金済, 入金待ち
       'shipping_status' => "発送済", // 発送済, 発送準備中, 未
-      'created_at' => "2019-10-31 00:00:00",
-      'updated_at' => "2019-10-31 00:00:00",
+      'created_at' => "2020-10-31 09:00:00",
+      'updated_at' => "2020-10-31 09:00:00",
       // 'created_at' => \Carbon\Carbon::now()->subYear(1)->addMonth(1),
     ]);
 
@@ -32,8 +32,8 @@ class OrderTableSeeder extends Seeder
       'message' => "そうしていただけると助かります。",
       'deposit_status' => "入金済", // 入金済, 入金待ち
       'shipping_status' => "発送済", // 発送済, 発送準備中, 未
-      'created_at' => "2019-11-03 00:00:00",
-      'updated_at' => "2019-11-03 00:00:00",
+      'created_at' => "2020-11-03 10:30:00",
+      'updated_at' => "2020-11-03 10:30:00",
       // 'created_at' => \Carbon\Carbon::now()->subYear(1)->addMonth(1),
     ]);
 
@@ -46,8 +46,8 @@ class OrderTableSeeder extends Seeder
       'message' => "お取次ぎいたしますので、少々お待ちいただけますか。",
       'deposit_status' => "入金済", // 入金済, 入金待ち
       'shipping_status' => "発送準備中", // 発送済, 発送準備中, 未
-      'created_at' => "2019-11-04 00:00:00",
-      'updated_at' => "2019-11-04 00:00:00",
+      'created_at' => "2020-11-04 11:00:00",
+      'updated_at' => "2020-11-04 11:00:00",
       // 'created_at' => \Carbon\Carbon::now()->subYear(1)->addMonth(1),
     ]);
 
@@ -60,8 +60,8 @@ class OrderTableSeeder extends Seeder
       'message' => "お気遣いは無用に願います。",
       'deposit_status' => "入金済", // 入金済, 入金待ち
       'shipping_status' => "発送準備中", // 発送済, 発送準備中, 未
-      'created_at' => "2019-11-05 00:00:00",
-      'updated_at' => "2019-11-05 00:00:00",
+      'created_at' => "2020-11-05 12:30:00",
+      'updated_at' => "2020-11-05 12:30:00",
       // 'created_at' => \Carbon\Carbon::now()->subYear(1)->addMonth(1),
     ]);
 
@@ -74,8 +74,8 @@ class OrderTableSeeder extends Seeder
       'message' => "本日は時間を割りテ頂きまして、ありがとうございました。",
       'deposit_status' => "入金待ち", // 入金済, 入金待ち
       'shipping_status' => "未", // 発送済, 発送準備中, 未
-      'created_at' => "2019-11-06 00:00:00",
-      'updated_at' => "2019-11-06 00:00:00",
+      'created_at' => "2020-11-06 13:00:00",
+      'updated_at' => "2020-11-06 13:00:00",
       // 'created_at' => \Carbon\Carbon::now()->subYear(1)->addMonth(1),
     ]);
 
@@ -88,8 +88,8 @@ class OrderTableSeeder extends Seeder
       'message' => "無理を承知の上で、そこを何とかお願いいたします。",
       'deposit_status' => "入金待ち", // 入金済, 入金待ち
       'shipping_status' => "未", // 発送済, 発送準備中, 未
-      'created_at' => "2019-11-07 00:00:00",
-      'updated_at' => "2019-11-07 00:00:00",
+      'created_at' => "2020-11-07 14:30:00",
+      'updated_at' => "2020-11-07 14:30:00",
       // 'created_at' => \Carbon\Carbon::now()->subYear(1)->addMonth(1),
     ]);
 
@@ -102,8 +102,8 @@ class OrderTableSeeder extends Seeder
       'message' => "一両日中には良いお返事が差し上げられるのではないかと思っております。",
       'deposit_status' => "入金待ち", // 入金済, 入金待ち
       'shipping_status' => "未", // 発送済, 発送準備中, 未
-      'created_at' => "2019-11-08 00:00:00",
-      'updated_at' => "2019-11-08 00:00:00",
+      'created_at' => "2020-11-08 00:00:00",
+      'updated_at' => "2020-11-08 00:00:00",
       // 'created_at' => \Carbon\Carbon::now()->subYear(1)->addMonth(1),
     ]);
   }

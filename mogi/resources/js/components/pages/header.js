@@ -27,7 +27,7 @@ const Header = () => {
     return (
         <div>
             <StyledDiv className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-                <StyledTitle>ユニフォーム受注管理システム</StyledTitle>
+                <StyledTitle>ユニフォーム受注、管理システム</StyledTitle>
             </StyledDiv>
             <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div className="container">

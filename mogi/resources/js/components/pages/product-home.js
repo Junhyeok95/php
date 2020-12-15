@@ -8,17 +8,18 @@ const ProductHome = ({ history }) => {
 
         for (let i = 0; i < 5; i++) {
             cardArr.push(
-                <Col key={"productCard" + i}>
-                    <Card className="justify-content-center align-items-center p-1 pt-3 mb-3">
-                        <Card.Img
-                            style={{
-                                minWidth: "10rem",
-                                maxWidth: "15rem"
-                            }}
-                            variant="top"
-                            src={`/images/${url[i]}.png`}
-                        />
-                        <Card.Body className="w-auto">
+                <Col
+                    key={"productCard" + i}
+                    className="justify-content-center align-items-center p-2 m-0"
+                    xs={{ span: 8, offset: 2 }}
+                    sm={{ span: 6, offset: 0 }}
+                    md={{ span: 4, offset: 0 }}
+                    lg={{ span: 3, offset: 0 }}
+                    xl={{ span: 2, offset: 0 }}
+                >
+                    <Card className="justify-content-center align-items-center p-1 pt-3">
+                        <Card.Img variant="top" src={`/images/${url[i]}.png`} />
+                        <Card.Body>
                             <Card.Title>{"ユニフォーム " + url[i]}</Card.Title>
                             <Card.Text></Card.Text>
                             <Button
@@ -45,7 +46,9 @@ const ProductHome = ({ history }) => {
 
     return (
         <Container className="p-3" style={{ border: "solid black 1px" }}>
-            <Row>{productCard()}</Row>
+            <Row className="justify-content-center align-items-center">
+                {productCard()}
+            </Row>
         </Container>
     );
 };

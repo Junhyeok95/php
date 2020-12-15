@@ -107810,7 +107810,7 @@ var Header = function Header() {
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv, {
     className: "navbar navbar-expand-md navbar-light bg-white shadow-sm"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledTitle, null, "\u30E6\u30CB\u30D5\u30A9\u30FC\u30E0\u53D7\u6CE8\u7BA1\u7406\u30B7\u30B9\u30C6\u30E0")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledTitle, null, "\u30E6\u30CB\u30D5\u30A9\u30FC\u30E0\u53D7\u6CE8\u3001\u7BA1\u7406\u30B7\u30B9\u30C6\u30E0")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
     className: "navbar navbar-expand-md navbar-light bg-white shadow-sm"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
@@ -108178,7 +108178,7 @@ var OrderManagement = function OrderManagement(_ref) {
       orderData = _useState2[0],
       setOrderData = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])((window.innerWidth || document.body.clientWidth) >= 768 ? "16px" : "11px"),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])((window.innerWidth || document.body.clientWidth) <= 992 ? (window.innerWidth || document.body.clientWidth) <= 768 ? "10px" : "13px" : "16px"),
       _useState4 = _slicedToArray(_useState3, 2),
       mediaFontSize = _useState4[0],
       setMediaFontSize = _useState4[1];
@@ -108187,6 +108187,15 @@ var OrderManagement = function OrderManagement(_ref) {
       _useState6 = _slicedToArray(_useState5, 2),
       getProductList = _useState6[0],
       setGetProductList = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState8 = _slicedToArray(_useState7, 2),
+      getMonthlySalesList = _useState8[0],
+      setGetMonthlySalesList = _useState8[1];
+
+  var AddComma = function AddComma(data_value) {
+    return "￥" + Number(data_value).toLocaleString("en");
+  };
 
   var getOrders = function getOrders() {
     try {
@@ -108200,6 +108209,7 @@ var OrderManagement = function OrderManagement(_ref) {
         if (res.data) {
           setOrderData(res.data[0]);
           setGetProductList(res.data[1]);
+          setGetMonthlySalesList(res.data[2]);
         }
       })["catch"](function (err) {
         history.push("/");
@@ -108275,7 +108285,7 @@ var OrderManagement = function OrderManagement(_ref) {
                 for (var j = 0; j < list.length; j++) {
                   if (list[j].name === selectedName) {
                     var result = list[j].price * quantity;
-                    newEl.childNodes[4].textContent = "￥" + result;
+                    newEl.childNodes[4].textContent = AddComma(result);
                     return;
                   }
                 }
@@ -108337,10 +108347,8 @@ var OrderManagement = function OrderManagement(_ref) {
                 shipping_status: editClone.childNodes[7].childNodes[0].value
               }
             }).then(function (res) {
-              console.log(res);
-
               if (res.data) {
-                alert("保存　完了");
+                alert("保存完了");
                 editClone.remove();
                 editOld.style.border = "";
                 editOld.childNodes[8].childNodes[0].childNodes[3].style.display = "none";
@@ -108390,43 +108398,24 @@ var OrderManagement = function OrderManagement(_ref) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     getOrders();
-    var mql = window.matchMedia("screen and (max-width: 768px)");
+    var mql = window.matchMedia("screen and (max-width: 992px)");
     mql.addEventListener("change", function (e) {
-      // "1.75vmin"
       if (e.matches) {
-        setMediaFontSize("8px"); // console.log("모바일 화면 입니다.");
+        setMediaFontSize("13px");
       } else {
-        setMediaFontSize("16px"); // console.log("데스크탑 화면 입니다.");
+        setMediaFontSize("16px");
+      }
+    });
+    var mql2 = window.matchMedia("screen and (max-width: 768px)");
+    mql2.addEventListener("change", function (e) {
+      if (e.matches) {
+        setMediaFontSize("10px");
+      } else {
+        setMediaFontSize("13px");
       }
     });
   }, []);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {}, [mediaFontSize]);
-
-  var monthlySales = function monthlySales() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Container"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-      className: "text-right",
-      xs: {
-        span: 5,
-        offset: 6
-      }
-    }, "11\u6708\u306E\u58F2\u308A\u4E0A\u3052(\u767A\u9001\u5B8C\u4E86\u5206)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-      className: "text-right",
-      xs: {
-        span: 1
-      }
-    }, "\uFFE58,000")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-      className: "text-right",
-      xs: {
-        span: 5,
-        offset: 6
-      }
-    }, "10\u6708\u306E\u58F2\u308A\u4E0A\u3052(\u767A\u9001\u5B8C\u4E86\u5206)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-      className: "text-right",
-      xs: {
-        span: 1
-      }
-    }, "\uFFE5900")));
-  };
 
   var orderListHead = function orderListHead() {
     var datalist = {
@@ -108498,6 +108487,31 @@ var OrderManagement = function OrderManagement(_ref) {
     })));
   };
 
+  var monthlySales = function monthlySales() {
+    var salesArr = [];
+
+    for (var i = 0; i < getMonthlySalesList.length; i++) {
+      salesArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+        style: {
+          fontSize: mediaFontSize
+        },
+        key: "sales" + i,
+        className: "p-0"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+        className: "text-right",
+        xs: {
+          span: 6,
+          offset: 4
+        }
+      }, getMonthlySalesList[i].key, "\u306E\u58F2\u308A\u4E0A\u3052(\u767A\u9001\u5B8C\u4E86\u5206)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
+        className: "text-right pr-3",
+        xs: 2
+      }, AddComma(getMonthlySalesList[i].value))));
+    }
+
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, salesArr);
+  };
+
   var option = function option() {
     var optionArr = [];
 
@@ -108530,9 +108544,9 @@ var OrderManagement = function OrderManagement(_ref) {
         className: "text-right"
       }, orderData[i].quantity ? orderData[i].quantity : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-right"
-      }, "\uFFE5", orderData[i].billable_amount ? orderData[i].billable_amount : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      }, orderData[i].billable_amount ? AddComma(orderData[i].billable_amount) : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
-      }, moment__WEBPACK_IMPORTED_MODULE_4___default()(orderData[i].created_at).format("YYYY年MM月DD日") ? moment__WEBPACK_IMPORTED_MODULE_4___default()(orderData[i].created_at).format("YYYY年MM月DD日") : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      }, moment__WEBPACK_IMPORTED_MODULE_4___default()(orderData[i].created_at).format("YYYY年MM月DD日 HH:mm") ? mediaFontSize == "10px" ? moment__WEBPACK_IMPORTED_MODULE_4___default()(orderData[i].created_at).format("MM月DD日 HH:mm") : moment__WEBPACK_IMPORTED_MODULE_4___default()(orderData[i].created_at).format("YYYY年MM月DD日 HH:mm") : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
       }, orderData[i].deposit_status ? orderData[i].deposit_status : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
@@ -108639,7 +108653,7 @@ var OrderManagement = function OrderManagement(_ref) {
       textAlign: "center",
       borderBottom: "solid blue 2px"
     }
-  }, "\u53D7\u6CE8\u7BA1\u7406\u30B7\u30B9\u30C6\u30E0")), orderData && getProductList && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, monthlySales(), orderList()));
+  }, "\u53D7\u6CE8\u7BA1\u7406\u30B7\u30B9\u30C6\u30E0")), orderData && getProductList && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, getMonthlySalesList && monthlySales(), orderList()));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (OrderManagement);
@@ -109000,19 +109014,34 @@ var ProductHome = function ProductHome(_ref) {
 
     var _loop = function _loop(i) {
       cardArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Col"], {
-        key: "productCard" + i
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], {
-        className: "justify-content-center align-items-center p-1 pt-3 mb-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Img, {
-        style: {
-          minWidth: "10rem",
-          maxWidth: "15rem"
+        key: "productCard" + i,
+        className: "justify-content-center align-items-center p-2 m-0",
+        xs: {
+          span: 8,
+          offset: 2
         },
+        sm: {
+          span: 6,
+          offset: 0
+        },
+        md: {
+          span: 4,
+          offset: 0
+        },
+        lg: {
+          span: 3,
+          offset: 0
+        },
+        xl: {
+          span: 2,
+          offset: 0
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"], {
+        className: "justify-content-center align-items-center p-1 pt-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Img, {
         variant: "top",
         src: "/images/".concat(url[i], ".png")
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Body, {
-        className: "w-auto"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Title, null, "ユニフォーム " + url[i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Text, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Body, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Title, null, "ユニフォーム " + url[i]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Text, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         variant: "success",
         className: "w-100",
         onClick: function onClick() {
@@ -109038,7 +109067,9 @@ var ProductHome = function ProductHome(_ref) {
     style: {
       border: "solid black 1px"
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], null, productCard()));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Row"], {
+    className: "justify-content-center align-items-center"
+  }, productCard()));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ProductHome);

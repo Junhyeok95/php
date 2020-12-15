@@ -2,6 +2,7 @@
 
 ```
 php artisan serve
+'timezone' => 'Asia/Tokyo',
 
 ```
 
