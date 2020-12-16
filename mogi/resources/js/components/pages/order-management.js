@@ -71,6 +71,7 @@ const OrderManagement = ({ history }) => {
                         setOrderData(res.data[0]);
                         setGetProductList(res.data[1]);
                         setGetMonthlySalesList(res.data[2]);
+                        console.log(res.data);
                     }
                 })
                 .catch(err => {
@@ -79,6 +80,8 @@ const OrderManagement = ({ history }) => {
                 });
         } catch (err) {
             history.push("/");
+            localStorage.removeItem("user");
+            alert("로그인을 다시 해주세요");
             console.log(err);
         }
     };
@@ -120,29 +123,28 @@ const OrderManagement = ({ history }) => {
                 .then(res => {
                     if (res.data) {
                         const editDisplay = (newEl, oldEl) => {
-                            oldEl.style.border = "solid 3px green";
-                            oldEl.style.borderBottom = "";
-                            oldEl.childNodes[8].childNodes[0].childNodes[0].style.display =
+                            oldEl.style.borderTop = "solid 3px green";
+                            oldEl.childNodes[8].childNodes[0].style.display =
                                 "none";
-                            oldEl.childNodes[8].childNodes[0].childNodes[1].style.display =
+                            oldEl.childNodes[8].childNodes[1].style.display =
                                 "none";
-                            oldEl.childNodes[8].childNodes[0].childNodes[2].style.display =
+                            oldEl.childNodes[8].childNodes[2].style.display =
                                 "none";
-                            oldEl.childNodes[8].childNodes[0].childNodes[3].style.display =
+                            oldEl.childNodes[8].childNodes[3].style.display =
                                 "unset";
 
-                            oldEl.childNodes[8].childNodes[0].childNodes[3].addEventListener(
+                            oldEl.childNodes[8].childNodes[3].addEventListener(
                                 "click",
                                 () => {
                                     newEl.remove();
                                     oldEl.style.border = "";
-                                    oldEl.childNodes[8].childNodes[0].childNodes[3].style.display =
+                                    oldEl.childNodes[8].childNodes[3].style.display =
                                         "none";
-                                    oldEl.childNodes[8].childNodes[0].childNodes[0].style.display =
+                                    oldEl.childNodes[8].childNodes[0].style.display =
                                         "unset";
-                                    oldEl.childNodes[8].childNodes[0].childNodes[1].style.display =
+                                    oldEl.childNodes[8].childNodes[1].style.display =
                                         "unset";
-                                    oldEl.childNodes[8].childNodes[0].childNodes[2].style.display =
+                                    oldEl.childNodes[8].childNodes[2].style.display =
                                         "unset";
                                 },
                                 false
@@ -263,7 +265,7 @@ const OrderManagement = ({ history }) => {
                         autoSelected(editClone, editOld, 7);
 
                         // 8. 저장, 삭제 이벤트
-                        editClone.childNodes[8].childNodes[0].children[0].addEventListener(
+                        editClone.childNodes[8].children[0].addEventListener(
                             "click",
                             () => {
                                 Axios({
@@ -300,13 +302,13 @@ const OrderManagement = ({ history }) => {
                                             alert("保存完了");
                                             editClone.remove();
                                             editOld.style.border = "";
-                                            editOld.childNodes[8].childNodes[0].childNodes[3].style.display =
+                                            editOld.childNodes[8].childNodes[3].style.display =
                                                 "none";
-                                            editOld.childNodes[8].childNodes[0].childNodes[0].style.display =
+                                            editOld.childNodes[8].childNodes[0].style.display =
                                                 "unset";
-                                            editOld.childNodes[8].childNodes[0].childNodes[1].style.display =
+                                            editOld.childNodes[8].childNodes[1].style.display =
                                                 "unset";
-                                            editOld.childNodes[8].childNodes[0].childNodes[2].style.display =
+                                            editOld.childNodes[8].childNodes[2].style.display =
                                                 "unset";
                                             getOrders();
                                         }
@@ -315,7 +317,7 @@ const OrderManagement = ({ history }) => {
                             },
                             false
                         );
-                        editClone.childNodes[8].childNodes[0].children[1].addEventListener(
+                        editClone.childNodes[8].children[1].addEventListener(
                             "click",
                             () => {
                                 Axios({
@@ -334,13 +336,13 @@ const OrderManagement = ({ history }) => {
                                             alert("削除　完了");
                                             editClone.remove();
                                             editOld.style.border = "";
-                                            editOld.childNodes[8].childNodes[0].childNodes[3].style.display =
+                                            editOld.childNodes[8].childNodes[3].style.display =
                                                 "none";
-                                            editOld.childNodes[8].childNodes[0].childNodes[0].style.display =
+                                            editOld.childNodes[8].childNodes[0].style.display =
                                                 "unset";
-                                            editOld.childNodes[8].childNodes[0].childNodes[1].style.display =
+                                            editOld.childNodes[8].childNodes[1].style.display =
                                                 "unset";
-                                            editOld.childNodes[8].childNodes[0].childNodes[2].style.display =
+                                            editOld.childNodes[8].childNodes[2].style.display =
                                                 "unset";
                                             getOrders();
                                         }
@@ -400,8 +402,6 @@ const OrderManagement = ({ history }) => {
             <thead
                 style={{
                     fontSize: mediaFontSize,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
                     whiteSpace: "nowrap"
                 }}
             >
@@ -409,19 +409,19 @@ const OrderManagement = ({ history }) => {
                     <th style={{ width: "5%" }} className="text-center">
                         {datalist.orderId}
                     </th>
-                    <th style={{ width: "10%" }} className="text-center">
+                    <th style={{ width: "14%" }} className="text-center">
                         {datalist.customerName}
                     </th>
                     <th style={{ width: "15%" }} className="text-center">
                         {datalist.uniformKind}
                     </th>
-                    <th style={{ width: "7%" }} className="text-center">
+                    <th style={{ width: "8%" }} className="text-center">
                         {datalist.uniformQuantity}
                     </th>
                     <th style={{ width: "8%" }} className="text-center">
                         {datalist.billableAmount}
                     </th>
-                    <th style={{ width: "15%" }} className="text-center">
+                    <th style={{ width: "18%" }} className="text-center">
                         {datalist.createdAt}
                     </th>
                     <th style={{ width: "10%" }} className="text-center">
@@ -430,7 +430,7 @@ const OrderManagement = ({ history }) => {
                     <th style={{ width: "10%" }} className="text-center">
                         {datalist.shippingStatus}
                     </th>
-                    <th style={{ width: "15%" }} className="text-center"></th>
+                    <th style={{ width: "12%" }} className="text-center"></th>
                 </tr>
             </thead>
         );
@@ -474,89 +474,229 @@ const OrderManagement = ({ history }) => {
 
         for (let i = 0; i < orderData.length; i++) {
             bodyArr.push(
-                <tr
-                    id={"tr" + orderData[i].id}
-                    style={{
-                        fontSize: mediaFontSize
-                    }}
-                    key={"bodyArr" + i}
-                >
-                    <td className="text-center">
-                        {orderData[i].id ? orderData[i].id : "X"}
-                    </td>
-                    <td className="text-center">
-                        {orderData[i].name ? orderData[i].name : "X"}
-                    </td>
-                    <td className="text-center">
-                        {orderData[i].product_name
-                            ? orderData[i].product_name
-                            : "X"}
-                    </td>
-                    <td className="text-right">
-                        {orderData[i].quantity ? orderData[i].quantity : "X"}
-                    </td>
-                    <td className="text-right">
-                        {orderData[i].billable_amount
-                            ? AddComma(orderData[i].billable_amount)
-                            : "X"}
-                    </td>
-                    <td className="text-center">
-                        {moment(orderData[i].created_at).format(
-                            "YYYY年MM月DD日 HH:mm"
-                        )
-                            ? mediaFontSize == "10px"
-                                ? moment(orderData[i].created_at).format(
-                                      "MM月DD日 HH:mm"
-                                  )
-                                : moment(orderData[i].created_at).format(
-                                      "YYYY年MM月DD日 HH:mm"
-                                  )
-                            : "X"}
-                    </td>
-                    <td className="text-center">
-                        {orderData[i].deposit_status
-                            ? orderData[i].deposit_status
-                            : "X"}
-                    </td>
-                    <td className="text-center">
-                        {orderData[i].shipping_status
-                            ? orderData[i].shipping_status
-                            : "X"}
-                    </td>
-                    <td className="text-center">
-                        <span>
+                <Fragment key={"bodyArr" + i}>
+                    <tr id={"tr" + orderData[i].id}>
+                        <td className="text-center">
+                            {orderData[i].id ? orderData[i].id : "X"}
+                        </td>
+                        <td
+                            className="text-center"
+                            style={{
+                                overflow: "hidden",
+                                textOverflow: "ellipsis"
+                            }}
+                        >
+                            {orderData[i].name ? orderData[i].name : "X"}
+                        </td>
+                        <td
+                            className="text-center"
+                            style={{
+                                overflow: "hidden",
+                                textOverflow: "ellipsis"
+                            }}
+                        >
+                            {orderData[i].product_name
+                                ? orderData[i].product_name
+                                : "X"}
+                        </td>
+                        <td className="text-right">
+                            {orderData[i].quantity
+                                ? orderData[i].quantity
+                                : "X"}
+                        </td>
+                        <td
+                            className="text-right"
+                            style={{
+                                overflow: "hidden",
+                                textOverflow: "ellipsis"
+                            }}
+                        >
+                            {orderData[i].billable_amount
+                                ? AddComma(orderData[i].billable_amount)
+                                : "X"}
+                        </td>
+                        <td
+                            className="text-center"
+                            style={{
+                                overflow: "hidden",
+                                textOverflow: "ellipsis"
+                            }}
+                        >
+                            {moment(orderData[i].created_at).format(
+                                "YYYY年MM月DD日 HH:mm"
+                            )
+                                ? mediaFontSize == "10px"
+                                    ? moment(orderData[i].created_at).format(
+                                          "MM月DD日 HH:mm"
+                                      )
+                                    : moment(orderData[i].created_at).format(
+                                          "YY年MM月DD日 HH:mm"
+                                      )
+                                : "X"}
+                        </td>
+                        <td
+                            className="text-center"
+                            style={{
+                                overflow: "hidden",
+                                textOverflow: "ellipsis"
+                            }}
+                        >
+                            {orderData[i].deposit_status
+                                ? orderData[i].deposit_status
+                                : "X"}
+                        </td>
+                        <td
+                            className="text-center"
+                            style={{
+                                overflow: "hidden",
+                                textOverflow: "ellipsis"
+                            }}
+                        >
+                            {orderData[i].shipping_status
+                                ? orderData[i].shipping_status
+                                : "X"}
+                        </td>
+                        <td
+                            className="text-center"
+                            style={{
+                                overflow: "hidden",
+                                textOverflow: "ellipsis"
+                            }}
+                        >
                             <StyledSpan
+                                data-toggle="collapse"
+                                data-target={["#accordion" + i]}
                                 className="pr-1 pl-1 m-0"
-                                onClick={e => {
-                                    show(
-                                        e.target.parentNode.parentNode
-                                            .parentNode.id
-                                    );
-                                }}
+                                // onClick={e => {
+                                //     show(
+                                //         e.target.parentNode.parentNode
+                                //             .parentNode.id
+                                //     );
+                                // }}
                             >
                                 詳細
                             </StyledSpan>
-                            <span>{" / "}</span>
+                            <span>{"/"}</span>
                             <StyledSpan
                                 className="pr-1 pl-1 m-0"
                                 onClick={e => {
-                                    edit(
-                                        e.target.parentNode.parentNode
-                                            .parentNode.id
-                                    );
+                                    edit(e.target.parentNode.parentNode.id);
                                 }}
                             >
                                 更新
                             </StyledSpan>
-                            <StyledSpanCancel
-                                className="pr-1 pl-1 m-0"
-                                onClick={e => {}}
-                            >
+                            <StyledSpanCancel className="pr-1 pl-1 m-0">
                                 キャンセル
                             </StyledSpanCancel>
-                        </span>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                    <tr
+                        style={{
+                            borderBottom: "solid 3px black"
+                        }}
+                        id={"accordion" + i}
+                        className="collapse text-center"
+                    >
+                        <th
+                            style={{
+                                color: "red",
+                                height: 72
+                            }}
+                            className="p-0 align-middle"
+                        >
+                            ↳
+                        </th>
+                        <th
+                            style={{ height: "100%" }}
+                            className="p-0 align-middle"
+                        >
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    backgroundColor: "#dfefd8",
+                                    height: "32px"
+                                }}
+                            >
+                                メール
+                            </div>
+                        </th>
+                        <td
+                            colSpan="2"
+                            className="align-middle"
+                            style={{
+                                whiteSpace: "normal",
+                                wordBreak: "break-all"
+                            }}
+                        >
+                            {orderData[i].email}
+                        </td>
+                        <th
+                            style={{ height: "100%" }}
+                            className="p-0 align-middle"
+                        >
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    backgroundColor: "#dfefd8",
+                                    height: "32px",
+                                    width: "100%"
+                                }}
+                            >
+                                住所
+                            </div>
+                        </th>
+                        <td
+                            className="align-middle"
+                            style={{
+                                whiteSpace: "normal",
+                                wordBreak: "break-all"
+                            }}
+                        >
+                            {orderData[i].address}
+                        </td>
+                        <td className="p-0" colSpan="2">
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    backgroundColor: "#dfefd8",
+                                    height: 32
+                                }}
+                            >
+                                備考欄
+                            </div>
+                            <div
+                                style={{
+                                    whiteSpace: "normal",
+                                    wordBreak: "break-all"
+                                }}
+                            >
+                                {orderData[i].message}
+                            </div>
+                        </td>
+                        <td
+                            className="p-0 align-middle"
+                            colSpan="1"
+                            data-toggle="collapse"
+                            data-target={"#accordion" + i}
+                        >
+                            <div
+                                style={{
+                                    cursor: "pointer"
+                                }}
+                            >
+                                <strong style={{ color: "red" }}>↳</strong>
+                                キャンセル
+                            </div>
+                        </td>
+                    </tr>
+                </Fragment>
             );
         }
         bodyArr.push(
@@ -565,9 +705,7 @@ const OrderManagement = ({ history }) => {
                 key={"bodyArrUpdate"}
                 style={{
                     display: "none",
-                    fontSize: mediaFontSize,
-                    border: "solid 3px green",
-                    borderTop: ""
+                    borderBottom: "solid 3px green"
                 }}
             >
                 <td style={{ color: "green" }} className="text-center">
@@ -597,7 +735,7 @@ const OrderManagement = ({ history }) => {
                     />
                 </td>
                 <td className="text-right align-middle">billableAmount</td>
-                <td className="text-cente align-middler">createdAt</td>
+                <td className="text-center align-middle">createdAt</td>
                 <td className="text-center">
                     <Form.Control as="select" size="sm">
                         <option>入金待ち</option>
@@ -611,16 +749,14 @@ const OrderManagement = ({ history }) => {
                         <option>発送済</option>
                     </Form.Control>
                 </td>
-                <td className="text-center">
-                    <span>
-                        <StyledSpanGreen className="pr-1 pl-1 m-0">
-                            保存
-                        </StyledSpanGreen>
-                        {" / "}
-                        <StyledSpanRed className="pr-1 pl-1 m-0">
-                            削除
-                        </StyledSpanRed>
-                    </span>
+                <td className="text-center align-middle">
+                    <StyledSpanGreen className="pr-1 pl-1 m-0">
+                        保存
+                    </StyledSpanGreen>
+                    {"/"}
+                    <StyledSpanRed className="pr-1 pl-1 m-0">
+                        削除
+                    </StyledSpanRed>
                 </td>
             </tr>
         );
@@ -628,8 +764,7 @@ const OrderManagement = ({ history }) => {
         return (
             <tbody
                 style={{
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
+                    fontSize: mediaFontSize,
                     whiteSpace: "nowrap"
                 }}
             >
@@ -648,6 +783,8 @@ const OrderManagement = ({ history }) => {
                     hover
                     bordered
                     size="sm"
+                    className="p-0 m-0"
+                    style={{ tableLayout: "fixed" }}
                 >
                     {orderListHead()}
                     {orderListBody()}

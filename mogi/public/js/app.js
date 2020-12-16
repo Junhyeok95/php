@@ -107775,34 +107775,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _contexts_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../contexts/user */ "./resources/js/components/contexts/user.js");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    font-size: 24px;\n    text-align: center;\n    flex: 1;\n"]);
-
-  _templateObject2 = function _templateObject2() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border-bottom: solid black 2px;\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
 
 
-
-var StyledDiv = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div(_templateObject());
-var StyledTitle = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div(_templateObject2());
 
 var Header = function Header() {
   var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_contexts_user__WEBPACK_IMPORTED_MODULE_2__["UserContext"]),
@@ -107814,9 +107790,7 @@ var Header = function Header() {
     // color: "white",
     fontWeight: "900"
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledDiv, {
-    className: "navbar navbar-expand-md navbar-light bg-white shadow-sm"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledTitle, null, "\u30E6\u30CB\u30D5\u30A9\u30FC\u30E0\u53D7\u6CE8\u3001\u7BA1\u7406\u30B7\u30B9\u30C6\u30E0")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
     className: "navbar navbar-expand-md navbar-light bg-white shadow-sm"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
@@ -107928,7 +107902,6 @@ var LoginPage = function LoginPage() {
 
   var onSubmit = function onSubmit(e) {
     e.preventDefault();
-    console.log("login");
     login(email, password);
   };
 
@@ -108247,6 +108220,7 @@ var OrderManagement = function OrderManagement(_ref) {
           setOrderData(res.data[0]);
           setGetProductList(res.data[1]);
           setGetMonthlySalesList(res.data[2]);
+          console.log(res.data);
         }
       })["catch"](function (err) {
         history.push("/");
@@ -108254,6 +108228,8 @@ var OrderManagement = function OrderManagement(_ref) {
       });
     } catch (err) {
       history.push("/");
+      localStorage.removeItem("user");
+      alert("로그인을 다시 해주세요");
       console.log(err);
     }
   };
@@ -108290,19 +108266,18 @@ var OrderManagement = function OrderManagement(_ref) {
       }).then(function (res) {
         if (res.data) {
           var editDisplay = function editDisplay(newEl, oldEl) {
-            oldEl.style.border = "solid 3px green";
-            oldEl.style.borderBottom = "";
-            oldEl.childNodes[8].childNodes[0].childNodes[0].style.display = "none";
-            oldEl.childNodes[8].childNodes[0].childNodes[1].style.display = "none";
-            oldEl.childNodes[8].childNodes[0].childNodes[2].style.display = "none";
-            oldEl.childNodes[8].childNodes[0].childNodes[3].style.display = "unset";
-            oldEl.childNodes[8].childNodes[0].childNodes[3].addEventListener("click", function () {
+            oldEl.style.borderTop = "solid 3px green";
+            oldEl.childNodes[8].childNodes[0].style.display = "none";
+            oldEl.childNodes[8].childNodes[1].style.display = "none";
+            oldEl.childNodes[8].childNodes[2].style.display = "none";
+            oldEl.childNodes[8].childNodes[3].style.display = "unset";
+            oldEl.childNodes[8].childNodes[3].addEventListener("click", function () {
               newEl.remove();
               oldEl.style.border = "";
-              oldEl.childNodes[8].childNodes[0].childNodes[3].style.display = "none";
-              oldEl.childNodes[8].childNodes[0].childNodes[0].style.display = "unset";
-              oldEl.childNodes[8].childNodes[0].childNodes[1].style.display = "unset";
-              oldEl.childNodes[8].childNodes[0].childNodes[2].style.display = "unset";
+              oldEl.childNodes[8].childNodes[3].style.display = "none";
+              oldEl.childNodes[8].childNodes[0].style.display = "unset";
+              oldEl.childNodes[8].childNodes[1].style.display = "unset";
+              oldEl.childNodes[8].childNodes[2].style.display = "unset";
             }, false);
           };
 
@@ -108368,7 +108343,7 @@ var OrderManagement = function OrderManagement(_ref) {
 
           autoSelected(editClone, editOld, 7); // 8. 저장, 삭제 이벤트
 
-          editClone.childNodes[8].childNodes[0].children[0].addEventListener("click", function () {
+          editClone.childNodes[8].children[0].addEventListener("click", function () {
             axios__WEBPACK_IMPORTED_MODULE_3___default()({
               method: "put",
               url: "/api/orders/".concat(id.substr(2)),
@@ -108388,17 +108363,17 @@ var OrderManagement = function OrderManagement(_ref) {
                 alert("保存完了");
                 editClone.remove();
                 editOld.style.border = "";
-                editOld.childNodes[8].childNodes[0].childNodes[3].style.display = "none";
-                editOld.childNodes[8].childNodes[0].childNodes[0].style.display = "unset";
-                editOld.childNodes[8].childNodes[0].childNodes[1].style.display = "unset";
-                editOld.childNodes[8].childNodes[0].childNodes[2].style.display = "unset";
+                editOld.childNodes[8].childNodes[3].style.display = "none";
+                editOld.childNodes[8].childNodes[0].style.display = "unset";
+                editOld.childNodes[8].childNodes[1].style.display = "unset";
+                editOld.childNodes[8].childNodes[2].style.display = "unset";
                 getOrders();
               }
             })["catch"](function (err) {
               return console.log(err);
             });
           }, false);
-          editClone.childNodes[8].childNodes[0].children[1].addEventListener("click", function () {
+          editClone.childNodes[8].children[1].addEventListener("click", function () {
             axios__WEBPACK_IMPORTED_MODULE_3___default()({
               method: "delete",
               url: "/api/orders/".concat(id.substr(2)),
@@ -108410,10 +108385,10 @@ var OrderManagement = function OrderManagement(_ref) {
                 alert("削除　完了");
                 editClone.remove();
                 editOld.style.border = "";
-                editOld.childNodes[8].childNodes[0].childNodes[3].style.display = "none";
-                editOld.childNodes[8].childNodes[0].childNodes[0].style.display = "unset";
-                editOld.childNodes[8].childNodes[0].childNodes[1].style.display = "unset";
-                editOld.childNodes[8].childNodes[0].childNodes[2].style.display = "unset";
+                editOld.childNodes[8].childNodes[3].style.display = "none";
+                editOld.childNodes[8].childNodes[0].style.display = "unset";
+                editOld.childNodes[8].childNodes[1].style.display = "unset";
+                editOld.childNodes[8].childNodes[2].style.display = "unset";
                 getOrders();
               }
             })["catch"](function (err) {
@@ -108468,8 +108443,6 @@ var OrderManagement = function OrderManagement(_ref) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", {
       style: {
         fontSize: mediaFontSize,
-        overflow: "hidden",
-        textOverflow: "ellipsis",
         whiteSpace: "nowrap"
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
@@ -108483,7 +108456,7 @@ var OrderManagement = function OrderManagement(_ref) {
       className: "text-center"
     }, datalist.orderId), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
       style: {
-        width: "10%"
+        width: "14%"
       },
       className: "text-center"
     }, datalist.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -108493,7 +108466,7 @@ var OrderManagement = function OrderManagement(_ref) {
       className: "text-center"
     }, datalist.uniformKind), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
       style: {
-        width: "7%"
+        width: "8%"
       },
       className: "text-center"
     }, datalist.uniformQuantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -108503,7 +108476,7 @@ var OrderManagement = function OrderManagement(_ref) {
       className: "text-center"
     }, datalist.billableAmount), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
       style: {
-        width: "15%"
+        width: "18%"
       },
       className: "text-center"
     }, datalist.createdAt), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -108518,7 +108491,7 @@ var OrderManagement = function OrderManagement(_ref) {
       className: "text-center"
     }, datalist.shippingStatus), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
       style: {
-        width: "15%"
+        width: "12%"
       },
       className: "text-center"
     })));
@@ -108565,44 +108538,156 @@ var OrderManagement = function OrderManagement(_ref) {
     var bodyArr = [];
 
     for (var i = 0; i < orderData.length; i++) {
-      bodyArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-        id: "tr" + orderData[i].id,
-        style: {
-          fontSize: mediaFontSize
-        },
+      bodyArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], {
         key: "bodyArr" + i
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        id: "tr" + orderData[i].id
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-center"
       }, orderData[i].id ? orderData[i].id : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "text-center"
+        className: "text-center",
+        style: {
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }
       }, orderData[i].name ? orderData[i].name : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "text-center"
+        className: "text-center",
+        style: {
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }
       }, orderData[i].product_name ? orderData[i].product_name : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "text-right"
       }, orderData[i].quantity ? orderData[i].quantity : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "text-right"
-      }, orderData[i].billable_amount ? AddComma(orderData[i].billable_amount) : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "text-center"
-      }, moment__WEBPACK_IMPORTED_MODULE_4___default()(orderData[i].created_at).format("YYYY年MM月DD日 HH:mm") ? mediaFontSize == "10px" ? moment__WEBPACK_IMPORTED_MODULE_4___default()(orderData[i].created_at).format("MM月DD日 HH:mm") : moment__WEBPACK_IMPORTED_MODULE_4___default()(orderData[i].created_at).format("YYYY年MM月DD日 HH:mm") : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "text-center"
-      }, orderData[i].deposit_status ? orderData[i].deposit_status : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "text-center"
-      }, orderData[i].shipping_status ? orderData[i].shipping_status : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpan, {
-        className: "pr-1 pl-1 m-0",
-        onClick: function onClick(e) {
-          show(e.target.parentNode.parentNode.parentNode.id);
+        className: "text-right",
+        style: {
+          overflow: "hidden",
+          textOverflow: "ellipsis"
         }
-      }, "\u8A73\u7D30"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " / "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpan, {
+      }, orderData[i].billable_amount ? AddComma(orderData[i].billable_amount) : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-center",
+        style: {
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }
+      }, moment__WEBPACK_IMPORTED_MODULE_4___default()(orderData[i].created_at).format("YYYY年MM月DD日 HH:mm") ? mediaFontSize == "10px" ? moment__WEBPACK_IMPORTED_MODULE_4___default()(orderData[i].created_at).format("MM月DD日 HH:mm") : moment__WEBPACK_IMPORTED_MODULE_4___default()(orderData[i].created_at).format("YY年MM月DD日 HH:mm") : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-center",
+        style: {
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }
+      }, orderData[i].deposit_status ? orderData[i].deposit_status : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-center",
+        style: {
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }
+      }, orderData[i].shipping_status ? orderData[i].shipping_status : "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "text-center",
+        style: {
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpan, {
+        "data-toggle": "collapse",
+        "data-target": ["#accordion" + i],
+        className: "pr-1 pl-1 m-0" // onClick={e => {
+        //     show(
+        //         e.target.parentNode.parentNode
+        //             .parentNode.id
+        //     );
+        // }}
+
+      }, "\u8A73\u7D30"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "/"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpan, {
         className: "pr-1 pl-1 m-0",
         onClick: function onClick(e) {
-          edit(e.target.parentNode.parentNode.parentNode.id);
+          edit(e.target.parentNode.parentNode.id);
         }
       }, "\u66F4\u65B0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpanCancel, {
-        className: "pr-1 pl-1 m-0",
-        onClick: function onClick(e) {}
-      }, "\u30AD\u30E3\u30F3\u30BB\u30EB")))));
+        className: "pr-1 pl-1 m-0"
+      }, "\u30AD\u30E3\u30F3\u30BB\u30EB"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+        style: {
+          borderBottom: "solid 3px black"
+        },
+        id: "accordion" + i,
+        className: "collapse text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        style: {
+          color: "red",
+          height: 72
+        },
+        className: "p-0 align-middle"
+      }, "\u21B3"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        style: {
+          height: "100%"
+        },
+        className: "p-0 align-middle"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        style: {
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          backgroundColor: "#dfefd8",
+          height: "32px"
+        }
+      }, "\u30E1\u30FC\u30EB")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        colSpan: "2",
+        className: "align-middle",
+        style: {
+          whiteSpace: "normal",
+          wordBreak: "break-all"
+        }
+      }, orderData[i].email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        style: {
+          height: "100%"
+        },
+        className: "p-0 align-middle"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        style: {
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          backgroundColor: "#dfefd8",
+          height: "32px",
+          width: "100%"
+        }
+      }, "\u4F4F\u6240")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "align-middle",
+        style: {
+          whiteSpace: "normal",
+          wordBreak: "break-all"
+        }
+      }, orderData[i].address), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "p-0",
+        colSpan: "2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        style: {
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#dfefd8",
+          height: 32
+        }
+      }, "\u5099\u8003\u6B04"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        style: {
+          whiteSpace: "normal",
+          wordBreak: "break-all"
+        }
+      }, orderData[i].message)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        className: "p-0 align-middle",
+        colSpan: "1",
+        "data-toggle": "collapse",
+        "data-target": "#accordion" + i
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        style: {
+          cursor: "pointer"
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        style: {
+          color: "red"
+        }
+      }, "\u21B3"), "\u30AD\u30E3\u30F3\u30BB\u30EB")))));
     }
 
     bodyArr.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
@@ -108610,9 +108695,7 @@ var OrderManagement = function OrderManagement(_ref) {
       key: "bodyArrUpdate",
       style: {
         display: "none",
-        fontSize: mediaFontSize,
-        border: "solid 3px green",
-        borderTop: ""
+        borderBottom: "solid 3px green"
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
       style: {
@@ -108643,7 +108726,7 @@ var OrderManagement = function OrderManagement(_ref) {
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
       className: "text-right align-middle"
     }, "billableAmount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-      className: "text-cente align-middler"
+      className: "text-center align-middle"
     }, "createdAt"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
       className: "text-center"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Control, {
@@ -108655,16 +108738,15 @@ var OrderManagement = function OrderManagement(_ref) {
       as: "select",
       size: "sm"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "\u672A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "\u767A\u9001\u6E96\u5099\u4E2D"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "\u767A\u9001\u6E08"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-      className: "text-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpanGreen, {
+      className: "text-center align-middle"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpanGreen, {
       className: "pr-1 pl-1 m-0"
-    }, "\u4FDD\u5B58"), " / ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpanRed, {
+    }, "\u4FDD\u5B58"), "/", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledSpanRed, {
       className: "pr-1 pl-1 m-0"
-    }, "\u524A\u9664")))));
+    }, "\u524A\u9664"))));
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
       style: {
-        overflow: "hidden",
-        textOverflow: "ellipsis",
+        fontSize: mediaFontSize,
         whiteSpace: "nowrap"
       }
     }, bodyArr);
@@ -108675,7 +108757,11 @@ var OrderManagement = function OrderManagement(_ref) {
     , {
       hover: true,
       bordered: true,
-      size: "sm"
+      size: "sm",
+      className: "p-0 m-0",
+      style: {
+        tableLayout: "fixed"
+      }
     }, orderListHead(), orderListBody()));
   };
 

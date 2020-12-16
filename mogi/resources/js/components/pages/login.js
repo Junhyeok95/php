@@ -9,7 +9,6 @@ const LoginPage = () => {
 
     const onSubmit = e => {
         e.preventDefault();
-        console.log("login");
         login(email, password);
     };
 
