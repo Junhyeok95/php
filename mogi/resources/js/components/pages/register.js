@@ -14,7 +14,6 @@ const RegisterPage = () => {
         if (password !== passwordConfirm) {
             alert("비밀번호가 서로 다릅니다");
         } else {
-            console.log("register");
             register(name, email, password, passwordConfirm);
         }
     };

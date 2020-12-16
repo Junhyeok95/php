@@ -51,7 +51,7 @@ const ProductBuy = ({ history }) => {
                     setProductData(res.data[res.data.length - 1]); //
                 }
             })
-            .catch(error => console.log(error));
+            .catch(err => console.log(err));
     };
 
     const axiosSubmit = e => {
@@ -71,16 +71,15 @@ const ProductBuy = ({ history }) => {
         })
             .then(res => {
                 if (res.data) {
-                    console.log(res.data);
                     const { name, email } = res.data;
                     alert(
-                        `注文　完了\n\n名前：${name}\nメールアドレス：${email}`
+                        `注文完了\n\n名前：${name}\nメールアドレス：${email}`
                     );
                     history.push("/product");
                 }
             })
-            .catch(function(error) {
-                console.log(error);
+            .catch(err => {
+                alert("正しいメールアドレスを入力してください。");
             });
     };
 

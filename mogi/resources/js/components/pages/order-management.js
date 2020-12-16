@@ -71,7 +71,6 @@ const OrderManagement = ({ history }) => {
                         setOrderData(res.data[0]);
                         setGetProductList(res.data[1]);
                         setGetMonthlySalesList(res.data[2]);
-                        console.log(res.data);
                     }
                 })
                 .catch(err => {
@@ -97,11 +96,7 @@ const OrderManagement = ({ history }) => {
                         JSON.parse(localStorage.getItem("user")).token
                 }
             })
-                .then(res => {
-                    console.log(res);
-                    if (res.data) {
-                    }
-                })
+                .then(res => {})
                 .catch(err => console.log(err));
         } catch (err) {
             history.push("/");

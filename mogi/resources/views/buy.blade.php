@@ -8,8 +8,8 @@
     <img src="{{$message->embed($order->product_url)}}" alt="">
   </div>
   <h3>商品名：{{$order->product_name}}<br />
-    購入個数：{{$order->quantity}}<br />
-    注文価格：{{$order->billable_amount}}</h3>
+    購入個数：{{$order->quantity}}個<br />
+    注文価格：￥ {{number_format($order->billable_amount)}}</h3>
 
   <h3>住所：{{$order->address}}<br />
     振込口座：{{$order->account}}</h3>

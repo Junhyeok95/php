@@ -19,8 +19,7 @@ const StyledButton = styled.button`
     width: 100%;
 `;
 
-const NotFoundPage = ({ match, history }) => {
-    console.log(match, history.location);
+const NotFoundPage = ({ history }) => {
     return (
         <StyledDiv className="flex-center position-ref full-height">
             <div className="content">

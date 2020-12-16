@@ -107,17 +107,8 @@ class OrderController extends Controller
     $order['product_name'] = $product_name;
     $order['product_url'] = public_path() . "/" . "images" . "/" . substr($product_name, -1, 1) . ".png";
 
-    // 이벤트 처리
-    // \Mail::send(
-    //   'buy',
-    //   compact('order'),
-    //   function ($message) use ($order) {
-    //     $res_email = $order->email;
-    //     $message->to($res_email);
-    //     $message->subject(`神田ユニフォーム店：{$order->name}様のご注文内容`);
-    //     // $message->attach(public_path($order->product_url));
-    //   }
-    // );
+    // email 발송
+    event(new \App\Events\OrderCreated($order));
 
     return response()->json($order);
   }

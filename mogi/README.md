@@ -1,13 +1,28 @@
-#
+# 시작
 
 ```
+composer install
+npm install
+composer dump-autoload
+npm run production
+
+.env      // cp .env.example .env
+DB        // Check your development environment
+
+php artisan key:generate
+php artisan jwt:secret                // yse
+php artisan migrate:refresh --seed
 php artisan serve
+```
+
+## Tip
+
+```
 php artisan serve --host=192.168.0.100 --port=80
 'timezone' => 'Asia/Tokyo',
-
 ```
 
-## install
+### install
 
 ```
 composer create-project --prefer-dist laravel/laravel mogi
@@ -40,4 +55,8 @@ php artisan make:migration create_order_product_table --create=order_product
 
 php artisan make:seeder ProductsTableSeeder
 php artisan make:seeder OrderTableSeeder
+
+// EventServiceProvider ->  $listen = [ 이벤트 => [ 리스너] ] 등록
+// A-> php artisan event:generate
+// B-> php artisan make:listener OrderEventListener + php artisan make:event OrderCreated
 ```
