@@ -29,6 +29,10 @@ const ProductBuy = ({ history }) => {
         setBuyData(_buyData);
     };
 
+    const AddComma = data_value => {
+        return "￥ " + Number(data_value).toLocaleString("en");
+    };
+
     const getProducts = () => {
         Axios({
             method: "get",
@@ -194,7 +198,7 @@ const ProductBuy = ({ history }) => {
                                                 parseInt(e.target.value)
                                             )
                                                 .toString()
-                                                .slice(0, 2);
+                                                .slice(0, 3);
                                             formOnChange(e);
                                         }}
                                     />
@@ -221,9 +225,9 @@ const ProductBuy = ({ history }) => {
                                 }}
                                 name="billable_amount"
                             >
-                                {"決済金額 : ￥ "}
-                                {productData.price * buyData.quantity}
-                                {" 円 (税込)"}
+                                {"決済金額：　"}
+                                {AddComma(productData.price * buyData.quantity)}
+                                {"円　(税込)"}
                             </Form.Label>
                             <Row className="justify-content-center">
                                 <Button

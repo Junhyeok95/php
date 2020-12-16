@@ -52,7 +52,7 @@ const OrderManagement = ({ history }) => {
     const [getMonthlySalesList, setGetMonthlySalesList] = useState(null);
 
     const AddComma = data_value => {
-        return "￥" + Number(data_value).toLocaleString("en");
+        return "￥ " + Number(data_value).toLocaleString("en");
     };
 
     const getOrders = () => {
@@ -596,8 +596,8 @@ const OrderManagement = ({ history }) => {
                         size="sm"
                     />
                 </td>
-                <td className="text-right">billableAmount</td>
-                <td className="text-center">createdAt</td>
+                <td className="text-right align-middle">billableAmount</td>
+                <td className="text-cente align-middler">createdAt</td>
                 <td className="text-center">
                     <Form.Control as="select" size="sm">
                         <option>入金待ち</option>

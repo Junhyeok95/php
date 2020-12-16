@@ -2,6 +2,7 @@
 
 ```
 php artisan serve
+php artisan serve --host=192.168.0.100 --port=80
 'timezone' => 'Asia/Tokyo',
 
 ```

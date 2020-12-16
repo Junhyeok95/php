@@ -15,13 +15,17 @@ const ProductHome = ({ history }) => {
                     sm={{ span: 6, offset: 0 }}
                     md={{ span: 4, offset: 0 }}
                     lg={{ span: 3, offset: 0 }}
-                    xl={{ span: 2, offset: 0 }}
+                    xl={{}}
                 >
                     <Card className="justify-content-center align-items-center p-1 pt-3">
                         <Card.Img variant="top" src={`/images/${url[i]}.png`} />
                         <Card.Body>
-                            <Card.Title>{"ユニフォーム " + url[i]}</Card.Title>
-                            <Card.Text></Card.Text>
+                            <Card.Title className="text-center">
+                                {"ユニフォーム"}
+                            </Card.Title>
+                            <Card.Title className="text-center">
+                                {url[i] + " 商品"}
+                            </Card.Title>
                             <Button
                                 variant="success"
                                 className="w-100"
@@ -45,7 +49,7 @@ const ProductHome = ({ history }) => {
     };
 
     return (
-        <Container className="p-3" style={{ border: "solid black 1px" }}>
+        <Container style={{ border: "solid black 1px" }}>
             <Row className="justify-content-center align-items-center">
                 {productCard()}
             </Row>

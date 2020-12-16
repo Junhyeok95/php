@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { UserContextProvider } from "./contexts/user";
 
 import Header from "./pages/header";
+import MainPage from "./pages/main";
 import OrderPage from "./pages/order";
 import ProductPage from "./pages/product";
 import LoginPage from "./pages/login";
@@ -15,6 +16,7 @@ const App = () => {
         <React.Fragment>
             <Header />
             <Switch>
+                <Route exact path="/" component={MainPage} />
                 <Route path="/product" component={ProductPage} />
                 <Route path="/order" component={OrderPage} />
                 <Route exact path="/login" component={LoginPage} />
